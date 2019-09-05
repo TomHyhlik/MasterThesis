@@ -1,0 +1,192 @@
+% arara: pdflatex: { synctex: yes }
+% arara: makeindex: { style: ctuthesis }
+% arara: bibtex
+
+% The class takes all the key=value arguments that \ctusetup does,
+% and a couple more: draft and oneside
+\documentclass[oneside]{ctuthesis}
+\usepackage{siunitx}
+\usepackage{nomencl}
+\usepackage{setspace}
+\usepackage{indentfirst}
+
+%%%%%%%%%%%%%%%%%% insert images from other directory
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this shit is here to break long url into more lines
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+%\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this shit is here to prevent breaking words on the edge of a line
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+
+\ctusetup{
+%	preprint = \ctuverlog,```%%%%%%%%%%%%%%%%%%%%%%%%% toto je cislo na kazde strance dole ktere tam nema byt
+%	mainlanguage = english,
+%	titlelanguage = english,
+	mainlanguage = czech,
+	otherlanguages = {czech},
+	title-czech = {Low power wireless sensor network},
+	title-english = {Low power wireless sensor network},
+	subtitle-czech = {},
+	subtitle-english = {},
+	faculty = F3,
+	department-czech = {Katedra telekomunikační techniky},
+	department-english = {Department of Telecommunications Engineering},
+	author = {Tomáš Hyhlík},
+	supervisor = {Ing. Bc. Marek Neruda, Ph.D},
+	supervisor-address = {},
+	supervisor-specialist = {Ing. Bc. Lukáš Vojtěch, Ph.D},
+	fieldofstudy-english = {Electronics and Communications},
+	subfieldofstudy-english = {Electronics},
+	fieldofstudy-czech = {Elektronika a komunikace},
+	subfieldofstudy-czech = {Elektronika},
+	keywords-czech = {sensor network},
+	keywords-english = {sensor network},
+	day = 12,
+	month = 10,
+	year = 2019,
+	specification-file = {zav_prace.pdf},
+%	front-specification = true,
+%	front-list-of-figures = false,
+%	front-list-of-tables = false,
+%	monochrome = true,
+%	layout-short = true,
+}
+
+\ctuprocess
+
+\addto\ctucaptionsczech{%
+	\def\supervisorname{Vedoucí}%
+	\def\subfieldofstudyname{Studijní program}%
+}
+
+\ctutemplateset{maketitle twocolumn default}{
+	\begin{twocolumnfrontmatterpage}
+		% \ctutemplate{twocolumn.thanks}
+		% \ctutemplate{twocolumn.declaration}
+		\ctutemplate{twocolumn.abstract.in.titlelanguage}
+		\ctutemplate{twocolumn.abstract.in.secondlanguage}	
+		\ctutemplate{twocolumn.tableofcontents}
+		\ctutemplate{twocolumn.listoffigures}
+	\end{twocolumnfrontmatterpage}
+}
+
+% Theorem declarations, this is the reasonable default, anybody can do what they wish.
+% If you prefer theorems in italics rather than slanted, use \theoremstyle{plainit}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{note}
+\newtheorem*{remark*}{Remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\setlength{\parskip}{5ex plus 0.2ex minus 0.2ex}
+
+% Abstract in Czech
+\begin{abstract-czech}
+Účelem této práce je...
+
+\end{abstract-czech}
+
+% Abstract in English
+\begin{abstract-english}
+The purpose of this work is...
+\end{abstract-english}
+
+% % Acknowledgements / Podekovani
+% \begin{thanks}
+% I would like to thank Supervisor Ing. Bc. Marek Neruda Ph.D and Supervisor-specialist Ing. Bc. Lukáš Vojtěch Ph.D for helping me with this project. Also I would like to thank IMA s.r.o. company, which helped me to get compatible cards to the HID Prox Point plus reader, which is used for the second system design.
+% \end{thanks}
+
+
+% % Declaration / Prohlaseni
+% \begin{declaration}
+% I declare that I have developed the presented work independently and that I have
+% listed all information sources used in accordance with the Methodical Guidelines on
+% Maintaining Ethical Principles During the Preparation of Higher Education Theses.
+
+% In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+% \end{declaration}
+
+% Only for testing purposes
+\listfiles
+\usepackage[pagewise]{lineno}
+\usepackage{lipsum,blindtext}
+\usepackage{mathrsfs} % provides \mathscr used in the ridiculous examples
+
+\newcommand{\abbrlabel}[1]{\makebox[3cm][l]{\textbf{#1}\ \dotfill}}
+\newenvironment{abbreviations}{\begin{list}{}{\renewcommand{\makelabel}{\abbrlabel}}}{\end{list}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+% \ctutemplate{specification.as.chapter}           % ZADANI BP
+
+%\rule{\linewidth}{1pt}     % this shit was here for the url cut
+\titlespacing*{\chapter}					{0pt}	{0ex}{0ex}
+\titlespacing*{\section} 					{0pt}	{0ex}{-3ex}
+\titlespacing*{\subsection} 			{0pt}	{0ex}{-3ex}
+\titlespacing*{\subsubsection}		 {0pt}	{0ex}{-4ex}
+\titlespacing*{\paragraph} 			{0pt}	{0ex}{-4ex}
+\titlespacing*{\aubparagraph} 		{0pt}	{0ex}{-4ex}
+
+\section{List of Abbreviations}
+\begin{abbreviations}
+	\item[BLE]   	Bluetooth Low Energy
+	\item[I2C]   	Inter-integrated Circuit
+	\item[IoT]		Internet of Things
+	\item[IPv6] 	Internet Protocol version 6
+	\item[ISM]		Industrial, scientific and medical
+
+	\item[M2M]		machine to machine
+	\item[RF]		Radio Frequency
+	\item[RPMA]		Random Phase Multiple Access
+	\item[SDK]	 	Software development kit
+	\item[SF]		Spread factor
+	\item[SPI]   	Serial Peripheral Interface 
+
+\end{abbreviations}
+
+
+% \input{1_Introduction}		
+
+% \part{Theoretical part}
+													
+\input{chapter_LPwirelessTechnologies.tex}
+
+\input{chapter_SNdesign.tex}															
+
+% \part{Practical part}
+
+
+\bibliographystyle{amsalpha}
+% \bibliography{0main}	% not used
+\input{references.tex}
+
+
+%\appendix
+
+
+
+\end{document}
