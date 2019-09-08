@@ -357,8 +357,8 @@ OUTPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/main.lof
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/main.lot
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/main.lot
 OUTPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/main.lot
-INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_deviceDesign.tex
-INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_deviceDesign.tex
+INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_stanoveniPozadavku.tex
+INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_stanoveniPozadavku.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmsso10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/./images/01.png
@@ -367,6 +367,8 @@ INPUT ./images/01.png
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmr10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmss10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
+INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_deviceDesign.tex
+INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/chapter_deviceDesign.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/./images/Nucleo64.jpg
 INPUT ./images/Nucleo64.jpg

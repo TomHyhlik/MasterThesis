@@ -1,22 +1,18 @@
-\chapter{Realizace zařízení}
+\chapter{Realizace gatewaye}
 
-Tato gateway senzorové sítě o topologii typu hvězda komunikuje se senzory nebo aktuátory pomocí síťového protokolu LoRaWAN.
-Data ze senzorů jsou dále odesílána na server přes drátové rozhraní RS485 s využitím IMA protokolu navrženého pro přístupové systémy.
+\section{Výběr přenosové technologie}
+Pro tento systém je použita RF technologie LoRa se standardizovaným síťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu.
+Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa transceiver, který prijímá na všech osmi kanálech je příliš drahý (přibližně desetinásobná cena) a složitý k implementaci, zatímco v tomto projektu je kladen důraz na cenu a jednoduchost řešení.
 
+Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbýtek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
+Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
 
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=1\textwidth]{01}
-    \caption{Blokový diagram senzorové sítě}
-    \label{fig:01}
-\end{figure}
-
-\newpage
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Stavba zařízení}
+\section{Komponenty}
+todo
+
 Celé zařízení se skládá z vývojového kitu NUCLEO-L073RZ, LoRa transceiveru RFM95W a převodník UART na RS485. Kit má kompatibilní pinout s Arduino UNO.
 
 
