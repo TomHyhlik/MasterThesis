@@ -10,17 +10,19 @@ Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gat
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Komponenty}
-todo
+\section{Výběr komponent}
+\subsection{Microcontroller}
+Pro toto zařízení je zvolen mikrocontroller STM32L073RZ se zaměřením na nízkou spotřebu, jelikož je levný, má dostačující vlastnosti a je dostupný ve formě vývojového kitu NUCLEO-L073RZ který byl použit pro  vývoj zařízení. Mezi hlavní vlastnosti patří \cite{nucleoST}:
+\begin{itemize}    
+    \item {Architektura ARM Cortex-M0+ 32-bit RISC}
+    \item{Interní Flash paměť 192 KB}
+    \item{Interní SRAM paměť 20 KB}
+    \item{Interní EEPROM paměť 6 KB}
+    \item {Až 32 MHz CPU}
+    \item {2X SPI, 3x I2C, 4x USART, LIN, ADC}
+\end{itemize}
 
-Celé zařízení se skládá z vývojového kitu NUCLEO-L073RZ, LoRa transceiveru RFM95W a převodník UART na RS485. Kit má kompatibilní pinout s Arduino UNO.
-
-
-\subsection{NUCLEO-L073RZ}
-Kit obsahuje 32-bitový procesor STM32L073RZT6 architektury ARM Cortex-M0+, zaměřující se na nízkou spotřebu. Pro tento projekt je jeho clock nakonfigurován na co nejvyšší hodnotu, tedy 32 MHz.
-Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}. Kit má 2 tlačítka. Černé pro reset a modré pro libovolné použití (user button).
-
-
+Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.4\textwidth]{Nucleo64}
@@ -28,11 +30,10 @@ Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nuc
     \label{fig:02}
 \end{figure}
 
-
-
-\subsection{RFM95w}
-LoRa transceiver od firmy HopeRF založeném na chipu SX1276 od firmy Semtech používá SPI \cite{RFM95w}.
-Pro vývoj zařízení byl využit tento transciever v tzv. Dragino LoRa Shield \cite{draginoWiki}, který má stejně jako vývojový kit, pinout kompatibilní s Arduino UNO. Pořizovací cena samotného modulu RFM95w je okolo \$7, cena Dragino Shieldu se pohybuje okolo \$22 na ebay.
+\subsection{LoRa transceiver}
+Lora transceiver čip doposud vyrábí pouze Semtech, pro použití v Evropském pásmu je určen typ SX1276.
+V tomto návrhu je použita deska RFM95w od firmy HopeRF s integrovaným čipem SX1276 \cite{RFM95w}.
+Pro vývoj zařízení byl využit tento transciever v tzv. Dragino LoRa Shield \cite{draginoWiki}, který má stejně jako použitý vývojový kit, pinout kompatibilní s Arduino UNO. Pořizovací cena samotného transceiveru RFM95w je okolo \$7, cena Dragino Shieldu se pohybuje okolo \$22 na ebay.
 
 \begin{figure}[!h]
     \centering
@@ -41,9 +42,8 @@ Pro vývoj zařízení byl využit tento transciever v tzv. Dragino LoRa Shield 
     \label{fig:02}
 \end{figure}
 
-
-\subsection{SparkFun Transceiver Breakout - RS485}
-Tento převodník převádí RS485 na UART, napěťové úrovně 3.3 V. A je dostupný za cenu okolo \$10 \cite{rs485tr}.
+\subsection{RS485 transceiver}
+SparkFun Transceiver Breakout - RS485 převádí rozhranní UART na RS485, pří vstupním napětí 3.3 V. A je dostupný za cenu okolo \$10 \cite{rs485tr}.
 
 \begin{figure}[!h]
     \centering
@@ -56,7 +56,9 @@ Tento převodník převádí RS485 na UART, napěťové úrovně 3.3 V. A je dos
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace LoRaWAN protokolu}
+\section{SW realizace}
+todo
+\subsection{Implementace LoRaWAN sítě}
 Pro jednoduchost a nízkou cenu řešení je zde použita technologie LoRaWAN pouze na jednom kanále a jednom SF(Sprading factor). Všechna zařízení v síti tedy musí mít tyto dva parametry nastavené stejně. Defaultně je použito 868.1 MHz a SF7.
 
 Gateway má trvale ve své non-volatile paměti uložené adresy, a typy všech LoRaWAN zařízení v síti. A oba šifrovací klíče NwSKey a AppSKey, které jsou pro celou síť stejné.
