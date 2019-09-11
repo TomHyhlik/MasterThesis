@@ -5,7 +5,11 @@ all:
 	$(CC) main.tex
 
 run:
-	open $(OUTPUT)
+# 	open $(OUTPUT)
+	xdg-open $(OUTPUT)
+
 
 clean:
 	rm -f $(OUTPUT)
+
+	

@@ -50,22 +50,29 @@ SparkFun Transceiver Breakout - RS485 převádí rozhranní UART na RS485, pří
     \includegraphics[width=0.4\textwidth]{rs485transceiver}
     \caption{RS485 transceiver \cite{rs485tr}}
     \label{fig:rs485transceiver}
-\end{figure}
-
-
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace LoRaWAN sítě}
-Jednokanálové použití technologie LoRa umožňuje použít transceiver navržen pro koncová zařízení, 
-kterým jsou packety kontinuálně odposlouchávány na jednom zvoleným kanále a SF. Tyto dva parametry  jsou nakonfigurovány na všech koncových zařízeních v síti.
+\section{SW realizace}
+
+
 todo
 
 
 
 
+\subsection{Implementace LoRaWAN sítě}
+
+Jednokanalove pouziti technologie LoRa umoznuje pouzit transceiver navrzen pro koncova zarizeni, kterym jsou kontinualne odposlouchavany na jednom zvolenym kanale a SF, tudiz stejne tak musi byt nakonfigurovana vsechna koncova zarizeni v siti.
 
 
+
+
+
+
+
+
+
+Pro jednoduchost a nízkou cenu řešení je zde použita technologie LoRaWAN pouze na jednom kanále a jednom SF(Sprading factor). Všechna zařízení v síti tedy musí mít tyto dva parametry nastavené stejně. Defaultně je použito 868.1 MHz a SF7.
 
 Gateway má trvale ve své non-volatile paměti uložené adresy, a typy všech LoRaWAN zařízení v síti. A oba šifrovací klíče NwSKey a AppSKey, které jsou pro celou síť stejné.
 
@@ -491,12 +498,12 @@ LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit.
 Nukleo kit neobsahuje ISCP konektor, který je součástí pinoutu Arduina a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}.
 Jumpery na shieldu musí také být stejně jako v obrázku.
 
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width=1\textwidth]{foto01.jpg}
-%     \caption{foto zapojení}
-%     \label{fig:03}
-% \end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{foto01}
+    \caption{foto zapojení}
+    \label{fig:03}
+\end{figure}
 
 
 Pro komunikaci s LoRa transceiverem je tedy použito SPI1, pro komunikaci přes USB je použito USART2 a pro komunikaci přes RS485 je použito UART1.
