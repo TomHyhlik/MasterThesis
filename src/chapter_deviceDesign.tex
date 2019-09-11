@@ -7,6 +7,16 @@ Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa t
 Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbýtek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
 Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
 
+\subsection{Zabezpečení protokolu LoRaWAN}
+Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
+
+\subsubsection{Síťové zabezpečení}
+Síťové zabezpečení je zde aby bylo hackerům zabráněno odesílání duplikovaných packetů nebo vytváření a vysílání packetů s nasimulovanými daty.
+Poslední 4 byty packetu obsahují MIC (Message Integrity Code), který je získán zašifrováním dat síťovým klíčem NwkSKey obsahujících mimo jiné celý payload packetu (včetně packet counter). Toto umožňuje odhalit jakoukoliv manipulaci s daty v packetu. LoRaWAN packet také obsahuje counter počítající od nuly od doby kdy bylo LoRaWAN zařízení spuštěno. Toto umožňuje odhalit duplikování packetů.
+
+
+\subsubsection{Aplikační zabezpečení}
+Aplikační klíč AppSKey (Application Session Key) je použit pro zašifrování dat aplikační zprávy (App message) \cite{lwSpec} \cite{lwSecur}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,38 +67,18 @@ SparkFun Transceiver Breakout - RS485 převádí rozhranní UART na RS485, pří
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace LoRaWAN sítě}
-Jednokanálové použití technologie LoRa umožňuje použít transceiver navržen pro koncová zařízení, 
-kterým jsou packety kontinuálně odposlouchávány na jednom zvoleným kanále a SF. Tyto dva parametry  jsou nakonfigurovány na všech koncových zařízeních v síti.
-todo
+Jednokanálové použití technologie LoRa umožňuje použít transceiver navržený pro koncová zařízení, 
+kterým jsou packety kontinuálně odposlouchávány na jednom nastaveném kanále a SF. Tyto dva parametry  jsou nakonfigurovány na všech koncových zařízeních v síti.
 
-
-
-
-
-
-
-Gateway má trvale ve své non-volatile paměti uložené adresy, a typy všech LoRaWAN zařízení v síti. A oba šifrovací klíče NwSKey a AppSKey, které jsou pro celou síť stejné.
-
-Přijme-li gateway LoRaWAN packet, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení, packet dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na server.
+Použitý protokol IMA\_RS485, původně navržen pro přístupové systémy, umožňuje posílat data pouze pomocí příkazu "průchod", který má kapacitu pro data z koncového zařízení pouze 6 B. Systém je proto navržen neobvyklým způsobem. Přijme-li gateway LoRaWAN packet, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení, packet dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na server.
+LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována K4 serverem.
+Všechna zařízení mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
 
 Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
 
-\subsection{Zabezpečení protokolu LoRaWAN}
-Protokol používá AES-128 na 2 způsoby. Pro bezpečné dekódování packetu jsou tedy požity 2 128-bit šifrovací klíče.
-
-\subsubsection{Aplikační zabezpečení}
-Aplikační klíč (Application Session Key) je použit pro zašifrování aplikační zprávy (App message). Tímto je zabráněno přečíst zprávu komukoliv kdo packet přijme 
-
-
-\subsubsection{Síťové zabezpečení}
-Síťové zabezpečení je zde aby bylo hackerům zabráněno odesílání duplikovaných packetů nebo packetů s neplatnými daty.
-LoRaWAN packet obsahuje packet counter počítající od nuly od doby kdy bylo LoRaWAN zařízení spuštěno. Toto umožňuje odhalit duplikování packetu.
-Poslední 4 byty packetu obsahují MIC (Message Integrity Code), který je získán zašifrováním dat síťovým klíčem (Network Session Key) obsahujících mimo jiné celý payload packetu (včetně packet counter). Toto umožňuje odhalit jakoukoliv manipulaci s daty v packetu \cite{lwSpec} \cite{lwSecur}.
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace protokolu IMA RS485}
+\section{Implementace komunkičního protokolu v síti IMA\_RS485}
 Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Server má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou). V tomto projektu je tento protokol naprogramován v souborech rs485\_protocol.h a rs485\_protocol.c.
 
 \subsection{Syntaxe příkazů}
