@@ -7,6 +7,8 @@ Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa t
 Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbýtek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
 Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
 
+todo
+
 \subsection{Zabezpečení protokolu LoRaWAN}
 Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
 
@@ -71,7 +73,7 @@ Jednokanálové použití technologie LoRa umožňuje použít transceiver navr�
 kterým jsou packety kontinuálně odposlouchávány na jednom nastaveném kanále a SF. Tyto dva parametry  jsou nakonfigurovány na všech koncových zařízeních v síti.
 
 Použitý protokol IMA\_RS485, původně navržen pro přístupové systémy, umožňuje posílat data pouze pomocí příkazu "průchod", který má kapacitu pro data z koncového zařízení pouze 6 B. Systém je proto navržen neobvyklým způsobem. Přijme-li gateway LoRaWAN packet, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení, packet dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na server.
-LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována K4 serverem.
+LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na K4 serveru.
 Všechna zařízení mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
 
 Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
@@ -79,9 +81,26 @@ Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace komunkičního protokolu v síti IMA\_RS485}
-Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Server má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou). V tomto projektu je tento protokol naprogramován v souborech rs485\_protocol.h a rs485\_protocol.c.
+V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. Jedná se o kolizní protokol v síti, kde je připojen jeden master, a jeden nebo více slaveů řízených masterem.
 
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{ |c|c| }
+     \hline
+
+     Baud rate              & 9600           \\ \hline
+     Data bits              & 8                 \\ \hline
+     Parity                 & none              \\ \hline
+     Stop bits              & 1                 \\ \hline
+
+    \end{tabular}
+    \caption{Fyzické vlastnosti IMA\_RS485 sítě}
+    \label{table:3}
+\end{table}
+
+\newpage
 \subsection{Syntaxe příkazů}
+Komunikace v síti probíha formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
 
 \begin{table}[!h]
     \centering
@@ -91,46 +110,35 @@ Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena 
  počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
  \hline
 \end{tabular}
-    \caption{Syntaxe příkazu pro komunikaci se serverem přes RS485}
-    \label{table:1}
+    \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
+    \label{table:syntaxePrikazu}
 \end{table}
 
-Veškeré typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
+Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
+Příkazy odeslané masterem obsahují navíc synchronizační byte na začátku 0xAA.
+CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
 
-Příkazy odeslané ze serveru obsahují navíc synchronizační byte na začátku 0xAA.
-crc je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
-
-
+\subsection{Adresace zařízení v síti}
+Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
 
 \subsection{Statusy}
-Zařízení má dva možné statusy, offline a online. Status zařízení je odesílán periodicky s typem příkazu 0x10 a jedním bajtem dat označujícím status. Server na tento příkaz neodpovídá.
+Slave má dva možné statusy, offline a online, což značí, zda je zařízení v aktivním režumu, tudíž má povolení odesílat příkaz průchod (V případě této gatewaye příkaz průchod obsahuje data ze koncového zařízení).  
+Slave odesílá příkoz obsahující onformaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. Master na tento příkaz odpoví pouze pokud mění status slaveu. Pokud je slave online a master přestane komunikovat, zařízení slave se samo přepne na status offline.
 
 \subsubsection{Offline}
-Je-li zařízení zapnuto, je ve stavu offline. Nemá povoleno odesílat data ze senzorů, pouze odpovídá na příkazy serveru a následně dostane příkaz od serveru pro přechod do stavu online. Odesílání příkazu signalizující tento stav je s periodou 30 s a obsahuje bajt 0xEE.
+Je-li zařízení zapnuto, je ve stavu offline. Nemá povoleno odesílat příkaz průchod obsahující data z koncových zařízení, pouze odpovídá na příkazy masteru. Odesílání příkazu signalizující tento stav je s periodou 10 s a obsahuje byte 0xEE.
 
 \subsubsection{Online}
-V tomto stavu je povoleno odesílání dat ze senzorů. Odesílání příkazu signalizující tento stav je s periodou 45 s a obsahuje bajt 0x00.
+Odesílání příkazu signalizující tento stav je s periodou 45 s a obsahuje byte 0x00.
+V tomto stavu je povoleno odesílání příkazu průchod.
 
-\subsection{ACK neboli potvrzení}
-Zařízení odpovídá na každý platný příkaz od serveru ACK. Typ příkazu ACK je 0x06 a v datech je jeden byte, což je typ příkazu na který právě odpovídá potvrzením.
-\\ \\
-Server odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty v příkazu. Délka dat je tedy 0.
 
 \subsection{Přidávání LoRaWAN zařízení do systému}
-Pokud server dostane od zařízení příkaz oznamující že je ve stavu offline, nejprve tomu zařízení v RS485 síti pošle seznam adres LoRaWAN modulů v síti a pak ho přepne do stavu online.
+Pokud master přijme od slavea příkaz oznamující že je ve stavu offline, nejprve slaveu pošle seznam LoRaWAN adres všech známých koncových zařízení a následně slavea přepne do stavu online.
+Přijímání seznamu adres je realizov8no sekvencí příkazů typu 0x8F. 
 
-Přijímání seznamu adres je tvořeno sekvencí příkazů typu 0x8F. 
+Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi masterem a slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde slave má adresu 0x10 a master standartně 0xFF. Jak již bylo řečeno, příkazy od serveru lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
 
-První Byte dat je counter packetu začínající od nuly, který označuje číslo odeslaného packetu v sekvenci. Na každý tento packet v sekvenci zařízení odpoví ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech packetu navíc obsahuje counter packety v sekvenci.
-
-První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
-Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
-
-LoraWAN používá 4-bytové devAddr. První 4 byty jsou devAddr, páty byte je typ zařízení a ostatní zatím nejsou použity. Momentálně je zaveden pouze jeden typ zařízení a to je RH1S001, pro nějž hodnota tohoto bytu je 0.
-
-Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty crc přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
-
-V tabulce \ref{table:2} je pro názornost příklad sekvence příkazů. Jak již bylo řečeno, příkazy od serveru lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
 
 \begin{table}[!h]
     \begin{tabular}{ |l|p{10cm}| }
@@ -145,12 +153,20 @@ V tabulce \ref{table:2} je pro názornost příklad sekvence příkazů. Jak ji�
     konec      &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
     ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
     \end{tabular}
-    \caption{Příklad sekvence příkazů pro přidávání LoRaWAN zařízení do systému}
+    \caption{Příklad sekvence příkazů odesílaných mezi masterem a slavem během předávání seznamu LoRaWAN device address koncových zařízení}
     \label{table:2}
 \end{table}
 
+LoraWAN protokol používá 4-bytové adresy koncových zařízení.
+Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, páty byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
+
+První Byte dat je counter packetu začínající od nuly, který označuje číslo odeslaného packetu v sekvenci. Na každý tento packet v sekvenci slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech packetu navíc obsahuje counter packety v sekvenci.
+První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
+Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
+Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
 \subsection{Odesílání dat ze senzoru}
+todo
 Jak již bylo zmíněno, protokol byl navrhnut pro přístupové systémy a nedošlo k žádné úpravě pro tuto odlišnou aplikaci. Data ze senzorů se tedy posílají s použitím stávajícího příkazu "průchod".
 Typ tohoto příkazu je 0x10. První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0.
 Dále následuje LoRaWAN adresa modulu od kterého byl přijat packet. Dále následují 4 byty dat ze senzoru. Dále 2 byty oznamující čas průchodu, což v tomto projektu není použito a tyto dva byty mají tedy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
@@ -158,6 +174,10 @@ Celý tento příkaz průchod tedy obsahuje pouze 6 bytů pro data ze senzoru.
 
 Server na tento příkaz odpovídá ACK a má čas na odpověď standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu neodpoví, zařízení  příkaz zopakuje a změní typ příkazu na 0x20. Pokud server ani na třetí opakování neodpoví ACK, zařízení se přepne do stavu offline a vymaže frontu příkazů k odeslání.
 
+\subsection{Potvrzení}
+Zařízení odpovídá na každý platný příkaz od serveru ACK. Typ příkazu ACK je 0x06 a v datech je jeden byte, což je typ příkazu na který právě odpovídá potvrzením.
+\\ \\
+Server odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty v příkazu. Délka dat je tedy 0.
 
 \subsection{Dotaz na příznaky}
 Server se může zeptat s jak dlouhýmí adresami zařízení pracuji. Je to typ příkazu 0x49 a délka dat je 0. Zařízení na to odpoví ACK, ale navíc je v datech příkazu byte 0x04 a server pak počítá s tím, že pracuji se 64-bit adresami (ve skutečnosti ale používám 32-bitové a zbylé 4 byty jsou pro data).

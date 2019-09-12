@@ -390,9 +390,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/lmsy9.tfm
-INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/./images/foto01.jpg
-INPUT ./images/foto01.jpg
-INPUT ./images/foto01.jpg
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/references.tex
 INPUT /Users/tomashyhlik/Repozitories/MasterThesis/src/references.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/lm/ec-lmri10.tfm
