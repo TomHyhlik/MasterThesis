@@ -166,15 +166,16 @@ Další příkazy hned za counter bytem obsahují několik osmibytových adres, 
 Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
 \subsection{Odesílání dat ze senzoru}
-todo
-Jak již bylo zmíněno, protokol byl navrhnut pro přístupové systémy a nedošlo k žádné úpravě pro tuto odlišnou aplikaci. Data ze senzorů se tedy posílají s použitím stávajícího příkazu "průchod".
-Typ tohoto příkazu je 0x10. První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0.
-Dále následuje LoRaWAN adresa modulu od kterého byl přijat packet. Dále následují 4 byty dat ze senzoru. Dále 2 byty oznamující čas průchodu, což v tomto projektu není použito a tyto dva byty mají tedy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
-Celý tento příkaz průchod tedy obsahuje pouze 6 bytů pro data ze senzoru.
+Jak již bylo zmíněno, protokol byl navrhnut pro přístupové systémy, tudíž data z koncových začízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
+todo: příklad příkazu
 
-Server na tento příkaz odpovídá ACK a má čas na odpověď standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu neodpoví, zařízení  příkaz zopakuje a změní typ příkazu na 0x20. Pokud server ani na třetí opakování neodpoví ACK, zařízení se přepne do stavu offline a vymaže frontu příkazů k odeslání.
+První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0.
+Dále následuje LoRaWAN adresa koncového zařízení od kterého byl packet přijat. Dále následují 4 byty dat ze senzoru. Dále 2 byty oznamující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
+
+Master na příkaz "průchod" odpovídá příkazem ACK. Slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu master neodpoví, slave  příkaz zopakuje a změní typ příkazu na 0x20. Pokud server ani na třetí opakování neodpoví ACK, slave se přepne do stavu offline a vymaže frontu příkazů k odeslání.
 
 \subsection{Potvrzení}
+todo: pokracovani
 Zařízení odpovídá na každý platný příkaz od serveru ACK. Typ příkazu ACK je 0x06 a v datech je jeden byte, což je typ příkazu na který právě odpovídá potvrzením.
 \\ \\
 Server odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty v příkazu. Délka dat je tedy 0.
