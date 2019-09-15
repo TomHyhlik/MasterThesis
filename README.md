@@ -21,5 +21,3 @@ Když to shrnu, DP by měla obsahovat:
 4. testování řešení - využije se naplánovaný test
 5. jako příloha DP může být článek, kde kolega Hyhlík bude spoluautorem. S tím mu samozřejmě pomůžeme. Článek musí vzniknout do konce tohoto roku.
 
-Dejte mi prosím vědět, pokud jste měl s nějakou činností problém. Je lepčší to všas s panem Nerudou vykomunikovat než to honit na poslední chvíli.
-

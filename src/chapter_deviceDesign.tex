@@ -189,17 +189,16 @@ Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}
 Master na příkaz "průchod" odpovídá příkazem ACK. Slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu master neodpoví, slave  příkaz zopakuje a změní typ příkazu na 0x20. Pokud server ani na třetí opakování neodpoví ACK, slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
 
 \subsection{Potvrzení}
-todo: pokracovani
-Zařízení odpovídá na každý platný příkaz od serveru ACK. Typ příkazu ACK je 0x06 a v datech je jeden byte, což je typ příkazu na který právě odpovídá potvrzením.
-\\ \\
-Server odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty v příkazu. Délka dat je tedy 0.
+Slave odpovídá na každý příkaz od masteru ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
+Master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
 
 \subsection{Dotaz na příznaky}
-Server se může zeptat s jak dlouhýmí adresami zařízení pracuji. Je to typ příkazu 0x49 a délka dat je 0. Zařízení na to odpoví ACK, ale navíc je v datech příkazu byte 0x04 a server pak počítá s tím, že pracuji se 64-bit adresami (ve skutečnosti ale používám 32-bitové a zbylé 4 byty jsou pro data).
+Master se může zeptat s jak dlouhýmí adresami slave pracuje s typem příkazu 0x49. Slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Master pak počítá s tím, že slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Paměť}
+todo: section pamet by nemela bejt
 Konfigurace systému, DevAddr a typ všech zařízení v síti jsou uložena v non-volatile paměti procesoru EEPROM, která je o velikosti 6144 B. 
 Paměť je tedy rozdělená tak, že od adresy 0 až po 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po 6144 je prostor pro ukládání konfigurace systému.
 
@@ -209,7 +208,7 @@ Jedno zařízení zabírá tedy 8 B, takže jich pro jednu síť může být až
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Komunikace přes USB}
-Komunikace přes USB s PC má za účel konfiguraci systému a Log aplikace. Lze k tomu použít libovolný terminál s nastavením viz tabulka \ref{table:2}.
+Gateway má implementovanou komunikaci přes USB, což má za účel konfiguraci systému a logování. K přípojení přes USB lze použít PC s  aplikací terminálu s nastavením viz tabulka \ref{table:usb_term}.
 
 \begin{table}[!h]
     \centering
@@ -224,15 +223,20 @@ Komunikace přes USB s PC má za účel konfiguraci systému a Log aplikace. Lze
 
     \end{tabular}
     \caption{Nastavení USB terminálu}
-    \label{table:3}
+    \label{table:usb_term}
 \end{table}
 
-Při komunikaci jsou data oddělována bytem 0x0D, ale je akceptována i sekvence 0x0D 0x0A. 
+Při komunikaci jsou data standartně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Log aplikace}
-Gateway odesílá informace přes USB o tom, co právě provádí. Níže je příklad výpisu dat pro případ, že gateway přijme packet. Nejprve jsou vypsána data týkající se LoRaWAN protokolu, DevAddr bylo rozpoznáno, payload byl dešifrován a na základě typu senzoru byl dekódován payload a vyčteny hodnoty senzorů LoRaWAN zařízení. Poslední řádek obsahuje data odeslané přes RS485 na server.
+Gateway loguje informace o proběhlých událostech přes USB. 
+Níže je příklad výpisu dat pro případ, že gateway přjala LoRaWAN packet z koncového zařízení v síti.
 
+Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
+Poslední řádek začínajíci s předponou "Tx -> RS-485:" obsahuje data odeslané k masteru přes RS485 síť.
 
+todo: nakopirovat priklad aktualizovaneh vypisu dat
 \begin{lstlisting}
 ______________________________________________________
 Rx -> LoRaWAN, pktCntr: 406
@@ -253,9 +257,11 @@ message (decrypted):  01 44 6C 83 05 00 FF FF 71
 Sensor type: RHF1S001
 temperature: 27.46 C, humidity: 58 %
 period: 10 s, RSSI: -29 dBm, SNR: 9 dB, battery voltage: 2.6 V
-Tx -> RS-485: " FF 10 10 0D 00 D0 F6 1F 01 26 BA 0A 3A E3 FF FF 09 1A 96"
+Tx -> RS-485: "FF 10 10 0D 00 D0 F6 1F 01 26 BA 0A 3A E3 FF FF 09 1A 96"
 \end{lstlisting}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+todo: pokrac
 \subsection{Konfigurace systému}
 Pro vstup do configuration setup menu musí být odeslán příkaz "config". Z menu je možné vystoupit kdykoliv příkazem "quit" (bez uložení). 
 Při vstupu do stavu konfigurace systému je pozastavena činnost gatewaye (přijímání LoRaWAN packetů, komunikace se serverem,...).
