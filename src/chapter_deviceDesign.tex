@@ -7,7 +7,7 @@ Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa t
 Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbýtek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
 Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
 
-todo
+todo: zabespeceni o LoRaWAN protokolu by melo byt jinde
 
 \subsection{Zabezpečení protokolu LoRaWAN}
 Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
@@ -261,50 +261,46 @@ Tx -> RS-485: "FF 10 10 0D 00 D0 F6 1F 01 26 BA 0A 3A E3 FF FF 09 1A 96"
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-todo: pokrac
 \subsection{Konfigurace systému}
-Pro vstup do configuration setup menu musí být odeslán příkaz "config". Z menu je možné vystoupit kdykoliv příkazem "quit" (bez uložení). 
-Při vstupu do stavu konfigurace systému je pozastavena činnost gatewaye (přijímání LoRaWAN packetů, komunikace se serverem,...).
-V terminálu je nejprve vypsána kompletní aktuální konfigurace systému a následně menu konfigurace. Uživatel pak vybírá zadáním čísla.
+Konfigurace gatewaye se provádí opět přes USB port. Je do ní vsoupeno odesláním příkazu
+"config", následuje vypsání současného stavu konfigurace a dále je vypsáno konfigurační menu, kde uživatel vybere jednotlivý bod menu zadáním jeho čísla na začátku řádku.
 Níže je zobrazen příklad výpisu po vstupu do konfigurace.
-\\
 
 \begin{lstlisting}
-
-_________________Entering configuration setup________________
-
-
-System configuration:
-
-*** LoRa channel: 
-channel: 0 (868.1 Mhz)
-SF7
-
-*** RS485 channel: 
-my address: 10
-server address: FF
-timeout: 3 s
-
-*** LoRaWAN keys: 
-NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
-AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-
-
-Config menu:
-1 -> Config LoRa channel
-2 -> Config RS485 channel
-3 -> Config LoRaWAN protocol
-4 -> Print all LoRaWAN devices
-5 -> Erase all LoRaWAN devices
-6 -> Restore to default configuration
-7 -> Exit without save
-8 -> Save and exit
+    _________________Entering configuration setup________________
+    
+    System configuration:
+    
+    *** LoRa channel: 
+    channel: 0 (868.1 Mhz)
+    SF7
+    
+    *** RS485 channel: 
+    my address: 10
+    server address: FF
+    timeout: 3 s
+    
+    *** LoRaWAN keys: 
+    NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
+    AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
+    
+    
+    Config menu:
+    1 -> Config LoRa channel
+    2 -> Config RS485 channel
+    3 -> Config LoRaWAN protocol
+    4 -> Print all LoRaWAN devices
+    5 -> Erase all LoRaWAN devices
+    6 -> Restore to default configuration
+    7 -> Exit without save
+    8 -> Save and exit
 \end{lstlisting}
+    
 
-
-
+Z konfigurace je možné vystoupit kdykoliv bez uložení změn příkazem "quit". 
+Při vstoupení do konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace s masterem v síti RS485 nejsou aktivní.
 Jsou zde tedy 3 stavy konfigurace, přičemž je možné vždy jednotlivá nastavení přeskakovat odesláním "prázdného příkazu" 0x0D (v terminálu obvykle stačí stisknout Enter). Systém při konfiguraci vždy vypíše jaká data mají být zadána v jakém tvaru a zároveň současnou hodnotu měněného parametru. Zadaná data uživatelem jsou vždy zkontrolována zda splňují požadovaný tvar. Pokud ne, uživatel je o tom informován a vyzván k dalšímu pokusu.
-Po provedení konfigurace následuje vždy návrat do menu. Pro uložení nové konfigurace je potřeba v menu vybrat "Save and exit", systém pak následně vypíše které parametry byly změněny.
+Po provedení konfigurace následuje vždy návrat zpět do hlavního menu. Pro uložení nové konfigurace je potřeba v menu vybrat "Save and exit", gateway pak následně vypíše které parametry byly změněny a provede restart.
 
 \subsubsection{Config LoRa channel}
 Konfigurace LoRa RF kanálu zahrnuje nastavení SF a frekvenční pásmo. Níže je příklad konfigurace.
@@ -330,9 +326,8 @@ ch7 is 869.0 Mhz
 channel 1 set.
 \end{lstlisting}
 
-
 \subsubsection{Config RS485 channel}
-Konfigurace RS485 kanálu pro komunikaci se serverem zahrnuje nastavení adresy tohoto zařízení, adresa serveru a timeout, což je doba čekání na zprávu ACK od serveru po odeslání příkazu obsahujícího data ze senzorů. Níže je příklad konfigurace.
+Konfigurace RS485 kanálu pro komunikaci se serverem zahrnuje nastavení adresy tohoto zařízení, adresa masteru a timeout, což je doba čekání na potvrzení od masteru po odeslání příkazu "průchod". Níže je příklad konfigurace.
 
 \begin{lstlisting}
 RS485 channel configuration:
@@ -354,11 +349,11 @@ timeout set to: 5 s
 
 
 \subsubsection{Config LoRaWAN protocol}
-Konfigurace LoRaWAN zahrnuje nastavení šifrovacích klíčů pro LoRaWAN protokol. Níže je příklad konfigurace.
+Konfigurace LoRaWAN protokolu zahrnuje nastavení šifrovacích klíčů NwkSKey a AppSKey. Níže je příklad konfigurace.
 
 \begin{lstlisting}
 LoRaWAN protocol configuration:
-Enter NwSKey (16 bytes in HEX)
+Enter NwkSKey (16 bytes in HEX)
 (current:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47)
 11111111222222223333333344444444
 NwSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
@@ -368,8 +363,6 @@ Enter AppSKey (16 bytes in HEX)
 11111111222222223333333344444444
 AppSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
 \end{lstlisting}
-
-
 
 
 \subsubsection{Print all LoRaWAN devices}
@@ -396,8 +389,8 @@ Device Type: IMA_tempPress
 
 
 
-\subsubsection{Restore to default configuration}
-Po zvolení této možnosti je načtena defaultní konfigurace systému, která obsahuje hodnoty viz tabulka \ref{table:5}.
+\subsubsection{Restore default configuration}
+Po zvolení této možnosti je načtena defaultní konfigurace systému, která obsahuje hodnoty viz tabulka \ref{table:5}. Tyto defaultní hodnoty jsou nastaveny v programu a slouží především pro testovací účely.
 
 \begin{table}[!h]
     \centering
@@ -422,11 +415,10 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Koncová zařízení}
-Jelikož používaný protokol ke komunikaci se serverem je datově omezen na 6B na jeden paket, payload senzoru je dekódován v gatewayi a v packetu odeslaném na server jsou pouze nejdůležitější data, která se vejdou do této velikosti.
-Na základě typu koncového zařízení jsou data v packetu zakódovány, tudíž typ koncového zařízení musí být v gatewayi implementován.
-Typ kobncového zařízení je definován jedním bytem a je uložen v gatewayi i na serveru společně s DevAddr u každého koncového zařízení.
+Jelikož používaný protokol ke komunikaci s masterem je omezen na pouhých 6 B na jeden paket, payload koncových zařízení je dekódován v gatewayi a v packetu odeslaném na master jsou pouze vybraná nejdůležitější data, která se vejdou do této velikosti.
+Prote společně s LoRaWAN device address koncového zařízení je v gatewayi uložen i typ zařízení zadefinován jedním bytem a na základě typu zařízení gateway rozpozná jak dekódovat payload.
 
-Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby neni problém rozšířit FW gatewaye o další typy koncových zařízení.
+Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení.
 
 \begin{table}[!h]
     \centering
@@ -443,7 +435,7 @@ Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby nen
 \end{table}
 
 \subsection{Zpracování dat jednotlivých typů koncových zařízení}
-Níže je popsáno pro jednotlivá koncová zařízení jak jsou data uložena ve struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6B, který je odeslán na K4 server
+Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán do masteru příkazem "průchod".
 
 \subsubsection{RHF1S001}
 Senzor od firmy RisingHF měří teplotu a vlhkost.
@@ -467,7 +459,7 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
 	printf("SNR: %d dB, ", RHF1S001_data.snr);
 	printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
 
-    /* Put the data into 6B long buffer, that is transmitted to the K4 server */
+    /* Put the data into 6B long buffer, that is transmitted to the master */
 	buffer[0] = RHF1S001_data.temperature & 0xFF;
 	buffer[1] = RHF1S001_data.temperature >> 8;
 	buffer[2] = RHF1S001_data.humidity;
@@ -505,9 +497,9 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
 
 \subsection{Přidávání koncových zařízení ze serveru K4}
-Koncocová zařízení sítě se nastavují ze serveru K4 v podobě seznamu offline karet s délkou UID 8B.
-LoRaWAN device address je dlouhá 4B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
-Jelikož typ zařízení je uložen v gatewayi i na serveru. Při odesílání zprávy průchod se tedy už typ zařízení neposílá z důvodu datového omezení v této zprávě (6B).
+Koncocová zařízení sítě se nastavují ze serveru K4 v podobě seznamu offline karet s délkou UID 8 B.
+LoRaWAN device address je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
+Jelikož typ zařízení je uložen v gatewayi i na K4 serveru. Při odesílání příkazu průchod se tedy už typ zařízení neposílá z důvodu datového omezení tohoto příkazu.
 Na serveru K4 se UID nastavuje jako dekadické číslo.
 Níže je příklad vytvoření výsledného čísla obsahující DevAddr a typ zařízení, které se zadává do K4 serveru.
 
@@ -518,20 +510,16 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Zapojení}
-LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit. 
-Nukleo kit neobsahuje ISCP konektor, který je součástí pinoutu Arduina a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}.
-Jumpery na shieldu musí také být stejně jako v obrázku.
+LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
 
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width=1\textwidth]{foto01.jpg}
-%     \caption{foto zapojení}
-%     \label{fig:03}
-% \end{figure}
-
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{foto01}
+    \caption{foto zapojení}
+    \label{fig:03}
+\end{figure}
 
 Pro komunikaci s LoRa transceiverem je tedy použito SPI1, pro komunikaci přes USB je použito USART2 a pro komunikaci přes RS485 je použito UART1.
-
 
 \begin{table}[h]
     \centering
@@ -558,7 +546,12 @@ Pro komunikaci s LoRa transceiverem je tedy použito SPI1, pro komunikaci přes 
 \end{table}
 
 
-\section{Instalace}
+\section{Naprogramování}
+K naprogramování MCU je použita HAL knihovna poskytnutá výrobcem, pomocný nástroj STM32CubeMX a kompilátor arm-none-eabi-gcc. Výstupem kompilace je soubor s koncovkou .binary, který 
+
+todo:pokrac
+
+
 K nahrání zkompilovaného programu do procesoru z PC není potřeba instalovat žádný SW. 
 Kit je potřeba připojit k PC přes USB. V PC se to zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program se spustí. Kit je také možné restartovat černým tlačítkem reset.
 
