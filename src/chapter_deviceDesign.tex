@@ -1,4 +1,5 @@
-\chapter{Realizace gatewaye}
+\chapter{Realizace zařízení}
+Tato kapitola popisuje návrh gatewaye neboli centrálního bodu LPWSN.
 
 \section{Výběr přenosové technologie}
 Pro tento systém je použita RF technologie LoRa se standardizovaným síťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu.
@@ -15,9 +16,8 @@ Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gat
 % Síťové zabezpečení je zde aby bylo hackerům zabráněno odesílání duplikovaných paketů nebo vytváření a vysílání paketů s nasimulovanými daty.
 % Poslední 4 byty paketu obsahují MIC (Message Integrity Code), který je získán zašifrováním dat síťovým klíčem NwkSKey obsahujících mimo jiné celý payload paketu (včetně paket counter). Toto umožňuje odhalit jakoukoliv manipulaci s daty v paketu. LoRaWAN paket také obsahuje counter počítající od nuly od doby kdy bylo LoRaWAN zařízení spuštěno. Toto umožňuje odhalit duplikování paketů.
 
-
-\subsubsection{Aplikační zabezpečení}
-Aplikační klíč AppSKey (Application Session Key) je použit pro zašifrování dat aplikační zprávy (App message) \cite{lwSpec} \cite{lwSecur}.
+% \subsubsection{Aplikační zabezpečení}
+% Aplikační klíč AppSKey (Application Session Key) je použit pro zašifrování dat aplikační zprávy (App message) \cite{lwSpec} \cite{lwSecur}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -588,4 +588,4 @@ Níže je seznam zdrojových souborů.
 Výstupem kompilace je soubor s koncovkou .binary, který je nahrán do MCU. K tomuto nahrání není potřeba žádný speciální SW nebo HW.
 Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
 Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
-Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{sec:konfigurace}.
+Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{sec:konfigurace}.  
