@@ -220,30 +220,29 @@ Gateway loguje informace o proběhlých událostech přes USB.
 Níže je příklad výpisu dat pro případ, že gateway přjala LoRaWAN paket z koncového zařízení v síti.
 
 Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
-Poslední řádek začínajci s předponou "Tx -> RS-485:" obsahuje data odeslané k masteru přes RS485 síť.
+Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k masteru přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od masteru.
 
-todo: nakopirovat priklad aktualizovaneh vypisu dat
 \begin{lstlisting}
 ______________________________________________________
-Rx -> LoRaWAN, pktCntr: 406
-RSSI: -29, SNR: 9, length: 22
-paket rawData:  40 F6 1F 01 26 C0 A1 30 08 D4 5D 93 F0 F0 F6 60 C0 04 BC BE 4B 24
-devAddr:  F6 1F 01 26
-MHDR: 40
-FCtrl: c0
-FCnt: 12449
-FPort: 08
-MIC:  BC BE 4B 24
-adaptive data rate:  1
-ack: 0
-direction: UP
-message (encrypted):  D4 5D 93 F0 F0 F6 60 C0 04
-message (decrypted):  01 44 6C 83 05 00 FF FF 71
+Rx -> LoRaWAN, pktCntr: 6
+RSSI: -51, SNR: 9, length: 22
+
+Message type: Unconfirmed Data Up
+Packet rawData: "40F61F0128C0D62508D970CB071595D115BAC68F6663"
+Device Address: "F61F0128"
+FCnt: 9686
+message (encrypted): "D970CB071595D115BA"
+MHDR: 40; FCtrl: C0; FPort: 08; MIC: "C68F6663"
+adaptive data rate: true; ack: false
+message HEX (decrypted): "013566779600FFFFAF"
 
 Sensor type: RHF1S001
-temperature: 27.46 C, humidity: 58 %
-period: 10 s, RSSI: -29 dBm, SNR: 9 dB, battery voltage: 2.6 V
-Tx -> RS-485: "FF 10 10 0D 00 D0 F6 1F 01 26 BA 0A 3A E3 FF FF 09 1A 96"
+temperature: 23.30 C, humidity: 52 %
+period: 300 s, RSSI: -51 dBm, SNR: 9 dB, battery voltage: 3.2 V
+Tx -> RS-485: "FF1F100D00D0F61F01281A0934CDFFFF09202E"
+______________________________________________________
+Rx -> RS-485: "AA1FFF060000E6"
+ACK
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
