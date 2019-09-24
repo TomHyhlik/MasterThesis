@@ -32,7 +32,7 @@ Pro ucely dokumentace to po oprave par chyb asi bude stacit. Pro potreby DP to c
 
 Zamerte se prosim na jednotlive body a hlavne na soucasny stav.
 
-
+todo: prepsat "slavea" nebo "slaveu" na zarizeni v rezimu slave.
 
 ## todo
 1. účel zařízení v kontextu současného stavu ve světě
