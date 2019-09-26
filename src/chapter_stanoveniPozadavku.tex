@@ -11,8 +11,25 @@ Cílem tohoto projektu je návrh, realizace a otestování gatewaye, která shro
 
 Předpokládá se, že koncová zařízení jsou senzory nebo aktuátory napájeny z baterie, tudíž pro jejich dlouhodobou životnost je kladen důraz na nízkou spotřebu vybrané bezdrátové technologie.
 
-Drátová síť RS485, přes kterou gateway komunikuje se PC masterem používá síťový protokol původně navržen pro přístupové systémy. 
+Drátová síť RS485, přes kterou gateway komunikuje s PC masterem používá síťový protokol původně navržen pro přístupové systémy. 
 Rošiřování vlastností tohoto protokolu by znamenalo mnoho komplikací, cílem je tedy implementace IoT tak, aniž by bylo nutné protokol rozšiřovat.
+
+\section{Přístupové systémy}
+Přístupové systémy jsou elektronické systémy řídící skrze síť přístup uživatelů do budov či objektů na základě ověření jejich identity \cite{accessControlSystem_eiprocus}.
+V obrázku \ref{fig:Access control system architecture} je znázorněn příklad infrastruktury přístupového systému.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{Architetcture-of-Access-Control-System}
+    \caption{Příklad architektury přístupového systému \cite{accessControlSystem_eiprocus}}
+    \label{fig:Access control system architecture}
+\end{figure}
+
+todo: popsat jednotlive bloky obrazku
+
+\section{Implementace IoT do přístupového systému firmy IMA}
+V použitém systému firmy IMA je control panel nazýván PC Master, který komunikuce s čtečkami proprietárním protokolem přes rozhranní RS485.
+Účelem tohoto projektu je tedy nahrad
 
 
 % todo: 
