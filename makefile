@@ -1,4 +1,4 @@
 all:
 	git add .
-	git commit -m "nvm"
+	git commit -m "$(arg)"
 	git push
