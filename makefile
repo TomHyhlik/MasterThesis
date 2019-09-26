@@ -1,4 +1,4 @@
-# call it like: make arg=commitTitle
+# call it like: make arg="commit title"
 all:
 	git add .
 	git commit -m "$(arg)"
