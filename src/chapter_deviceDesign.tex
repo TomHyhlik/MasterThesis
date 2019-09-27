@@ -3,12 +3,13 @@ Tato kapitola popisuje návrh gatewaye neboli centrálního bodu LPWSN.
 
 \section{Výběr přenosové technologie}
 Pro tento systém je použita RF technologie LoRa se standardizovaným síťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu.
-todo: popsat v cem se muj navrh lisi od standardu
+Tento způsob řešení se liší od standardu omezením na pouze jeden kanál a SF vysílání.
 Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa transceiver, který přijímá na všech osmi kanálech je příliš drahý (přibližně desetinásobná cena) a složitý k implementaci, zatímco v tomto projektu je kladen důraz na cenu a jednoduchost řešení.
 
-Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbytek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
-Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
-
+Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, 
+zbytek času mohou být ve stavu nízké spotřeby, což má pozitivní vliv na životnost baterie.
+Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. 
+Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále a SF.
 
 % tahle section by mozna mohla byt nekde jinde
 % \subsection{Zabezpečení protokolu LoRaWAN}
