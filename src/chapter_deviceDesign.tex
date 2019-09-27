@@ -9,7 +9,8 @@ Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa t
 Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, zbytek času mohou být ve stavu nízké spotřeby, což má za důsledek delší životnost baterie.
 Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále.
 
-% todo: tahle section by mozna mohla byt nekde jinde
+
+% tahle section by mozna mohla byt nekde jinde
 % \subsection{Zabezpečení protokolu LoRaWAN}
 % Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
 
@@ -68,18 +69,26 @@ SparkFun Transceiver Breakout - RS485 převádí rozhranní UART na RS485, pří
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace LoRaWAN sítě}
 Jednokanálové použití technologie LoRa umožňuje použít transceiver navržený pro koncová zařízení, 
-kterým jsou pakety kontinuálně odposlouchávány na jednom nastaveném kanále a SF. Tyto dva parametry  jsou nakonfigurovány na všech koncových zařízeních v síti.
+kterým jsou pakety kontinuálně odposlouchávány na jednom nastaveném kanále a SF. 
+Tyto dva parametry jsou nakonfigurovány na všech zařízeních v síti stejně.
 
-Použitý protokol IMA\_RS485, původně navržen pro přístupové systémy, umožňuje posílat data pouze pomocí příkazu "průchod", který má kapacitu pro data z koncového zařízení pouze 6 B. Systém je proto navržen neobvyklým způsobem. Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení, paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na master.
-LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na K4 serveru.
-Všechna zařízení mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
+Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, 
+použitý protokol pro komunikaci s control panelem přístupového systému firmy IMA zajišťuje posílání dat z koncových zařízení příkazem "průchod", 
+který má kapacitu na data z koncového zařízení pouze 6 B. 
+Systém je proto navržen neobvyklým způsobem. 
+Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení,
+ paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na master.
+
+LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
+Všechna zařízení v síti mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
 
 Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace komunkičního protokolu v síti IMA\_RS485}
-V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. Jedná se o kolizní protokol v síti, kde je připojen jeden master, a jeden nebo více slaveů řízených masterem.
+\section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
+V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
+Jedná se o kolizní protokol v síti, kde je připojen jeden master, a jeden nebo více zařízení v režimu slave řízených masterem.
 
 \begin{table}[!h]
     \centering
@@ -120,19 +129,18 @@ CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu krom�
 Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
 
 \subsection{Statusy}
-Slave má dva možné statusy, offline a online, což značí, zda je zařízení v aktivním režimu, tudíž má povolení odesílat příkaz průchod (V případě této gatewaye příkaz průchod obsahuje data ze koncového zařízení).  
-Slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. Master na tento příkaz odpoví pouze pokud mění status slaveu. Pokud je slave online a master přestane komunikovat, zařízení slave se samo přepne na status offline.
-
-\subsubsection{Offline}
-Je-li zařízení zapnuto, je ve stavu offline. Nemá povoleno odesílat příkaz průchod obsahující data z koncových zařízení, pouze odpovídá na příkazy masteru. Odesílání příkazu signalizující tento stav je s periodou 10 s a obsahuje byte 0xEE.
-
-\subsubsection{Online}
-Odesílání příkazu signalizující tento stav je s periodou 45 s a obsahuje byte 0x00.
-V tomto stavu je povoleno odesílání příkazu průchod.
+Slave má dva možné statusy v síti IMA\_RS485, offline a online. Toto značí, zda zařízení má nebo nemá povolení odesílat příkaz "průchod".  
+Slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
+Pro status online je tento byte 0x00 a pro status offline 0xEE. 
+Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
+Status zařízení mění pouze master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
+Slave svůj status přepne sám pouze v případě, že má status online a master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
+Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
+Gateway pouze odpovídá na příkazy masteru a čeká na příkaz od masteru k přepnutí na status online.
 
 
 \subsection{Přidávání LoRaWAN zařízení do systému}
-Pokud master přijme od slavea příkaz oznamující že je ve stavu offline, nejprve slaveu pošle seznam LoRaWAN adres všech známých koncových zařízení a následně slavea přepne do stavu online.
+Pokud master přijme příkaz od zařízení v režimu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
 Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
 
 Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi masterem a slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde slave má adresu 0x10 a master standardně 0xFF. Jak již bylo řečeno, příkazy od masteru lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
@@ -164,8 +172,8 @@ Další příkazy hned za counter bytem obsahují několik osmibytových adres, 
 Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
 \subsection{Odesílání dat z koncových zařízení}
-Jak již bylo zmíněno, protokol byl navrhnut pro přístupové systémy, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
-
+\label{sec:Odesílání dat z koncových zařízení}
+Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
 První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
 
 Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.

@@ -17,22 +17,20 @@ Když to shrnu, DP by měla obsahovat:
 
 
 ## actual notes 
-- clanek bude v AJ, nyni to je pro potreby DP v cestine a sablone DP
-- sablonu pro AJ dodam
+
 - tesim se na kapitolu 1 a 2, je potreba hledat ve vedeckych databazich, napr. https://ieeexplore.ieee.org, kam mate po prihlaseni CVUT heslem pristup ke clankum, prehledove clanky jsou k dispozici po zadani "LPWAN wire", je jich deset, na "RS-485 LPWAN" je nula clanku, chce to pohledat podobne clanky, coz bude mozna mravenci prace, mozna hned na neco naazite
 - ten text jsem uz videl a procital, co je tam noveho? Neumim to identifikovat.
 - popiste infrastrukturu pristupovych systemu (obrazek a popis jednotlivych bloku), a jednak jejich vyuziti, zda se pouzivaji i na neco jineho - opet clanky, ten obr. 3.1 neni dostatecny pro clanek
 - jste si jist, zda toto plati? "Pro tento systém je použita RF technologie LoRa se standardizovanýmsíťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu." Vite, v cem se lisite od standardu?
+
 - "je-li zařízení zapnuto, je ve stavu offline. " opravdu?
 - v nekterych castech je popis napsan tak, ze neni jasne, jak to funguje. Vy vite, ale v tom textu to neni srozumitelne uvedeno. Vede to pak k domnenkam, coz neni dobre, pr. "4.4.3  Statusy"
-- od "slavea" bych nepouzival
--  LPWSN neni prilis obvykle, ci ano?
 
 Pro ucely dokumentace to po oprave par chyb asi bude stacit. Pro potreby DP to chce prepsat do vice technickeho jazyka, pro potreby clanku se pouziji nektere informace.
 
 Zamerte se prosim na jednotlive body a hlavne na soucasny stav.
 
-todo: prepsat "slavea" nebo "slaveu" na zarizeni v rezimu slave.
+
 
 ## todo
 1. účel zařízení v kontextu současného stavu ve světě
