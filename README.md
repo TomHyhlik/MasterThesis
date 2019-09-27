@@ -17,8 +17,7 @@ Když to shrnu, DP by měla obsahovat:
 
 
 ## actual notes 
-
-- tesim se na kapitolu 1 a 2, je potreba hledat ve vedeckych databazich, napr. https://ieeexplore.ieee.org, kam mate po prihlaseni CVUT heslem pristup ke clankum, prehledove clanky jsou k dispozici po zadani "LPWAN wire", je jich deset, na "RS-485 LPWAN" je nula clanku, chce to pohledat podobne clanky, coz bude mozna mravenci prace, mozna hned na neco naazite
+- tesim se na kapitolu 1 a 2, je potreba hledat ve vedeckych databazich, napr. https://ieeexplore.ieee.org, kam mate po prihlaseni CVUT heslem pristup ke clankum, prehledove clanky jsou k dispozici po zadani "   ", je jich deset, na "RS-485 LPWAN" je nula clanku, chce to pohledat podobne clanky, coz bude mozna mravenci prace, mozna hned na neco naazite
 
 
 ## todo

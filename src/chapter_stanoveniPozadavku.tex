@@ -24,11 +24,11 @@ V obrázku \ref{fig:Access control system architecture} je znázorněn příklad
     \label{fig:Access control system architecture}
 \end{figure}
 
-"ID Credential" je identifikátor uživatele, např. RFID tag, otisk prstu, QR kód atd.
-Reader slouží k sejmutí dat identifikátoru uživatele a odeslání do "control panelu"
+ID Credential je identifikátor uživatele, např. RFID tag, otisk prstu, QR kód atd.
+Reader slouží k sejmutí dat identifikátoru uživatele a odeslání do control panelu
 Door lock slouží k ovládání přístupu uživatele do objektu.
-Control panel vytváří rozhranní mezi "Access control system" a dvojcemi readerů a door locků. 
-Obvykle vytváří síť například RS485, kde jsou zapojeny jednotky až desítky těchto dvojíc. 
+Control panel vytváří rozhranní mezi access control systémem a dvojcemi readerů a door locků. 
+Obvykle vytváří síť například poRS485, kde jsou zapojeny jednotky až desítky těchto dvojíc. 
 V jednom systému může být jeden nebo více control panelů vytvářejících síť o jedné nebo více dvojicích reader a door lock.
 Control panel komunikuje s access control systémem například přes ethernet na bázi protokolu TCP/IP.
 Databáze obsahuje uživatelská ID.

@@ -130,7 +130,7 @@ CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu krom�
 Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
 
 \subsection{Statusy}
-Slave má dva možné statusy v síti IMA\_RS485, offline a online. Toto značí, zda zařízení má nebo nemá povolení odesílat příkaz "průchod".  
+Slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení v režimu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
 Slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
 Pro status online je tento byte 0x00 a pro status offline 0xEE. 
 Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
