@@ -5,8 +5,8 @@ all:
 	$(CC) main.tex
 
 run:
-	open $(OUTPUT)
-# 	xdg-open $(OUTPUT)
+# 	open $(OUTPUT)
+	xdg-open $(OUTPUT)
 
 
 clean:
