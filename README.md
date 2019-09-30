@@ -16,11 +16,18 @@ Když to shrnu, DP by měla obsahovat:
 5. jako příloha DP může být článek, kde kolega Hyhlík bude spoluautorem. S tím mu samozřejmě pomůžeme. Článek musí vzniknout do konce tohoto roku.
 
 
-## actual notes 
-- kapitola: 1 a 2, je potreba hledat ve vedeckych databazich, napr. https://ieeexplore.ieee.org, kam mate po prihlaseni CVUT heslem pristup ke clankum, prehledove clanky jsou k dispozici po zadani "   ", je jich deset, na "RS-485 LPWAN" je nula clanku, chce to pohledat podobne clanky, coz bude mozna mravenci prace, mozna hned na neco naazite
-zdroje: http://knihovna.cvut.cz/katalogy-a-databaze/prehled-databazi/abecedni-seznam#i
+## actual notes
 
+todo: misto "Master odesila..." napsal "Zarizeni typu master odesila..."?
+ANO - je to detail, ale technicky to zni lepe. V DP nelze pouzivat slang, musite byt technicky korektni.
 
+- kapitola: 1 a 2, je potreba hledat ve vedeckych databazich, napr. https://ieeexplore.ieee.org, kam mate po prihlaseni CVUT heslem pristup ke clankum, prehledove clanky jsou k dispozici po zadani "LPWAN wire", je jich deset, na "RS-485 LPWAN" je nula clanku, chce to pohledat podobne clanky, coz bude mozna mravenci prace, mozna hned na neco naazite
+Seznam odbornych zdroju: 
+http://knihovna.cvut.cz/katalogy-a-databaze/prehled-databazi/abecedni-seznam#i
+
+Zdroje:
+https://ieeexplore.ieee.org/
+https://ebookcentral.proquest.com/
 
 ## todo
 1. účel zařízení v kontextu současného stavu ve světě
