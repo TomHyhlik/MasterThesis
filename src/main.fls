@@ -356,6 +356,7 @@ INPUT /home/hyhlik/Repositories/MasterThesis/src/chapter_ucelaSoucStav.tex
 INPUT /home/hyhlik/Repositories/MasterThesis/src/chapter_ucelaSoucStav.tex
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmsso10.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmssbx10.tfm
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri10.tfm
 INPUT /home/hyhlik/Repositories/MasterThesis/src/chapter_stanoveniPozadavku.tex
 INPUT /home/hyhlik/Repositories/MasterThesis/src/chapter_stanoveniPozadavku.tex
 INPUT /home/hyhlik/Repositories/MasterThesis/src/./images/Architetcture-of-Access-Control-System.jpg
@@ -392,12 +393,11 @@ INPUT ./images/foto01.jpg
 INPUT ./images/foto01.jpg
 INPUT /home/hyhlik/Repositories/MasterThesis/src/references.tex
 INPUT /home/hyhlik/Repositories/MasterThesis/src/references.tex
-INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri10.tfm
 INPUT /home/hyhlik/Repositories/MasterThesis/src/main.aux
 INPUT /home/hyhlik/Repositories/MasterThesis/src/main.out
 INPUT /home/hyhlik/Repositories/MasterThesis/src/main.out
-INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc
+INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmr10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmr6.pfb
