@@ -78,7 +78,7 @@ použitý protokol pro komunikaci s control panelem přístupového systému fir
 který má kapacitu na data z koncového zařízení pouze 6 B. 
 Systém je proto navržen neobvyklým způsobem. 
 Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení,
- paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na master.
+ paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na zařízení typu master.
 
 LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
 Všechna zařízení v síti mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
@@ -89,7 +89,7 @@ Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
 V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
-Jedná se o kolizní protokol v síti, kde je připojen jeden master, a jeden nebo více zařízení v režimu slave řízených masterem.
+Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
 
 \begin{table}[!h]
     \centering
@@ -123,28 +123,29 @@ Komunikace v síti probíhá formou příkazů, které mají specifikovanou synt
 \end{table}
 
 Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
-Příkazy odeslané masterem obsahují navíc synchronizační byte na začátku 0xAA.
+Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
 CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
 
 \subsection{Adresace zařízení v síti}
-Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
+Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
 
 \subsection{Statusy}
-Slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení v režimu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
-Slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
+Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
+Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
 Pro status online je tento byte 0x00 a pro status offline 0xEE. 
 Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
-Status zařízení mění pouze master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
-Slave svůj status přepne sám pouze v případě, že má status online a master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
+Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
+Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
 Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
-Gateway pouze odpovídá na příkazy masteru a čeká na příkaz od masteru k přepnutí na status online.
+Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
 
+todo: continue here (slave)
 
 \subsection{Přidávání LoRaWAN zařízení do systému}
-Pokud master přijme příkaz od zařízení v režimu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
+Pokud zařízení typu master přijme příkaz od zařízení v režimu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
 Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
 
-Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi masterem a slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde slave má adresu 0x10 a master standardně 0xFF. Jak již bylo řečeno, příkazy od masteru lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
+Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
 
 
 \begin{table}[!h]
@@ -160,7 +161,7 @@ Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných me
     master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
     slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
     \end{tabular}
-    \caption{Příklad sekvence příkazů odesílaných mezi masterem a slavem během předávání seznamu LoRaWAN device address koncových zařízení}
+    \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
     \label{table:2}
 \end{table}
 
@@ -189,18 +190,18 @@ Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}
  D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
  \hline
 \end{tabular}
-    \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye k masteru, obsahující data z koncových zařízení}
+    \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
     \label{table:prikladprikazpruchod}
 \end{table}
 
-Master na příkaz "průchod" odpovídá příkazem ACK. Slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu master neodpoví, slave  příkaz zopakuje a změní typ příkazu na 0x20. Pokud master ani na třetí opakování neodpoví ACK, slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
+Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, slave  příkaz zopakuje a změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
 
 \subsection{Potvrzení}
-Slave odpovídá na každý příkaz od masteru ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
-Master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
+Slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
+Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
 
 \subsection{Dotaz na příznaky}
-Master se může zeptat s jak dlouhými adresami slave pracuje s typem příkazu 0x49. Slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Master pak počítá s tím, že slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
+Zařízení typu master se může zeptat s jak dlouhými adresami slave pracuje s typem příkazu 0x49. Slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Komunikace přes USB}
@@ -230,7 +231,7 @@ Gateway loguje informace o proběhlých událostech přes USB.
 Níže je příklad výpisu dat pro případ, že gateway přjala LoRaWAN paket z koncového zařízení v síti.
 
 Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
-Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k masteru přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od masteru.
+Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k zařízení typu master přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od zařízení typu master.
 
 \begin{lstlisting}
 ______________________________________________________
@@ -294,7 +295,7 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace.
     
 
 Z konfigurace je možné vystoupit kdykoliv bez uložení změn příkazem "quit". 
-Při vstoupení do konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace s masterem v síti RS485 nejsou aktivní.
+Při vstoupení do konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace se zařízením typu master v síti RS485 nejsou aktivní.
 Jsou zde tedy 3 stavy konfigurace, přičemž je možné vždy jednotlivá nastavení přeskakovat odesláním "prázdného příkazu" 0x0D (v terminálu obvykle stačí stisknout Enter). Systém při konfiguraci vždy vypíše jaká data mají být zadána v jakém tvaru a zároveň současnou hodnotu měněného parametru. Zadaná data uživatelem jsou vždy zkontrolována zda splňují požadovaný tvar. Pokud ne, uživatel je o tom informován a vyzván k dalšímu pokusu.
 Po provedení konfigurace následuje vždy návrat zpět do hlavního menu. Pro uložení nové konfigurace je potřeba v menu vybrat "Save and exit", gateway pak následně vypíše které parametry byly změněny a provede restart.
 
@@ -323,7 +324,7 @@ channel 1 set.
 \end{lstlisting}
 
 \subsubsection{Config RS485 channel}
-Konfigurace RS485 kanálu pro komunikaci s masterem zahrnuje nastavení adresy tohoto zařízení, adresa masteru a timeout, což je doba čekání na potvrzení od masteru po odeslání příkazu "průchod". Níže je příklad konfigurace.
+Konfigurace RS485 kanálu pro komunikaci se zařízením typu master zahrnuje nastavení adresy tohoto zařízení, adresa zařízení typu master a timeout, což je doba čekání na potvrzení od zařízení typu master po odeslání příkazu "průchod". Níže je příklad konfigurace.
 
 \begin{lstlisting}
 RS485 channel configuration:
@@ -411,7 +412,7 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Koncová zařízení}
-Jelikož používaný protokol ke komunikaci s masterem je omezen na pouhých 6 B na jeden paket, payload koncových zařízení je dekódován v gatewayi a v paketu odeslaném na master jsou pouze vybraná nejdůležitější data, která se vejdou do této velikosti.
+Jelikož používaný protokol ke komunikaci se zařízením typu master je omezen na pouhých 6 B na jeden paket, payload koncových zařízení je dekódován v gatewayi a v paketu odeslaném na zařízení typu master jsou pouze vybraná nejdůležitější data, která se vejdou do této velikosti.
 Prote společně s LoRaWAN device address koncového zařízení je v gatewayi uložen i typ zařízení zadefinován jedním bytem a na základě typu zařízení gateway rozpozná jak dekódovat payload.
 
 Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení.
@@ -431,7 +432,7 @@ Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je 
 \end{table}
 
 \subsection{Zpracování dat jednotlivých typů koncových zařízení}
-Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán do masteru příkazem "průchod".
+Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán na zařízení typu master příkazem "průchod".
 
 \subsubsection{RHF1S001}
 Senzor od firmy RisingHF měří teplotu a vlhkost.
