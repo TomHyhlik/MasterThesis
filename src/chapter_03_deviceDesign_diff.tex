@@ -1,3 +1,63 @@
+\chapter{Stanovení požadavků návrhu zařízení}
+
+
+Účelem tohoto projektu je rozšířit přístupový systém firmy IMA o IoT, aby bylo možné snímat veličiny jako je teplota, vlhkost, atd. bezdrátovými senzory rozmístěnými po budově.
+Práce tedy zahrnuje návrh, realizace a otestování gatewaye, která shromažďuje data z bezdrátových koncových zařízení a přeposílá je na control panel přístupového systému. 
+Předpokládá se, že koncová zařízení jsou senzory nebo aktuátory napájeny z baterie, tudíž pro jejich dlouhodobou životnost je kladen důraz na nízkou spotřebu vybrané bezdrátové technologie.
+
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width=1\textwidth]{01}
+%     \caption{Blokový diagram funkce gatewaye}
+%     \label{fig:block diagram of the system}
+% \end{figure}
+
+
+\section{Přístupové systémy}
+Přístupové systémy jsou elektronické systémy řídící skrze síť přístup uživatelů do budov či objektů na základě ověření jejich identity \cite{accessControlSystem_eiprocus}.
+V obrázku \ref{fig:Access control system architecture} je znázorněn příklad infrastruktury přístupového systému.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{Architetcture-of-Access-Control-System}
+    \caption{Příklad architektury přístupového systému \cite{accessControlSystem_eiprocus}}
+    \label{fig:Access control system architecture}
+\end{figure}
+
+ID Credential je identifikátor uživatele, např. RFID tag, otisk prstu, QR kód atd.
+Reader slouží k sejmutí dat identifikátoru uživatele a odeslání do control panelu
+Door lock slouží k ovládání přístupu uživatele do objektu.
+Control panel vytváří rozhranní mezi access control systémem a dvojcemi readerů a door locků. 
+Obvykle vytváří síť například poRS485, kde jsou zapojeny jednotky až desítky těchto dvojíc. 
+V jednom systému může být jeden nebo více control panelů vytvářejících síť o jedné nebo více dvojicích reader a door lock.
+Control panel komunikuje s access control systémem například přes ethernet na bázi protokolu TCP/IP.
+Databáze obsahuje uživatelská ID.
+Na access control serveru je spuštěn software umožňující spravování databáze a komunikaci se všemi control panely systému.
+Prokáže-li se uživatel pomocí ID credential readeru, reader sejme ID uživatele a odešle na control panel, který jej následně přepošle na access control server.
+Software access control vyhledá přijaté user ID v databázi a je-li nalezeno, pošle na odpovídající control panel příkaz k sepnutí odpovídajícího door locku.
+
+
+
+\section{Implementace IoT do přístupového systému firmy IMA}
+\label{sec:Implementace IoT do přístupového systému firmy IMA}
+V infrastruktuře přístupového systému v obr. \ref{fig:Access control system architecture} je reader nahrazen gatewayí a ID credential bezdrátovým senzorem. 
+Gateway pak komunikuje s control panelem přes rozhranní RS485 s proprietárním síťovým protokolem navrženým ve firmě IMA. 
+Stávajcí přístupový systém je navržen tak, že po spuštění připojeného readeru je mu ze serveru předán seznám offline RFID karet. 
+Pro gateway to je seznam adres koncových zařízení senzorové sítě. 
+V případě, že uživatel přiloží ID credential odpovídající některému ze seznamu offline karet, reader přepošle příkaz "průchod".
+Ekvivalentně to platí pro gateway. 
+V případě že gateway přijme packet od koncového zařízení s daty ze senzorů a adresa koncového zařízení je obsažena v seznamu adres koncových zařízení,
+gateway odešle příkaz "průchod" obsahující adresu koncového zařízení a data koncového zařízení.
+Problém je ale v tom, že příkaz "průchod" má kapacitu na data koncového zařízení pouze 6 bytů.
+Rošiřování vlastností tohoto protokolu by znamenalo mnoho komplikací, 
+cílem je tedy implementace gatewaye tak, aniž by bylo nutné protokol rozšiřovat.
+
+
+% - popiste infrastrukturu pristupovych systemu (obrazek a popis jednotlivych bloku), a jednak jejich vyuziti, 
+% zda se pouzivaji i na neco jineho - opet clanky, ten obr. 3.1 neni dostatecny pro clanek. Mam na mysli toto:
+% https://www.elprocus.com/understanding-about-types-of-access-control-systems/
+% https://en.wikipedia.org/wiki/Access_control#Access_control_system_topologies
+
 \chapter{Realizace zařízení}
 
 \section{Výběr přenosové technologie}
@@ -263,22 +323,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace.
 
 \begin{lstlisting}
     _________________Entering configuration setup________________
-    
+
     System configuration:
-    
+
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-    
+
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-    
+
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-    
+
     
     Config menu:
     1 -> Config LoRa channel
@@ -435,7 +495,37 @@ Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou da
 \subsubsection{RHF1S001}
 Senzor od firmy RisingHF měří teplotu a vlhkost.
 
-\begin{lstlisting}[style=CStyle]
+\DIFdelbegin %DIFDELCMD < \begin{lstlisting}%DIFDELCMD < [style=CStyle]
+%DIFDELCMD <     /* RHF1S001 data structure */   
+%DIFDELCMD <     typedef struct {
+%DIFDELCMD <         int16_t temperature;
+%DIFDELCMD <         uint8_t humidity;
+%DIFDELCMD <         uint16_t period;
+%DIFDELCMD <         int8_t rssi;
+%DIFDELCMD <         int8_t snr;
+%DIFDELCMD <         uint8_t battery;
+%DIFDELCMD <     } RHF1S001_data_t;
+%DIFDELCMD < 
+
+%DIFDELCMD <     /* Print the data from the structure */
+%DIFDELCMD < 	printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
+%DIFDELCMD < 	printf("humidity: %d %%\n", RHF1S001_data.humidity);
+%DIFDELCMD < 	printf("period: %d s, ", (int)RHF1S001_data.period);
+%DIFDELCMD < 	printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
+%DIFDELCMD < 	printf("SNR: %d dB, ", RHF1S001_data.snr);
+%DIFDELCMD < 	printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
+%DIFDELCMD < 
+
+%DIFDELCMD <     /* Put the data into 6B long buffer, that is transmitted to the master */
+%DIFDELCMD < 	buffer[0] = RHF1S001_data.temperature & 0xFF;
+%DIFDELCMD < 	buffer[1] = RHF1S001_data.temperature >> 8;
+%DIFDELCMD < 	buffer[2] = RHF1S001_data.humidity;
+%DIFDELCMD < 	buffer[3] = RHF1S001_data.rssi;
+%DIFDELCMD < 	buffer[4] = RHF1S001_data.snr;
+%DIFDELCMD < 	buffer[5] = RHF1S001_data.battery;
+%DIFDELCMD < \end{lstlisting}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \begin{lstlisting}[style=CStyle]
     /* RHF1S001 data structure */   
     typedef struct {
         int16_t temperature;
@@ -447,27 +537,53 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
     } RHF1S001_data_t;
 
     /* Print the data from the structure */
-	printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
-	printf("humidity: %d %%\n", RHF1S001_data.humidity);
-	printf("period: %d s, ", (int)RHF1S001_data.period);
-	printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
-	printf("SNR: %d dB, ", RHF1S001_data.snr);
-	printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
+    printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
+    printf("humidity: %d %%\n", RHF1S001_data.humidity);
+    printf("period: %d s, ", (int)RHF1S001_data.period);
+    printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
+    printf("SNR: %d dB, ", RHF1S001_data.snr);
+    printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
 
     /* Put the data into 6B long buffer, that is transmitted to the master */
-	buffer[0] = RHF1S001_data.temperature & 0xFF;
-	buffer[1] = RHF1S001_data.temperature >> 8;
-	buffer[2] = RHF1S001_data.humidity;
-	buffer[3] = RHF1S001_data.rssi;
-	buffer[4] = RHF1S001_data.snr;
-	buffer[5] = RHF1S001_data.battery;
+    buffer[0] = RHF1S001_data.temperature & 0xFF;
+    buffer[1] = RHF1S001_data.temperature >> 8;
+    buffer[2] = RHF1S001_data.humidity;
+    buffer[3] = RHF1S001_data.rssi;
+    buffer[4] = RHF1S001_data.snr;
+    buffer[5] = RHF1S001_data.battery;
 \end{lstlisting}
+\DIFaddend 
 
 
 \subsubsection{IMA\_tempPress}
 Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
-\begin{lstlisting}[style=CStyle]
+\DIFdelbegin %DIFDELCMD < \begin{lstlisting}%DIFDELCMD < [style=CStyle]
+%DIFDELCMD <     /* IMA_tempPress data structure */   
+%DIFDELCMD <     typedef struct {
+%DIFDELCMD <         int16_t temperature;
+%DIFDELCMD <         uint16_t pressure;
+%DIFDELCMD <         int8_t rssi;
+%DIFDELCMD <         int8_t snr;
+%DIFDELCMD <     } IMA_tempPress_data_t;
+%DIFDELCMD <     
+
+%DIFDELCMD <     /* print the data from the structure */
+%DIFDELCMD < 	printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
+%DIFDELCMD < 	printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
+%DIFDELCMD < 	printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
+%DIFDELCMD < 
+
+%DIFDELCMD <     /* Put the data into 6B long buffer, that is transmitted to the K4 server */
+%DIFDELCMD < 	buffer[0] = IMA_tempPress_data.temperature & 0xFF;
+%DIFDELCMD < 	buffer[1] = IMA_tempPress_data.temperature >> 8;
+%DIFDELCMD < 	buffer[2] = IMA_tempPress_data.pressure & 0xFF;
+%DIFDELCMD < 	buffer[3] = IMA_tempPress_data.pressure >> 8;
+%DIFDELCMD < 	buffer[4] = IMA_tempPress_data.rssi;
+%DIFDELCMD < 	buffer[5] = IMA_tempPress_data.snr;
+%DIFDELCMD < \end{lstlisting}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \begin{lstlisting}[style=CStyle]
     /* IMA_tempPress data structure */   
     typedef struct {
         int16_t temperature;
@@ -475,20 +591,21 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-    
+
     /* print the data from the structure */
-	printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
-	printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
-	printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
+    printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
+    printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
+    printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
 
     /* Put the data into 6B long buffer, that is transmitted to the K4 server */
-	buffer[0] = IMA_tempPress_data.temperature & 0xFF;
-	buffer[1] = IMA_tempPress_data.temperature >> 8;
-	buffer[2] = IMA_tempPress_data.pressure & 0xFF;
-	buffer[3] = IMA_tempPress_data.pressure >> 8;
-	buffer[4] = IMA_tempPress_data.rssi;
-	buffer[5] = IMA_tempPress_data.snr;
+    buffer[0] = IMA_tempPress_data.temperature & 0xFF;
+    buffer[1] = IMA_tempPress_data.temperature >> 8;
+    buffer[2] = IMA_tempPress_data.pressure & 0xFF;
+    buffer[3] = IMA_tempPress_data.pressure >> 8;
+    buffer[4] = IMA_tempPress_data.rssi;
+    buffer[5] = IMA_tempPress_data.snr;
 \end{lstlisting}
+\DIFaddend 
 
 
 \subsection{Přidávání koncových zařízení ze serveru K4}

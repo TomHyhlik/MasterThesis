@@ -1,5 +1,4 @@
 CC = pdflatex
-
 CC_DIF = latexdiff
 
 OUTPUT = main.pdf
@@ -24,9 +23,9 @@ compile:
 	$(CC) main.tex
 
 run:
-	open $(OUTPUT)
-#	xdg-open $(OUTPUT)
-	cp main.pdf ../MasterThesis.pdf
+# 	open $(OUTPUT)
+	xdg-open $(OUTPUT)
+# 	cp main.pdf ../MasterThesis.pdf
 
 
 
