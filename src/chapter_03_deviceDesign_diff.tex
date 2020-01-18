@@ -323,22 +323,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace.
 
 \begin{lstlisting}
     _________________Entering configuration setup________________
-
+    
     System configuration:
-
+    
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-
+    
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-
+    
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-
+    
     
     Config menu:
     1 -> Config LoRa channel
@@ -495,37 +495,7 @@ Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou da
 \subsubsection{RHF1S001}
 Senzor od firmy RisingHF měří teplotu a vlhkost.
 
-\DIFdelbegin %DIFDELCMD < \begin{lstlisting}%DIFDELCMD < [style=CStyle]
-%DIFDELCMD <     /* RHF1S001 data structure */   
-%DIFDELCMD <     typedef struct {
-%DIFDELCMD <         int16_t temperature;
-%DIFDELCMD <         uint8_t humidity;
-%DIFDELCMD <         uint16_t period;
-%DIFDELCMD <         int8_t rssi;
-%DIFDELCMD <         int8_t snr;
-%DIFDELCMD <         uint8_t battery;
-%DIFDELCMD <     } RHF1S001_data_t;
-%DIFDELCMD < 
-
-%DIFDELCMD <     /* Print the data from the structure */
-%DIFDELCMD < 	printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
-%DIFDELCMD < 	printf("humidity: %d %%\n", RHF1S001_data.humidity);
-%DIFDELCMD < 	printf("period: %d s, ", (int)RHF1S001_data.period);
-%DIFDELCMD < 	printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
-%DIFDELCMD < 	printf("SNR: %d dB, ", RHF1S001_data.snr);
-%DIFDELCMD < 	printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
-%DIFDELCMD < 
-
-%DIFDELCMD <     /* Put the data into 6B long buffer, that is transmitted to the master */
-%DIFDELCMD < 	buffer[0] = RHF1S001_data.temperature & 0xFF;
-%DIFDELCMD < 	buffer[1] = RHF1S001_data.temperature >> 8;
-%DIFDELCMD < 	buffer[2] = RHF1S001_data.humidity;
-%DIFDELCMD < 	buffer[3] = RHF1S001_data.rssi;
-%DIFDELCMD < 	buffer[4] = RHF1S001_data.snr;
-%DIFDELCMD < 	buffer[5] = RHF1S001_data.battery;
-%DIFDELCMD < \end{lstlisting}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \begin{lstlisting}[style=CStyle]
+\begin{lstlisting}[style=CStyle]
     /* RHF1S001 data structure */   
     typedef struct {
         int16_t temperature;
@@ -552,38 +522,12 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
     buffer[4] = RHF1S001_data.snr;
     buffer[5] = RHF1S001_data.battery;
 \end{lstlisting}
-\DIFaddend 
 
 
 \subsubsection{IMA\_tempPress}
 Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
-\DIFdelbegin %DIFDELCMD < \begin{lstlisting}%DIFDELCMD < [style=CStyle]
-%DIFDELCMD <     /* IMA_tempPress data structure */   
-%DIFDELCMD <     typedef struct {
-%DIFDELCMD <         int16_t temperature;
-%DIFDELCMD <         uint16_t pressure;
-%DIFDELCMD <         int8_t rssi;
-%DIFDELCMD <         int8_t snr;
-%DIFDELCMD <     } IMA_tempPress_data_t;
-%DIFDELCMD <     
-
-%DIFDELCMD <     /* print the data from the structure */
-%DIFDELCMD < 	printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
-%DIFDELCMD < 	printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
-%DIFDELCMD < 	printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
-%DIFDELCMD < 
-
-%DIFDELCMD <     /* Put the data into 6B long buffer, that is transmitted to the K4 server */
-%DIFDELCMD < 	buffer[0] = IMA_tempPress_data.temperature & 0xFF;
-%DIFDELCMD < 	buffer[1] = IMA_tempPress_data.temperature >> 8;
-%DIFDELCMD < 	buffer[2] = IMA_tempPress_data.pressure & 0xFF;
-%DIFDELCMD < 	buffer[3] = IMA_tempPress_data.pressure >> 8;
-%DIFDELCMD < 	buffer[4] = IMA_tempPress_data.rssi;
-%DIFDELCMD < 	buffer[5] = IMA_tempPress_data.snr;
-%DIFDELCMD < \end{lstlisting}
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \begin{lstlisting}[style=CStyle]
+\begin{lstlisting}[style=CStyle]
     /* IMA_tempPress data structure */   
     typedef struct {
         int16_t temperature;
@@ -591,7 +535,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-
+    
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
@@ -605,7 +549,6 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
     buffer[4] = IMA_tempPress_data.rssi;
     buffer[5] = IMA_tempPress_data.snr;
 \end{lstlisting}
-\DIFaddend 
 
 
 \subsection{Přidávání koncových zařízení ze serveru K4}

@@ -507,20 +507,20 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
     } RHF1S001_data_t;
 
     /* Print the data from the structure */
-	printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
-	printf("humidity: %d %%\n", RHF1S001_data.humidity);
-	printf("period: %d s, ", (int)RHF1S001_data.period);
-	printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
-	printf("SNR: %d dB, ", RHF1S001_data.snr);
-	printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
+    printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
+    printf("humidity: %d %%\n", RHF1S001_data.humidity);
+    printf("period: %d s, ", (int)RHF1S001_data.period);
+    printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
+    printf("SNR: %d dB, ", RHF1S001_data.snr);
+    printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
 
     /* Put the data into 6B long buffer, that is transmitted to the master */
-	buffer[0] = RHF1S001_data.temperature & 0xFF;
-	buffer[1] = RHF1S001_data.temperature >> 8;
-	buffer[2] = RHF1S001_data.humidity;
-	buffer[3] = RHF1S001_data.rssi;
-	buffer[4] = RHF1S001_data.snr;
-	buffer[5] = RHF1S001_data.battery;
+    buffer[0] = RHF1S001_data.temperature & 0xFF;
+    buffer[1] = RHF1S001_data.temperature >> 8;
+    buffer[2] = RHF1S001_data.humidity;
+    buffer[3] = RHF1S001_data.rssi;
+    buffer[4] = RHF1S001_data.snr;
+    buffer[5] = RHF1S001_data.battery;
 \end{lstlisting}
 
 
@@ -537,17 +537,17 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
     } IMA_tempPress_data_t;
     
     /* print the data from the structure */
-	printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
-	printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
-	printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
+    printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
+    printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
+    printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
 
     /* Put the data into 6B long buffer, that is transmitted to the K4 server */
-	buffer[0] = IMA_tempPress_data.temperature & 0xFF;
-	buffer[1] = IMA_tempPress_data.temperature >> 8;
-	buffer[2] = IMA_tempPress_data.pressure & 0xFF;
-	buffer[3] = IMA_tempPress_data.pressure >> 8;
-	buffer[4] = IMA_tempPress_data.rssi;
-	buffer[5] = IMA_tempPress_data.snr;
+    buffer[0] = IMA_tempPress_data.temperature & 0xFF;
+    buffer[1] = IMA_tempPress_data.temperature >> 8;
+    buffer[2] = IMA_tempPress_data.pressure & 0xFF;
+    buffer[3] = IMA_tempPress_data.pressure >> 8;
+    buffer[4] = IMA_tempPress_data.rssi;
+    buffer[5] = IMA_tempPress_data.snr;
 \end{lstlisting}
 
 
