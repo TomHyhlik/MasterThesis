@@ -138,8 +138,8 @@
 	subfieldofstudy-english = {Electronics},
 	fieldofstudy-czech = {Elektronika a komunikace},
 	subfieldofstudy-czech = {Elektronika},
-	% keywords-czech = {sensor network},
-	% keywords-english = {sensor network},
+	keywords-czech = {Access control system, LoRa, LPWAN, WSN.},
+	keywords-english = {Access control system, LoRa, LPWAN, WSN.},
 	day = 12,
 	month = 10,
 	year = 2019,
@@ -188,16 +188,25 @@
 
 \setlength{\parskip}{5ex plus 0.2ex minus 0.2ex}
 
-% % Abstract in Czech
-% \begin{abstract-czech}
-% Účelem této práce je...
+% Abstract in Czech
+\begin{abstract-czech}
+	The Wireless Sensor Network (WSN) plays an important role in the Internet of Things (IoT). 
+	It is very suitable for intelligent buildings providing a convenient way to collect sensor data and control electronic devices in the building and its surroundings.
+	%Nowadays, existing intelligent buildings include some electronic systems, such as access control systems. 
+	%As the WSN becomes neccesary, the effort of imlementation of WSN into existing smart buildings grow.
+	%It may be easier and cheaper to extend an existing electronic system with WSN instead of integrating an entire new WSN system into the building.
+	This paper proposes an extension of the existing access control system with WSN. Design of sensor nodes and gateway connected to the existing RS485 network is performed. The results of a long-term operation measurement in one university floor show the maximum number of sensor nodes simultaneously transmitting data in RS485 network is up to hundreds or thousands in dependence on used RS485 data rate and used reserve of data rate which prevent from malfunction of the access control system. The results prove the WSN can be effectively used in an existing RS485 infrastructure. 
+\end{abstract-czech}
 
-% \end{abstract-czech}
-
-% % Abstract in English
-% \begin{abstract-english}
-% The purpose of this work is...
-% \end{abstract-english}
+% Abstract in English
+\begin{abstract-english}
+	The Wireless Sensor Network (WSN) plays an important role in the Internet of Things (IoT). 
+	It is very suitable for intelligent buildings providing a convenient way to collect sensor data and control electronic devices in the building and its surroundings.
+	%Nowadays, existing intelligent buildings include some electronic systems, such as access control systems. 
+	%As the WSN becomes neccesary, the effort of imlementation of WSN into existing smart buildings grow.
+	%It may be easier and cheaper to extend an existing electronic system with WSN instead of integrating an entire new WSN system into the building.
+	This paper proposes an extension of the existing access control system with WSN. Design of sensor nodes and gateway connected to the existing RS485 network is performed. The results of a long-term operation measurement in one university floor show the maximum number of sensor nodes simultaneously transmitting data in RS485 network is up to hundreds or thousands in dependence on used RS485 data rate and used reserve of data rate which prevent from malfunction of the access control system. The results prove the WSN can be effectively used in an existing RS485 infrastructure. 
+\end{abstract-english}
 
 % % Acknowledgements / Podekovani
 % \begin{thanks}
@@ -271,29 +280,26 @@
 	% \item[SPI]   	Serial Peripheral Interface 
 \end{abbreviations}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{chapter_01_introduction_new.tex}
 
-% \input{1_Introduction}		
-
-% \part{Theoretical part}
+%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Theoretical part}
 													
-% \input{chapter_LPwirelessTechnologies_eng.tex}
+\input{chapter_02_LPwirelessTechnologies_new.tex}
 
-% \input{chapter_LPwirelessTechnologies.tex} % 	this may be added
+%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Practical part}
 
-% \input{chapter_SNdesign.tex}															
+\input{chapter_03_deviceDesign_new.tex}
+\input{chapter_03_results_new.tex}
+\input{chapter_04_conclusions_new.tex}
 
-% \part{Practical part}
-
-\input{chapter_01_ucelaSoucStav_diff.tex}
-\input{chapter_02_stanoveniPozadavku_diff.tex}
-\input{chapter_03_deviceDesign_diff.tex}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{amsalpha}
-% \bibliography{0main}	% not used
-% \input{references_project1.tex}
 \input{references.tex}
 
 %\appendix
 
 
-\end{document}
+\end{document}ß

@@ -1,64 +1,135 @@
-\chapter{Stanovení požadavků návrhu zařízení}
+\chapter{Realizace zařízení}
 
 
-Účelem tohoto projektu je rozšířit přístupový systém firmy IMA o IoT, aby bylo možné snímat veličiny jako je teplota, vlhkost, atd. bezdrátovými senzory rozmístěnými po budově.
-Práce tedy zahrnuje návrh, realizace a otestování gatewaye, která shromažďuje data z bezdrátových koncových zařízení a přeposílá je na control panel přístupového systému. 
-Předpokládá se, že koncová zařízení jsou senzory nebo aktuátory napájeny z baterie, tudíž pro jejich dlouhodobou životnost je kladen důraz na nízkou spotřebu vybrané bezdrátové technologie.
 
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width=1\textwidth]{01}
-%     \caption{Blokový diagram funkce gatewaye}
-%     \label{fig:block diagram of the system}
-% \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{General System Design}
 
-
-\section{Přístupové systémy}
-Přístupové systémy jsou elektronické systémy řídící skrze síť přístup uživatelů do budov či objektů na základě ověření jejich identity \cite{accessControlSystem_eiprocus}.
-V obrázku \ref{fig:Access control system architecture} je znázorněn příklad infrastruktury přístupového systému.
+\subsubsection{Architecture of Access Control Systems}
+Access control systems are electronic systems controlling the access of users into restricted areas depending on the user identity \cite{accessControlSystem_eiprocus}. A typical system architecture is shown in Fig. \ref{fig:Access control system architecture}.
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=1\textwidth]{Architetcture-of-Access-Control-System}
-    \caption{Příklad architektury přístupového systému \cite{accessControlSystem_eiprocus}}
+    \includegraphics[width=80mm]{Architetcture-of-Access-Control-System}
+    \caption{Example of access control system architecture \cite{accessControlSystem_eiprocus}}
     \label{fig:Access control system architecture}
 \end{figure}
 
-ID Credential je identifikátor uživatele, např. RFID tag, otisk prstu, QR kód atd.
-Reader slouží k sejmutí dat identifikátoru uživatele a odeslání do control panelu
-Door lock slouží k ovládání přístupu uživatele do objektu.
-Control panel vytváří rozhranní mezi access control systémem a dvojcemi readerů a door locků. 
-Obvykle vytváří síť například poRS485, kde jsou zapojeny jednotky až desítky těchto dvojíc. 
-V jednom systému může být jeden nebo více control panelů vytvářejících síť o jedné nebo více dvojicích reader a door lock.
-Control panel komunikuje s access control systémem například přes ethernet na bázi protokolu TCP/IP.
-Databáze obsahuje uživatelská ID.
-Na access control serveru je spuštěn software umožňující spravování databáze a komunikaci se všemi control panely systému.
-Prokáže-li se uživatel pomocí ID credential readeru, reader sejme ID uživatele a odešle na control panel, který jej následně přepošle na access control server.
-Software access control vyhledá přijaté user ID v databázi a je-li nalezeno, pošle na odpovídající control panel příkaz k sepnutí odpovídajícího door locku.
+The ID Credential represents the user identificaton, provided for instance by RFID tag, fingerprint, QR code.
+The Reader reads the data from the ID Credential and sends it to the Control Panel.
+The Door Lock is used to control the physical access of users to the restricted area, e.g., building, room, floor.
+The Control Panel is the interface between Access Control Server and pairs the Reader with the Door Lock. It typically connects these pairs via RS485 and Access Control Server via Ethernet, i.e., TCP/IP protocol. The main function is the management of these pairs.
+The Database contains user IDs.
+The Access Control Server uses Software (SW) to manage the Database and communicates with all Control Panels.
+The Reader scans data from submitted ID Credential and transmits the data to the Control Panel, which resends it to the Access Control Server.
+The Access Control Software finds the received user data in the Database and, if found, sends a command to the corresponding Control Panel to switch the corresponding Door Lock.
+
+
+\subsubsection{Wireless Sensor Network Design}
+Wireless sensor network design is based on a popular IoT technology LoRa, which is a LPWAN technology using ISM band, 433 MHz, 868 MHz and 915 MHz (depends on the region) and communicates on multiple frequency channels and uses multiple data rates \cite{LoRaWAN Evaluation for IoT Communications}.
+The LoRaWAN is an open standard network protocol and system architecture specified by \cite{LoRaWAN specification} and creates a media access control (MAC) layer on the top of the LoRa physical layer, secured by AES-128 encryption.
+The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
 
 
 
-\section{Implementace IoT do přístupového systému firmy IMA}
-\label{sec:Implementace IoT do přístupového systému firmy IMA}
-V infrastruktuře přístupového systému v obr. \ref{fig:Access control system architecture} je reader nahrazen gatewayí a ID credential bezdrátovým senzorem. 
-Gateway pak komunikuje s control panelem přes rozhranní RS485 s proprietárním síťovým protokolem navrženým ve firmě IMA. 
-Stávajcí přístupový systém je navržen tak, že po spuštění připojeného readeru je mu ze serveru předán seznám offline RFID karet. 
-Pro gateway to je seznam adres koncových zařízení senzorové sítě. 
-V případě, že uživatel přiloží ID credential odpovídající některému ze seznamu offline karet, reader přepošle příkaz "průchod".
-Ekvivalentně to platí pro gateway. 
-V případě že gateway přijme packet od koncového zařízení s daty ze senzorů a adresa koncového zařízení je obsažena v seznamu adres koncových zařízení,
-gateway odešle příkaz "průchod" obsahující adresu koncového zařízení a data koncového zařízení.
-Problém je ale v tom, že příkaz "průchod" má kapacitu na data koncového zařízení pouze 6 bytů.
-Rošiřování vlastností tohoto protokolu by znamenalo mnoho komplikací, 
-cílem je tedy implementace gatewaye tak, aniž by bylo nutné protokol rozšiřovat.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Specific System Design for Testing Proposes}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=140mm]{ACS_IoT_extension_21}
+% \subfigure[Plot3.]{\label{fig2b} \includegraphics[width=80mm]{fig2b.png}}\\
+% \subfigure[Mesh.]{\label{fig2c} \includegraphics[width=80mm]{fig2c.png}}
+\caption{IMA access control system architecture with WSN extension}
+    \label{fig:ACS architecture IMA with geteway}
+\end{figure*}
+
+\subsubsection{Tested Access Control System Architecture}
+The access control system to be extended by WSN is designed by IMA company, but it differs from the general architecture shown in Fig. \ref{fig:Access control system architecture} by an added CKP device that creates an interface between the Control Panel and the Reader with the Door Lock.
+There are several types of CKP devices to connect different types of Readers, Door Locks, barriers and gates, but all of them support the protocol of the IMA company on the RS485 network.
+The IoT extension of the access control system is done by connecting a WSN Gateway to the Control Panel via the RS485 network, i.e., the same way as CKP device is connected as shown in Fig. \ref{fig:ACS architecture IMA with geteway}.
+Therefore the WSN Gateway has to support the same protocol as CKP device in RS485 network to communicate with the Control Panel. It's a collision protocol, where all connected devices follow the rule "listen before talk", collisions are detected by integrity check mechanism aplied for all messages. When the device receives a corrupted command, it requests a retry.
 
 
-% - popiste infrastrukturu pristupovych systemu (obrazek a popis jednotlivych bloku), a jednak jejich vyuziti, 
-% zda se pouzivaji i na neco jineho - opet clanky, ten obr. 3.1 neni dostatecny pro clanek. Mam na mysli toto:
-% https://www.elprocus.com/understanding-about-types-of-access-control-systems/
-% https://en.wikipedia.org/wiki/Access_control#Access_control_system_topologies
+% \begin{figure}[!h]
+% \centering
+% \includegraphics[width=80mm]{ACS_IoT_extension_21}
+% \caption{Architektura přístupového systému firmy IMA}
+% \label{fig:ACS architecture IMA with geteway}
+% \end{figure}
 
-\chapter{Realizace zařízení}
+The Access Control System operates by obtaining a CKP list of valid cards (ID Credentials) from the Access Control Server.
+The designed Gateway takes it as a list of valid device addresses in the WSN.
+When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
+The same procedure applies to the Gateway.
+When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
+
+
+\subsubsection{Design of Tested Wireless Sensor Network}
+The most important requirements for the WSN Gateway are simplicity, low cost and the ability to use third-party nodes.
+LoRa with the standardized network protocol LoRaWAN is chosen as wireless communication technology, but only in single-channel mode as used in development projects \cite{Analysis of Propagation Link for Remote Weather}, so it is not fully LoRaWAN compliant.
+Single-channel Gateway communicates only on one channel and data rate at a time, therefore all devices in WSN are configured for one frequency channel and data rate.
+The advantage of a single-channel Gateway is about ten times cheaper transceiver and lower CPU performance requirements than standard LoRaWAN Gateway transceiver.
+Third-party LoRaWAN nodes are fully compatible with any LoRaWAN Gateway, so it can be deployed into this system, but it needs to be configured to communicate at the specified frequency channel and data rate.
+LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
+
+%Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
+%Various LoRaWAN nodes use different payload size, therefore it's not possible to transmit the whole node payload to the Control Panel. Manufacturer of the node provides documentation of the payload \cite{RHF1S001 pdf}. This issue was solved by decoding the node payload in the Gateway acording to node payload documentation and transmitting only the required data to the Control Panel. This means that the Gateway must store the node type along with the node device address in its memory.
+
+In summary, when the Gateway receives an encrypted LoRaWAN packet, it looks for whether the Node device address is in the list of known device addresses.
+If this is the case, the packet is encoded in the communication protocol of the Gateway and sent to the Control Panel. If there is not enough space in communication protocol of the Gateway, the packet is decrypted and relevant data, i.e., sensor values, are selected.
+
+In this design the opposite direction of communication direction is not implemented, but it can also be used to control actuators, e.g., switch, motor.
+
+% \subsubsection{Components}
+To test the proposed system design, the Gateway is built from one NUCLEO-L073RZ development board \cite{nucleoST}, RFM95w LoRa Shield \cite{RFM95w} and RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
+
+
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{5patro}
+    \caption{Location of sensor nodes and CKP devices on the university floor}
+    \label{fig:CorridorFloorPlan}
+\end{figure*}
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.48\textwidth]{LoRaWAN_gw_RS485_blockDiagram_2}
+    \caption{Gateway block diagram, RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
+    \label{fig:gatewayBlockDiagram}
+\end{figure}
+
+The NUCLEO-L073RZ development board with STM32L073RZ microcontroller is suitable for the development purposes because of its parameters, Tab. \ref{tab:mcuFeatures}, price and available documentation.
+%It is  was used for the prototype, because it has all required parameters, it is cheap, powerful enough and easily prototypable.
+% The price of the devlopment board is \$13 USD\cite{nucleoST}.
+LoRa transceiver board RFM95w with SX1276 chip integrated into Dragino LoRa Shield has the same pinout as the NUCLEO-L073RZ development board. RS485 transceiver as an RS485/UART interface enables communication with Control Panel.
+
+%RS485 transceiver SparkFun Breakout is used for the communication with the Control Panel. It converts interfaces UART to RS485, Fig. \ref{fig:gatewayBlockDiagram}.
+
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{The STM32L073RZ features \cite{nucleoST}}
+\begin{tabular}{|l|p{3.5cm}|}
+\hline
+Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
+Internal flash memory & 192 KB \\ \hline
+Internal SRAM memory & 20 kB \\ \hline
+Internal EEPROM memory & 6 kB \\ \hline
+CPU frequency & up to 32 MHz \\ \hline
+Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+\end{tabular}
+\label{tab:mcuFeatures}
+\end{table}
+
+
+
+
+
+
+
 
 \section{Výběr přenosové technologie}
 Pro implementaci LPWSN je použita RF technologie LoRa se standardizovaným síťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu.
@@ -235,9 +306,7 @@ Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy 
 \label{sec:Odesílání dat z koncových zařízení}
 Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
 První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
-
 Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
-
 Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
 
 \begin{table}[!h]

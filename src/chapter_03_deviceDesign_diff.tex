@@ -235,10 +235,14 @@ Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy 
 \label{sec:Odesílání dat z koncových zařízení}
 Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
 První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
+\DIFdelbegin %DIFDELCMD < 
 
-Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
+%DIFDELCMD < %%%
+\DIFdelend Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
+\DIFdelbegin %DIFDELCMD < 
 
-Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
+%DIFDELCMD < %%%
+\DIFdelend Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
 
 \begin{table}[!h]
     \centering
