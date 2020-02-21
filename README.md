@@ -1,13 +1,10 @@
 # MasterThesis
 
 ## Zadani DP
-Navrh a realizace distribuované senzorové sítě v Internetu věcí s koncentrátorem s požadavkem na připojení k dalším komponentům senzorové sítě s ohledem na cenu,
-bezpečnost a jednoduchost implementace.
+1. Prostudujte architekturu přístupových systémů a Low Power (LP) Wireless Sensor Networks, 2. Navrhněte a realizujte bezdrátovou senzorovou síť s požadavkem na LP (Low Power) pro implementaci do infrastruktury přístupového systému. Uvažujte možnost nasazení senzorů třetích stran.  3. Otestujte navržené řešení na vybrané infrastruktuře se standardními provozními podmínkami.  4. Zhodnoťte dosažené výsledky 5. Navrhněte vylepšení navrženého řešení nebo infrastruktury přístupového systému.
 
 
 ## notes 
-DP by měla obsahovat nejen technický popis GW, ale i účel zařízení nejen pro Vaši společnost, ale i pro současný stav ve světě. Důvodem je to, že z měření má vzniknout článek a toto je nedílnou součástí nejen článku, ale i teoretické části DP. Dále by DP měla obsahovat testování GW, zde se může využít plánované testování.
-
 Když to shrnu, DP by měla obsahovat:
 1. účel zařízení v kontextu současného stavu ve světě
 2. identifikace problému, který zařízení řeší
@@ -18,17 +15,15 @@ Když to shrnu, DP by měla obsahovat:
 
 ## struktura
 1. Introduction
-	- účel zařízení v kontextu současného stavu ve světě - z velke casti pouzity text z clanku
-2. Technologie pro LPWSN
-	- zde bych pouzil tabulku porovnani dostupnych technologii, kterou jsem delal uz drive, dale strucny popis technologii a nasledne vyber technologie pro nas projekt, nasledne detailnejsi popis teto technologie
+	- účel zařízení v kontextu současného stavu ve světě
+2. Access control system
 
-3. Realizace
+3. Technologie pro LPWSN
+
+4. Realizace
 	- HW a SW návrh celeho zarizeni
-
-4. testování řešení 
-	- Pouziti testu, ktery byl realizovan pro clanek
-
-5. Zaver
+5. testování řešení 
+6. Zaver
 
 
 Zdroje:
