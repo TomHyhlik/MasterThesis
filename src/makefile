@@ -29,7 +29,8 @@ run:
 	open $(OUTPUT)
 # 	xdg-open $(OUTPUT) &
 
-
+open:
+	open chapter_*_new.tex
 
 
 clean:

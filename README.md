@@ -16,14 +16,11 @@ Když to shrnu, DP by měla obsahovat:
 ## struktura
 1. Introduction
 	- účel zařízení v kontextu současného stavu ve světě
-2. Access control system
-
-3. Technologie pro LPWSN
-
-4. Realizace
+2. Technologie pro LPWSN
+3. Realizace
 	- HW a SW návrh celeho zarizeni
-5. testování řešení 
-6. Zaver
+4. testování řešení 
+5. Zaver
 
 
 Zdroje:
