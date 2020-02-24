@@ -7,26 +7,26 @@ FILES_NEW =  $(wildcard chapter_*_new.tex)
 CHAPTERS = $(patsubst %_new.tex,%, $(FILES_NEW))
 
 
-all: build run
+all: genDiff build run
 
-
-generateDifferenceFiles:
+# generate diffeneces between *_old and *_new tex files
+genDiff:
 	for chapter in $(CHAPTERS) ; do \
 	    $(CC_DIF) $${chapter}_old.tex $${chapter}_new.tex > $${chapter}_diff.tex  ; \
 	done
 
-build:
-	$(CC) main.tex
-
-
-rmDifferences:
+# remove differences, the text of *_new is copied into *_old tex files
+rmDiff:
 	for chapter in $(CHAPTERS) ; do \
 	    cp $${chapter}_new.tex $${chapter}_old.tex ; \
 	done
 	$(all)
 
+build:
+	$(CC) main.tex
+
 run:
-	open $(OUTPUT)
+	open $(OUTPUT) 
 # 	xdg-open $(OUTPUT) &
 
 open:
