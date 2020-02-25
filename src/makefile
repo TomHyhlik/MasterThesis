@@ -25,9 +25,15 @@ rmDiff:
 build:
 	$(CC) main.tex
 
-run:
-	open $(OUTPUT) 
-# 	xdg-open $(OUTPUT) &
+
+runLinux:
+	xdg-open $(OUTPUT) &
+
+
+runMac:
+	open $(OUTPUT) &
+
+run: runLinux
 
 open:
 	open chapter_*_new.tex
