@@ -1,20 +1,24 @@
 \chapter{Architektury přístupových systémů}
-Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě \cite{accessControlSystem_eiprocus}.
+\DIFaddbegin 
+
+\DIFaddend Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě.
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=80mm]{Architetcture-of-Access-Control-System}
-    \caption{Příklad architektury přístupového systému \cite{accessControlSystem_eiprocus}}
+    \DIFdelbeginFL %DIFDELCMD < \includegraphics[width=80mm]{Architetcture-of-Access-Control-System}
+%DIFDELCMD <     %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=130mm]{Architetcture-of-Access-Control-System}
+    \DIFaddendFL \caption{Příklad architektury přístupového systému \cite{accessControlSystem_eiprocus}}
     \label{fig:Access control system architecture}
 \end{figure}
 
-Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek ůmožňující identifikovat uživatele.
-
-the user identificaton, provided for instance by RFID tag, fingerprint, QR code.
-The Reader reads the data from the ID Credential and sends it to the Control Panel.
-The Door Lock is used to control the physical access of users to the restricted area, e.g., building, room, floor.
-The Control Panel is the interface between Access Control Server and pairs the Reader with the Door Lock. It typically connects these pairs via RS485 and Access Control Server via Ethernet, i.e., TCP/IP protocol. The main function is the management of these pairs.
-The Database contains user IDs.
-The Access Control Server uses Software (SW) to manage the Database and communicates with all Control Panels.
-The Reader scans data from submitted ID Credential and transmits the data to the Control Panel, which resends it to the Access Control Server.
-The Access Control Software finds the received user data in the Database and, if found, sends a command to the corresponding Control Panel to switch the corresponding Door Lock.
+Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek \DIFdelbegin \DIFdel{ůmožňující }\DIFdelend \DIFaddbegin \DIFadd{umožňující }\DIFaddend identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
+\DIFaddbegin \DIFadd{Zařízení typu }\DIFaddend Reader slouží ke čtení dat z ID Credential a v digitální podobě je \DIFdelbegin \DIFdel{pošle }\DIFdelend \DIFaddbegin \DIFadd{odesílá }\DIFaddend k zařízení typu Control Panel.
+Zařízení \DIFaddbegin \DIFadd{typu }\DIFaddend Door Lock řídí fyzický přístup uživatelů do omezených prostor. 
+Zařízení typu Control Panel tvoří rozhranní mezi Access Control Server a páry zařízení typů Reader a Door Lock. 
+Zařízení typu Control Panel jsou obvykle připojena 
+k zařízení typu Access Control Server přes TCP/IP síť \DIFdelbegin \DIFdel{.
+A }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend páry zařízení \DIFaddbegin \DIFadd{typů }\DIFaddend Reader a Door Lock jsou obvykle připojeny k zařízení typu Control panel přes RS485 síť\DIFdelbegin \DIFdel{, jehož hlavním účelem je řízení těchto párů}\DIFdelend . Databáze obsahuje \DIFdelbegin \DIFdel{všechny }\DIFdelend \DIFaddbegin \DIFadd{všechna }\DIFaddend uživatelské ID.
+Na Access Control Serveru je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
+Zařízení typu Reader čte uživatelská ID z předložených ID Credential \DIFdelbegin \DIFdel{uživateli }\DIFdelend a přeposílá je k zařízení typu Control Panel, které je dále přeposílá na Access Control Server. 
+Access Control Software vyhledá obdržená uživatelská ID v \DIFdelbegin \DIFdel{databáze }\DIFdelend \DIFaddbegin \DIFadd{databázi }\DIFaddend a pokud je nalezeno, pošle příkaz odpovídajícímu zařízení typu Control Panel k přepnutí odpovídajícímu zařízení typu Door Lock\DIFaddbegin \DIFadd{, čímž je uživateli udělen přístup do omezené oblasti }\DIFaddend \cite{accessControlSystem_eiprocus}.
