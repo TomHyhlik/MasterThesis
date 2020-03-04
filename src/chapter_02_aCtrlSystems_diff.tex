@@ -1,6 +1,9 @@
 \chapter{Architektury přístupových systémů}
+\DIFdelbegin %DIFDELCMD < 
 
-Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě.
+%DIFDELCMD < %%%
+\DIFdelend Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě.
+Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde \DIFdelbegin \DIFdel{ID Credential }\DIFdelend \DIFaddbegin \DIFadd{identifikátor (ID Credential) }\DIFaddend představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
 
 \begin{figure}[!h]
     \centering
@@ -9,12 +12,13 @@ Přístupové systémy jsou elektronické systémy řídící přístup uživate
     \label{fig:Access control system architecture}
 \end{figure}
 
-Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
-Zařízení typu Reader slouží ke čtení dat z ID Credential a v digitální podobě je odesílá k zařízení typu Control Panel.
-Zařízení typu Door Lock řídí fyzický přístup uživatelů do omezených prostor. 
-Zařízení typu Control Panel tvoří rozhranní mezi Access Control Server a páry zařízení typů Reader a Door Lock. 
+\DIFdelbegin \DIFdel{Zařízení typu Reader}\DIFdelend \DIFaddbegin \DIFadd{Čtečka (Reader) }\DIFaddend slouží ke čtení dat z \DIFdelbegin \DIFdel{ID Credential }\DIFdelend \DIFaddbegin \DIFadd{identifikátoru }\DIFaddend a v digitální podobě je odesílá k zařízení \DIFdelbegin \DIFdel{typu Control Panel.
+Zařízení typu Door Lock}\DIFdelend \DIFaddbegin \DIFadd{kontrolní panel (Control Panel).
+Zámek dveří (Door Lock) }\DIFaddend řídí fyzický přístup uživatelů do omezených prostor. 
+\DIFdelbegin \DIFdel{Zařízení typu Control Panel }\DIFdelend \DIFaddbegin \DIFadd{Kontrolní panel }\DIFaddend tvoří rozhranní mezi Access Control Server a páry \DIFdelbegin \DIFdel{zařízení typů Reader a Door Lock.
 Zařízení typu Control Panel jsou obvykle připojena 
-k zařízení typu Access Control Server přes TCP/IP síť a páry zařízení typů Reader a Door Lock jsou obvykle připojeny k zařízení typu Control panel přes RS485 síť. Databáze obsahuje všechna uživatelské ID.
-Na Access Control Serveru je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
-Zařízení typu Reader čte uživatelská ID z předložených ID Credential a přeposílá je k zařízení typu Control Panel, které je dále přeposílá na Access Control Server. 
-Access Control Software vyhledá obdržená uživatelská ID v databázi a pokud je nalezeno, pošle příkaz odpovídajícímu zařízení typu Control Panel k přepnutí odpovídajícímu zařízení typu Door Lock, čímž je uživateli udělen přístup do omezené oblasti \cite{accessControlSystem_eiprocus}.
+k zařízení typu }\DIFdelend \DIFaddbegin \DIFadd{čteček a zámků dveří.
+kontrolní panely jsou obvykle připojeny k serveru řízení přístupu (}\DIFaddend Access Control Server\DIFaddbegin \DIFadd{) }\DIFaddend přes TCP/IP síť a páry \DIFdelbegin \DIFdel{zařízení typů Reader a Door Lock }\DIFdelend \DIFaddbegin \DIFadd{čtečka a zámků dveří }\DIFaddend jsou obvykle připojeny \DIFdelbegin \DIFdel{k zařízení typu Control panel }\DIFdelend \DIFaddbegin \DIFadd{ke kontrolnímu panelu }\DIFaddend přes RS485 síť. Databáze obsahuje všechna uživatelské ID.
+Na \DIFdelbegin \DIFdel{Access Control Serveru }\DIFdelend \DIFaddbegin \DIFadd{serveru řízení přístupu }\DIFaddend je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
+\DIFdelbegin \DIFdel{Zařízení typu Reader }\DIFdelend \DIFaddbegin \DIFadd{Čtečka }\DIFaddend čte uživatelská ID z předložených \DIFdelbegin \DIFdel{ID Credential }\DIFdelend \DIFaddbegin \DIFadd{identifikátorů }\DIFaddend a přeposílá je \DIFdelbegin \DIFdel{k zařízení typu Control Panel, které }\DIFdelend \DIFaddbegin \DIFadd{na kontrolní panel, který }\DIFaddend je dále přeposílá na \DIFdelbegin \DIFdel{Access Control Server}\DIFdelend \DIFaddbegin \DIFadd{server řízení přístupu}\DIFaddend . 
+Access Control Software vyhledá \DIFdelbegin \DIFdel{obdržená uživatelská ID }\DIFdelend \DIFaddbegin \DIFadd{obdržený uživatelský identifikátor }\DIFaddend v databázi a pokud je \DIFdelbegin \DIFdel{nalezeno}\DIFdelend \DIFaddbegin \DIFadd{nalezen}\DIFaddend , pošle příkaz odpovídajícímu \DIFdelbegin \DIFdel{zařízení typu Control Panel }\DIFdelend \DIFaddbegin \DIFadd{kontrolnímu panelu }\DIFaddend k přepnutí odpovídajícímu \DIFdelbegin \DIFdel{zařízení typu Door Lock}\DIFdelend \DIFaddbegin \DIFadd{zámku dveří}\DIFaddend , čímž je uživateli udělen přístup do omezené oblasti \cite{accessControlSystem_eiprocus}.

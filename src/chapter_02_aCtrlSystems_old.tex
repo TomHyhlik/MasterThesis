@@ -1,6 +1,8 @@
 \chapter{Architektury přístupových systémů}
 
 Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě.
+Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
+
  
 \begin{figure}[!h]
     \centering
@@ -9,7 +11,6 @@ Přístupové systémy jsou elektronické systémy řídící přístup uživate
     \label{fig:Access control system architecture}
 \end{figure}
 
-Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
 Zařízení typu Reader slouží ke čtení dat z ID Credential a v digitální podobě je odesílá k zařízení typu Control Panel.
 Zařízení typu Door Lock řídí fyzický přístup uživatelů do omezených prostor. 
 Zařízení typu Control Panel tvoří rozhranní mezi Access Control Server a páry zařízení typů Reader a Door Lock. 

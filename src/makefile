@@ -33,7 +33,7 @@ runLinux:
 runMac:
 	open $(OUTPUT) &
 
-run: runMac
+run: runLinux
 
 open:
 	open chapter_*_new.tex

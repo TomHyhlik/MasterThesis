@@ -1,7 +1,7 @@
 \chapter{Architektury přístupových systémů}
-
 Přístupové systémy jsou elektronické systémy řídící přístup uživatelů do omezených prostor v závislosti na jejich prokázané identitě.
- 
+Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde identifikátor (ID Credential) představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=130mm]{Architetcture-of-Access-Control-System}
@@ -9,12 +9,10 @@ Přístupové systémy jsou elektronické systémy řídící přístup uživate
     \label{fig:Access control system architecture}
 \end{figure}
 
-Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde ID Credential představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
-Zařízení typu Reader slouží ke čtení dat z ID Credential a v digitální podobě je odesílá k zařízení typu Control Panel.
-Zařízení typu Door Lock řídí fyzický přístup uživatelů do omezených prostor. 
-Zařízení typu Control Panel tvoří rozhranní mezi Access Control Server a páry zařízení typů Reader a Door Lock. 
-Zařízení typu Control Panel jsou obvykle připojena 
-k zařízení typu Access Control Server přes TCP/IP síť a páry zařízení typů Reader a Door Lock jsou obvykle připojeny k zařízení typu Control panel přes RS485 síť. Databáze obsahuje všechna uživatelské ID.
-Na Access Control Serveru je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
-Zařízení typu Reader čte uživatelská ID z předložených ID Credential a přeposílá je k zařízení typu Control Panel, které je dále přeposílá na Access Control Server. 
-Access Control Software vyhledá obdržená uživatelská ID v databázi a pokud je nalezeno, pošle příkaz odpovídajícímu zařízení typu Control Panel k přepnutí odpovídajícímu zařízení typu Door Lock, čímž je uživateli udělen přístup do omezené oblasti \cite{accessControlSystem_eiprocus}.
+Čtečka (Reader) slouží ke čtení dat z identifikátoru a v digitální podobě je odesílá k zařízení kontrolní panel (Control Panel).
+Zámek dveří (Door Lock) řídí fyzický přístup uživatelů do omezených prostor. 
+Kontrolní panel tvoří rozhranní mezi Access Control Server a páry čteček a zámků dveří.
+kontrolní panely jsou obvykle připojeny k serveru řízení přístupu (Access Control Server) přes TCP/IP síť a páry čtečka a zámků dveří jsou obvykle připojeny ke kontrolnímu panelu přes RS485 síť. Databáze obsahuje všechna uživatelské ID.
+Na serveru řízení přístupu je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
+Čtečka čte uživatelská ID z předložených identifikátorů a přeposílá je na kontrolní panel, který je dále přeposílá na server řízení přístupu. 
+Access Control Software vyhledá obdržený uživatelský identifikátor v databázi a pokud je nalezen, pošle příkaz odpovídajícímu kontrolnímu panelu k přepnutí odpovídajícímu zámku dveří, čímž je uživateli udělen přístup do omezené oblasti \cite{accessControlSystem_eiprocus}.
