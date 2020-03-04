@@ -1,9 +1,8 @@
 \chapter{Výběr bezdrátové technologue pro senzorovou síť}
-
-
-
-
-All these technologies use license-free ISM bands.
+Navržená senzorová síť je napojena na infrastrukturu zavedeného přístupového systému v budově zákazníka s dosahem po celé budově a jejím okolí. Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
+Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
+Pro jednoduchost implementace vybraná bezdrátová technologie tedy používá bezlicenční pásmo ISM. 
+Níže jsou popsány dostupné bezdrátové technologie vyhovující zmíňeným požadavkům.
 
 
 \section{IQRF}
@@ -60,5 +59,15 @@ This technology based on IPv6 was developed for home network controlled by smart
 
 \section{RPMA}
 The "Random Phase Multiple Access" developed by Ingenu designed for M2M and IoT applications \cite{32} \cite{rpma_ublox} \cite{34}. \textit{"RPMA has been deployed for the Machine Network, but can also be rolled out as a private network installation. It is highly suitable for regions, where the rollout of 3GPP LPWA technologies is lagging, where cellular coverage is generally weak, or where users would like to exert full control over their network deployments."}\cite{rpma_ublox}
+
+
+
+
+
+
+\subsection{Wireless Sensor Network Design}
+Wireless sensor network design is based on a popular IoT technology LoRa, which is a LPWAN technology using ISM band, 433 MHz, 868 MHz and 915 MHz (depends on the region) and communicates on multiple frequency channels and uses multiple data rates \cite{LoRaWAN Evaluation for IoT Communications}.
+The LoRaWAN is an open standard network protocol and system architecture specified by \cite{LoRaWAN specification} and creates a media access control (MAC) layer on the top of the LoRa physical layer, secured by AES-128 encryption.
+The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
 
 
