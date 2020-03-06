@@ -373,22 +373,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace.
 
 \begin{lstlisting}
     _________________Entering configuration setup________________
-
+    
     System configuration:
-
+    
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-
+    
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-
+    
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-
+    
     
     Config menu:
     1 -> Config LoRa channel
@@ -585,7 +585,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-
+    
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
