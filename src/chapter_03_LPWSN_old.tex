@@ -1,10 +1,24 @@
-\chapter{Výběr bezdrátové technologue pro senzorovou síť}
+  \chapter{Výběr bezdrátové technologue pro senzorovou síť}
 Navržená senzorová síť je napojena na infrastrukturu zavedeného přístupového systému v budově zákazníka s dosahem po celé budově a jejím okolí. Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
 Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 Pro jednoduchost implementace vybraná bezdrátová technologie tedy používá bezlicenční pásmo ISM. 
 
 \section{Kandidátní bezdrátové technlogie}
 Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento projekt.
+
+\begin{table}[]
+  \begin{tabular}{|p{1.5cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+  \hline
+  Technology    & topology options                & frequency bands  & range                                           & price per one transciever & availability of devices on the market \\ \hline \hline
+  IQRF           & mesh, star                      & 868 MHz (Europe) & 10-100 m (in building), 100-1000 m (open space) & 15 – 20 \$                & very low                              \\ \hline
+  wireless M-bus & star                            & 868M, 433M, 169M & 500 m (868 MHz), 2000 m (169 MHz)               & 25 – 30 \$                & low                                   \\ \hline
+  ZigBee         & mesh, star                      & 2.4 GHz          & 100 m (open space)                              & 8 – 30 \$                 & high                                  \\ \hline
+  BLE            & Point-to-Point, Broadcast, Mesh & 2.4 GHz          & 100 m (open space)                              & 5 – 20 \$                 & high                                  \\ \hline
+  LoRa           & star                            & 868 MHz (Europe) & 15-22 km suburban, 3-8 km urban                 & 5 – 50 \$                 & medium                                \\ \hline
+  Z-Wave         & mesh                            & 868 MHz (Europe) & 100 m in (open space), 30 m (in building)       & 10 – 50 \$                & high                                  \\ \hline
+  Thread         & mesh                            & 2.4 GHz          & 100 m (open space)                              & 30 – 50 \$                & low                                   \\ \hline
+  \end{tabular}
+  \end{table}
 
 \subsection{IQRF}
 IQRF je subGHz bezdrqátová technologie vyvinuta IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK \cite{iqrf_sdk} a IDE \cite{iqrf_ide}. Z hlediska kriérií pro tento projekt je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. Většinou je tedy tato technologie používána pro realizaci vlastní sítě??
