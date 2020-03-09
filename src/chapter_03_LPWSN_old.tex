@@ -1,7 +1,8 @@
   \chapter{Výběr bezdrátové technologue pro senzorovou síť}
 Navržená senzorová síť je napojena na infrastrukturu zavedeného přístupového systému v budově zákazníka s dosahem po celé budově a jejím okolí. Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
 Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
-Pro jednoduchost implementace vybraná bezdrátová technologie tedy používá bezlicenční pásmo ISM. 
+Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat uplementaci celé sítě bez závislosti na siti třetích stran. 
+
 
 \section{Kandidátní bezdrátové technlogie}
 Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento projekt.
@@ -29,24 +30,21 @@ Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde g
 \section{Wireless M-bus}
 Wireless M-Bus je standard specifikovaný v evropské normě EN 13757, popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření. 
 Po několika letech v průmyslu bezdrátových měřících systémů se tato technologie rozšířila do oblasti průmyslu senzorových sítí.
-Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace, objemu a vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}.
-
-
-
-
-
-\cite{8}.
-
-
-
-
-
+Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace, objemu a vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}. Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 
 
 \section{Zigbee}
-Zigbee, developed by zigbee alliance is usually used for mesh sensor networks because of its short range. This technology is standardized since 2003, so there is many available nodes at the market by now \cite{10} \cite{11} \cite{12}.
+Zigbee je specifikace navržena pro IoT aplikace, založena na standardu  IEEE 802.15.4, vyvinuta Zigbee alliancí \cite{Zigbee_alliance}, vetšinou používána pro realizaci meshových sítí.
+Dostupné transceivery na trhu se pohybují okolo \$8–30 od více různých výrobců, taktéž je i na trhu dostupnýchmnoho Zigbee koncových zařízení.
+
 
 \section{BLE}
+
+
+
+
+
+
 Bluetooth has the big advantage, taht it's built in almost every mobile phone, tablet or laptop so there are more options to control the network. The Bluetooth 4.0+ also called BLE (Bluetooth Low Energy) aims to low power wireless sensor networks.
 It can be used for point-to-point, broadcast or mesh network topology \cite{13} \cite{14} \cite{15} \cite{16}.
 
