@@ -16,8 +16,6 @@ Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným
   ZigBee         & mesh, star                      & 2.4 GHz          & 100 m (open space)                              & 8 – 30 \$                 & high                                  \\ \hline
   BLE            & Point-to-Point, Broadcast, Mesh & 2.4 GHz          & 100 m (open space)                              & 5 – 20 \$                 & high                                  \\ \hline
   LoRa           & star                            & 868 MHz (Europe) & 15-22 km suburban, 3-8 km urban                 & 5 – 50 \$                 & medium                                \\ \hline
-  Z-Wave         & mesh                            & 868 MHz (Europe) & 100 m in (open space), 30 m (in building)       & 10 – 50 \$                & high                                  \\ \hline
-  Thread         & mesh                            & 2.4 GHz          & 100 m (open space)                              & 30 – 50 \$                & low                                   \\ \hline
   \end{tabular}
 \end{table}
 
@@ -31,16 +29,6 @@ Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde g
 Wireless M-Bus je standard specifikovaný v evropské normě EN 13757, popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření. 
 Po několika letech v průmyslu bezdrátových měřících systémů se tato technologie rozšířila do oblasti průmyslu senzorových sítí.
 Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace, objemu a vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}. Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
-
-
-\section{Zigbee}
-Zigbee je specifikace navržena pro IoT aplikace, založena na standardu  IEEE 802.15.4, vyvinuta Zigbee alliancí \cite{Zigbee_alliance}, vetšinou používána pro realizaci meshových sítí.
-Dostupné transceivery na trhu se pohybují okolo \$8–30 od více různých výrobců, taktéž je i na trhu dostupnýchmnoho Zigbee koncových zařízení.
-
-
-\section{BLE}
-Bluetooth Low Energy (BLE) je verze Bluetooth s rádiem navrženým pro minimální spotřebu energie, umožňující topologie point-to-point, broadcast a mesh \cite{BT_alliance}.
-Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých výrobců. Stejně tak je i na trhu mnoho dostupných koncových zařízení, ale mnohdy jsou tato koncová zařízení kompatibilní pouze se zařízení v rámci jednoho výrobce, tudíž může být problém je implementovat do vlastní senzorové sítě. 
 
 
 \section{LoRa}
@@ -59,6 +47,17 @@ Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat 
 % \end{figure}
 
 % \cite{19} \cite{20} \cite{21} \cite{22} \cite{23} \cite{24}.
+
+
+\section{Zigbee}
+Zigbee je specifikace navržena pro IoT aplikace, založena na standardu  IEEE 802.15.4, vyvinuta Zigbee alliancí \cite{Zigbee_alliance}, vetšinou používána pro realizaci meshových sítí.
+Dostupné transceivery na trhu se pohybují okolo \$8–30 od více různých výrobců, taktéž je i na trhu dostupnýchmnoho Zigbee koncových zařízení.
+
+
+\section{BLE}
+Bluetooth Low Energy (BLE) je verze Bluetooth s rádiem navrženým pro minimální spotřebu energie, umožňující topologie point-to-point, broadcast a mesh \cite{BT_alliance}.
+Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých výrobců. Stejně tak je i na trhu mnoho dostupných koncových zařízení, ale mnohdy jsou tato koncová zařízení kompatibilní pouze se zařízení v rámci jednoho výrobce, tudíž může být problém je implementovat do vlastní senzorové sítě. 
+
 
 
 % \section{Z-Wawe}
