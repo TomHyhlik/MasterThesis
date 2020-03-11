@@ -43,24 +43,22 @@ Bluetooth Low Energy (BLE) je verze Bluetooth s rádiem navrženým pro minimál
 Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých výrobců. Stejně tak je i na trhu mnoho dostupných koncových zařízení, ale mnohdy jsou tato koncová zařízení kompatibilní pouze se zařízení v rámci jednoho výrobce, tudíž může být problém je implementovat do vlastní senzorové sítě. 
 
 
-\section{lorawan_limits}
+\section{LoRa}
+LoRa (Long Range) je modulace navržena firmou Semtech, LoRa Alliance vytvořila síťový protokol s názvem LoRaWAN postaven na fyzické vrstvě LoRa.
+Protokol umožňuje ladit SF (Spreading Factor) neboli přenosovou rychlost, pro nastavení požadovaného dosahu \cite{lorawan_specification}.
+V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární, Na trhu je mnoho koncových zařízení i gatewayí, s jejichž vzájemnou kompatibilitou neni problém. Gateway přeposílá přijaté packety s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
+Semtech je jediným výrobcem integrovaných obvodů podporujících LoRa modulaci. Na trhu je dostupných mnoho transceiverů, které používají tento integrovaný obvod, některé dokonce obsahují implementovaný LoRaWAN stack.
+Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat packety od koncových zařízení na více kanálech a přenosových rychlostech. Je zde i možnost udělat jednokanálovou gateway, která je schopna přijímat v jednu chvíli pouze jednom kanále a jedné přenosové rychlosti s použitím transceiveru pro koncová zařízení za cenu okolo \$5-30. V takové sítí pak musí být všechna koncová zařízení nakonfigurována na jednu konkrétní frekvenci a přenosovou rychlost.
 
 
+% \begin{figure}[!h]
+%     \centering
+%     \includegraphics[width=1\textwidth]{spreading_factor_lorawan_2017-07-29}
+%     \caption{LoRa spread factor options \cite{24}}
+%     \label{fig:loraSF}
+% \end{figure}
 
-
-
-
-
-The name LoRa stands for "Long Range" wireless communication with low data rate and power consumption. The protocol enables to modify SF which affects the communication range and data rate. The \ref{fig:loraSF} shows this dependence.
-
-\begin{figure}[!h]
-    \centering
-    \includegraphics[width=1\textwidth]{spreading_factor_lorawan_2017-07-29}
-    \caption{LoRa spread factor options \cite{24}}
-    \label{fig:loraSF}
-\end{figure}
-
-This technology is very attractive for its long range capability and easy to connect nodes. It's complicated to build a full-capacity gateway which is capable of receiving packets at all frequency channels and SF in parallel. The transceiver for this application costs about \$130. Although it's also possible to build single-channel gateway which is way too cheaper, but it can receive packets at only one frequency channel and SF at once \cite{17} \cite{18} \cite{19} \cite{20} \cite{21} \cite{22} \cite{23} \cite{24}.
+% \cite{19} \cite{20} \cite{21} \cite{22} \cite{23} \cite{24}.
 
 
 \section{Z-Wawe}
