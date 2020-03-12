@@ -17,15 +17,19 @@ Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde g
 \cite{paper_iqrf}.
 
 
-\subsection{Wireless M-bus}
-Wireless M-Bus je standard specifikovaný v evropské normě EN 13757, popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření. 
+\subsection{Wireless M-Bus}
+Wireless M-Bus (Meter-Bus) je standard specifikovaný v evropské normě EN 13757, popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření jako rozšíření průmyslové datové sběrnice M-Bus \cite{wirelessMBus_automatizace}.
 Po několika letech v průmyslu bezdrátových měřících systémů se tato technologie rozšířila do oblasti průmyslu senzorových sítí.
-Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace, objemu a vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}. Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
+Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace a objemu vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}. 
+Wireless M-Bus síť má hvězdicovou topologii o dosahu 500 m v pásmu 868 MHz.
+Komunikaci vždy zahajuje koncové zařízení, které koncentrátor obsluhuje.
+Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 
 
 \subsection{LoRa}
 LoRa (Long Range) je modulace navržena firmou Semtech, LoRa Alliance vytvořila síťový protokol s názvem LoRaWAN postaven na fyzické vrstvě LoRa.
-Protokol umožňuje ladit SF (Spreading Factor) neboli přenosovou rychlost, pro nastavení požadovaného dosahu \cite{lorawan_specification}.
+Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje.
+Pro nízkou spotřebu protokol umožňuje ladit SF (Spreading Factor) neboli přenosovou rychlost, pro regulaci dosahu, který je až 15-22 km mimo městskou část a 3-8 km ve městské části \cite{lorawan_specification}.
 V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární, Na trhu je mnoho koncových zařízení i gatewayí, s jejichž vzájemnou kompatibilitou neni problém. Gateway přeposílá přijaté packety s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
 Semtech je jediným výrobcem integrovaných obvodů podporujících LoRa modulaci. Na trhu je dostupných mnoho transceiverů, které používají tento integrovaný obvod, některé dokonce obsahují implementovaný LoRaWAN stack.
 Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat packety od koncových zařízení na více kanálech a přenosových rychlostech. Je zde i možnost udělat jednokanálovou gateway, která je schopna přijímat v jednu chvíli pouze jednom kanále a jedné přenosové rychlosti s použitím transceiveru pro koncová zařízení za cenu okolo \$5-20. V takové sítí pak musí být všechna koncová zařízení nakonfigurována na jednu konkrétní frekvenci a přenosovou rychlost.
