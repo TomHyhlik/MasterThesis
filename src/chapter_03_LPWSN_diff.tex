@@ -7,18 +7,6 @@ Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí použ
 \section{Kandidátní bezdrátové technlogie}
 Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento projekt.
 
-\begin{table}[]
-  \begin{tabular}{|p{1.5cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-  \hline
-  Technology    & topology options                & frequency bands  & range                                           & price per one transciever & availability of devices on the market \\ \hline \hline
-  IQRF           & mesh, star                      & 868 MHz (Europe) & 10-100 m (in building), 100-1000 m (open space) & 15 – 20 \$                & very low                              \\ \hline
-  wireless M-bus & star                            & 868M, 433M, 169M & 500 m (868 MHz), 2000 m (169 MHz)               & 25 – 30 \$                & low                                   \\ \hline
-  ZigBee         & mesh, star                      & 2.4 GHz          & 100 m (open space)                              & 8 – 30 \$                 & high                                  \\ \hline
-  BLE            & Point-to-Point, Broadcast, Mesh & 2.4 GHz          & 100 m (open space)                              & 5 – 20 \$                 & high                                  \\ \hline
-  LoRa           & star                            & 868 MHz (Europe) & 15-22 km suburban, 3-8 km urban                 & 5 – 50 \$                 & medium                                \\ \hline
-  \end{tabular}
-\end{table}
-
 \subsection{IQRF}
 IQRF je subGHz bezdrqátová technologie vyvinuta IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK \cite{iqrf_sdk} a IDE \cite{iqrf_ide}. Z hlediska kriérií pro tento projekt je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
 Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde gateway je použita jedna z dostupných od IQRF aliance a koncová zařízení sítě jsou vytvořena vývojáři s použitím transceiverů od IQRF aliance
@@ -62,13 +50,27 @@ Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých v�
 
 % \section{Z-Wawe}
 % Z-Wave is intended for wireless connectivity for all possible smart home products, controlled by PC, phone, voice, etc. It's based on mesh network topology so every non-battery powered device works as a router to enhance the network range so the more devices are connected in one network, the stronger the network is \cite{27} \cite{28}.
-
-
 % \section{Thread}
 % This technology based on IPv6 was developed for home network controlled by smartphone, tablet or PC \cite{29} \cite{30} \cite{31}.
 
 
+\subsection{Shrnutí vlastností vybraných technologií}
+V tabulce \ref{tab:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
 
+
+\begin{table}[]
+  \begin{tabular}{|p{1.5cm}||p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+  \hline
+  Technology    & topology options                & frequency bands  & range                                           & price per one transciever & availability of devices on the market \\ \hline \hline
+  IQRF           & mesh, star                      & 868 MHz (Europe) & 10-100 m (in building), 100-1000 m (open space) & 15 – 20 \$                & very low                              \\ \hline
+  wireless M-bus & star                            & 868M, 433M, 169M & 500 m (868 MHz), 2000 m (169 MHz)               & 25 – 30 \$                & low                                   \\ \hline
+  ZigBee         & mesh, star                      & 2.4 GHz          & 100 m (open space)                              & 8 – 30 \$                 & high                                  \\ \hline
+  BLE            & Point-to-Point, Broadcast, Mesh & 2.4 GHz          & 100 m (open space)                              & 5 – 20 \$                 & high                                  \\ \hline
+  LoRa           & star                            & 868 MHz (Europe) & 15-22 km suburban, 3-8 km urban                 & 5 – 50 \$                 & medium                                \\ \hline
+  \end{tabular}
+  \caption{Shrnutí vlastností vybraných technologií}
+  \label{tab:shrnutiTechnologii}
+\end{table}
 
 
 
