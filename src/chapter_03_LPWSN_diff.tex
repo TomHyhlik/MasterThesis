@@ -65,25 +65,27 @@ Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých v�
 
 
 \section{Shrnutí vlastností vybraných technologií}
-V tabulce \ref{tab:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
+V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
 
 
+% \begin{tabular}{|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 
-\begin{table}[]
-  \begin{tabular}{|l|l|l|l|l|l|}
-  \hline
-                         & IQRF                                                             & wireless M-bus            & LoRa                                                             & ZigBee                                   & BLE                                                       \\ \hline
-  topology               & mesh, star                                                       & star                      & star                                                             & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
-  maximum size of packet & 64 B                                                             & 256 B                     & 256 B                                                            & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
-  data rate              & 19.2 kb/s                                                        & 32.768 – 100 kb/s         & 0.3-50kb/s                                                       & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
-  band                   & 868 MHz for Europe916 MHz for North America433 MHz band for Asia & 868 MHz                   & 868 MHz for Europe915 MHz for North America433 MHz band for Asia & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
-  range                  & 500 m (prima viditelnost)                                        & 500 m (prima viditelnost) & 15-22 km suburban, 3-8 km urban                                  & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
-  security               & AES-128                                                          & AES-128                   & AES-128                                                          & AES-128                                  & AES-128                                                   \\ \hline
-  max radio output power & 12.5 mW or 3.5 mW                                                & 0.16 – 20 mW              & 24 mW                                                            & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
+\begin{table}[!h]
+  \centering
+  \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
+      \hline
+                           & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
+    topology               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
+    maximum size of packet & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
+    data rate              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
+    band (Europe)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
+    range                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
+    security               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
+    max radio output power & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
   \end{tabular}
-  \end{table}
-
-
+  \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
+  \label{table:shrnutiTechnologii}
+\end{table}
 
 
 \section{Vybraná přenosová technologie}
