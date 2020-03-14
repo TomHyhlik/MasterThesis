@@ -3,17 +3,6 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{General System Design}
-
-
-\subsubsection{Wireless Sensor Network Design}
-Wireless sensor network design is based on a popular IoT technology LoRa, which is a LPWAN technology using ISM band, 433 MHz, 868 MHz and 915 MHz (depends on the region) and communicates on multiple frequency channels and uses multiple data rates \cite{LoRaWAN Evaluation for IoT Communications}.
-The LoRaWAN is an open standard network protocol and system architecture specified by \cite{LoRaWAN specification} and creates a media access control (MAC) layer on the top of the LoRa physical layer, secured by AES-128 encryption.
-The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Specific System Design for Testing Proposes}
 
 \begin{figure*}[!h]
@@ -47,11 +36,6 @@ When the Gateway receives data from a Node and the Node address matches one of t
 
 
 \subsubsection{Design of Tested Wireless Sensor Network}
-The most important requirements for the WSN Gateway are simplicity, low cost and the ability to use third-party nodes.
-LoRa with the standardized network protocol LoRaWAN is chosen as wireless communication technology, but only in single-channel mode as used in development projects \cite{Analysis of Propagation Link for Remote Weather}, so it is not fully LoRaWAN compliant.
-Single-channel Gateway communicates only on one channel and data rate at a time, therefore all devices in WSN are configured for one frequency channel and data rate.
-The advantage of a single-channel Gateway is about ten times cheaper transceiver and lower CPU performance requirements than standard LoRaWAN Gateway transceiver.
-Third-party LoRaWAN nodes are fully compatible with any LoRaWAN Gateway, so it can be deployed into this system, but it needs to be configured to communicate at the specified frequency channel and data rate.
 LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
 
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
