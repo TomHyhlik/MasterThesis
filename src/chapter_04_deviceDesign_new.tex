@@ -1,31 +1,22 @@
 \chapter{Realizace zařízení}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Návrh rozšíření komernčního přístupového systému}
+\section{Návrh rozšíření přístupového systému}
+Přístupový systém k rozšíření o WSN pro tento projekt je vytvořen firmou IMA a je komernčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhranní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat apodobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485.
+Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 
-\begin{figure*}[!h]
+\begin{figure}[!h]
 \centering
-\includegraphics[width=140mm]{ACS_IoT_extension_21}
-% \subfigure[Plot3.]{\label{fig2b} \includegraphics[width=80mm]{fig2b.png}}\\
-% \subfigure[Mesh.]{\label{fig2c} \includegraphics[width=80mm]{fig2c.png}}
+\includegraphics[width=1\textwidth]{ACS_IoT_extension_21}
 \caption{IMA access control system architecture with WSN extension}
-    \label{fig:ACS architecture IMA with geteway}
-\end{figure*}
+\label{fig:ACS architecture IMA with geteway}
+\end{figure}
 
-\subsubsection{Tested Access Control System Architecture}
-The access control system to be extended by WSN is designed by IMA company, but it differs from the general architecture shown in Fig. \ref{fig:Access control system architecture} by an added CKP device that creates an interface between the Control Panel and the Reader with the Door Lock.
-There are several types of CKP devices to connect different types of Readers, Door Locks, barriers and gates, but all of them support the protocol of the IMA company on the RS485 network.
-The IoT extension of the access control system is done by connecting a WSN Gateway to the Control Panel via the RS485 network, i.e., the same way as CKP device is connected as shown in Fig. \ref{fig:ACS architecture IMA with geteway}.
-Therefore the WSN Gateway has to support the same protocol as CKP device in RS485 network to communicate with the Control Panel. It's a collision protocol, where all connected devices follow the rule "listen before talk", collisions are detected by integrity check mechanism aplied for all messages. When the device receives a corrupted command, it requests a retry.
+WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
+mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
 
-% \begin{figure}[!h]
-% \centering
-% \includegraphics[width=80mm]{ACS_IoT_extension_21}
-% \caption{Architektura přístupového systému firmy IMA}
-% \label{fig:ACS architecture IMA with geteway}
-% \end{figure}
+
 
 The Access Control System operates by obtaining a CKP list of valid cards (ID Credentials) from the Access Control Server.
 The designed Gateway takes it as a list of valid device addresses in the WSN.
