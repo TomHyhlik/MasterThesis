@@ -24,7 +24,7 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 % When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
 
-\section{Design of Tested Wireless Sensor Network}
+\section{N8vrh WSN gatewaye}
 LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
 
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
