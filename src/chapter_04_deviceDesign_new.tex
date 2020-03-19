@@ -15,17 +15,20 @@ Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením W
 WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
 mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
+Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
+Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (napr. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (napr. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu.
 
 
 
-The Access Control System operates by obtaining a CKP list of valid cards (ID Credentials) from the Access Control Server.
+
+
 The designed Gateway takes it as a list of valid device addresses in the WSN.
 When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
 The same procedure applies to the Gateway.
 When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
 
-\subsubsection{Design of Tested Wireless Sensor Network}
+\section{Design of Tested Wireless Sensor Network}
 LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
 
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.

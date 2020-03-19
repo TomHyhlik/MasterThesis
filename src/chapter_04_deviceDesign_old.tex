@@ -15,10 +15,13 @@ Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením W
 WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
 mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
+Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
+Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (napr. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (napr. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu.
 
 
 
-The Access Control System operates by obtaining a CKP list of valid cards (ID Credentials) from the Access Control Server.
+
+
 The designed Gateway takes it as a list of valid device addresses in the WSN.
 When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
 The same procedure applies to the Gateway.
