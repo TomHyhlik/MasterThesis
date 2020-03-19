@@ -80,33 +80,6 @@ Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
 
 
 
-
-
-
-
-
-\section{Výběr přenosové technologie}
-Pro implementaci LPWSN je použita RF technologie LoRa se standardizovaným síťovým protokolem LoRaWAN, ale s požitím pouze jednoho kanálu.
-Tento způsob řešení se liší od standardu omezením na pouze jeden kanál a SF vysílání.
-Jedenokanálové řešení bylo zvoleno z toho důvodu, že plnohodnotný LoRa transceiver, který přijímá na všech osmi kanálech je příliš drahý (přibližně desetinásobná cena) a složitý k implementaci, zatímco v tomto projektu je kladen důraz na cenu a jednoduchost řešení.
-
-Vybraná technologie používá topologii typu hvězda, tedy koncová zařízení komunikují přímo s gatewayí, 
-zbytek času mohou být ve stavu nízké spotřeby, což má pozitivní vliv na životnost baterie.
-Koncová zařízení od různých výrobců jsou plně kompatibilní s cizí gatewayí, tudíž není problém je implementovat do tohoto systému. 
-Je pouze třeba je překonfigurovat pro vysílání na jednom použitém kanále a SF.
-
-% tahle section by mozna mohla byt nekde jinde
-% \subsection{Zabezpečení protokolu LoRaWAN}
-% Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
-
-% \subsubsection{Síťové zabezpečení}
-% Síťové zabezpečení je zde aby bylo hackerům zabráněno odesílání duplikovaných paketů nebo vytváření a vysílání paketů s nasimulovanými daty.
-% Poslední 4 byty paketu obsahují MIC (Message Integrity Code), který je získán zašifrováním dat síťovým klíčem NwkSKey obsahujících mimo jiné celý payload paketu (včetně paket counter). Toto umožňuje odhalit jakoukoliv manipulaci s daty v paketu. LoRaWAN paket také obsahuje counter počítající od nuly od doby kdy bylo LoRaWAN zařízení spuštěno. Toto umožňuje odhalit duplikování paketů.
-
-% \subsubsection{Aplikační zabezpečení}
-% Aplikační klíč AppSKey (Application Session Key) je použit pro zašifrování dat aplikační zprávy (App message) \cite{lwSpec} \cite{lwSecur}.
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Výběr komponent}
 \subsection{Microcontroller}

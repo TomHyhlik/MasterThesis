@@ -93,6 +93,20 @@ V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných te
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.
 Pro tento projekt byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž není to plně LoRaWAN kompatibilní.
 V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
-Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení.
-Standartní transceiver pro LoRaWAN gateway je přibližně desetkrát dražší a vyžaduje vyšší výkon CPU než transceiver pro koncová zařízení, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
+Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
 LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
+
+
+
+
+
+% tahle section by mozna mohla byt nekde jinde
+% \subsection{Zabezpečení protokolu LoRaWAN}
+% Protokol LoRaWAN používá AES-128 na 2 způsoby, pro síťové a aplikační zabezpečení. Jsou zde tedy 2 šifrovací klíče, NwkSKey a AppSKey.
+
+% \subsubsection{Síťové zabezpečení}
+% Síťové zabezpečení je zde aby bylo hackerům zabráněno odesílání duplikovaných paketů nebo vytváření a vysílání paketů s nasimulovanými daty.
+% Poslední 4 byty paketu obsahují MIC (Message Integrity Code), který je získán zašifrováním dat síťovým klíčem NwkSKey obsahujících mimo jiné celý payload paketu (včetně paket counter). Toto umožňuje odhalit jakoukoliv manipulaci s daty v paketu. LoRaWAN paket také obsahuje counter počítající od nuly od doby kdy bylo LoRaWAN zařízení spuštěno. Toto umožňuje odhalit duplikování paketů.
+
+% \subsubsection{Aplikační zabezpečení}
+% Aplikační klíč AppSKey (Application Session Key) je použit pro zašifrování dat aplikační zprávy (App message) \cite{lwSpec} \cite{lwSecur}.
