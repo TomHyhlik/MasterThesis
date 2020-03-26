@@ -1,9 +1,12 @@
 \chapter{Realizace zařízení}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace WSN gatewaye do přístupového systému}
+\section{Implementace WSN do přístupového systému}
 Přístupový systém k rozšíření o WSN pro tento projekt je vytvořen firmou IMA a je komernčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhranní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat apodobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
+
 Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
+V budovách, kde již je tento přístupový systém nainstalován je obvykle více kontrolních panelů, vždy jeden kontrolní panel pro několik dveří s CKP zařízeními propojenými sítí RS485. 
+K jednomu přístupovému systému je možné přípojit několik WSN gatewayí k libovolným kontrolním panelům v budově pro dosažení požadovaného pokrytí WSN.
 
 \begin{figure}[!h]
 \centering
@@ -12,12 +15,16 @@ Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením W
 \label{fig:ACS architecture IMA with geteway}
 \end{figure}
 
+
 WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
 mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
 Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
-Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (napr. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (napr. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu.
-Navržená gateway bere tento seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává packety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
+Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
+Navržená gateway bere seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává packety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
+Data z koncových zařízení jsou odesílána na servere řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá poze 6 B pro payload dat z koncového zařízení, což je velké omezení.
+LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální velikosti ?? B. Jako jedíné možné řešení je tedy dekódovat a dešifrovat LoRaWAN packet přímo v gatewayi, a odeslat pouze vybraná data z payloadu koncovéjo zařízení na server řízení přístupu skrze kontrolní panel. 
+
 
 % When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
 % The same procedure applies to the Gateway.
@@ -25,6 +32,21 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 
 
 \section{Návrh WSN gatewaye}
+
+ pro komunikaci s control panelem přístupového systému firmy IMA zajišťuje posílání dat z koncových zařízení příkazem "průchod", 
+% který má kapacitu na data z koncového zařízení pouze 6 B. 
+% Systém je proto navržen neobvyklým způsobem. 
+% Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení,
+%  paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na zařízení typu master.
+
+% LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
+% Všechna zařízení v síti mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
+
+% Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
+
+LoRaWAN protokol používá 4-byte dlouhé adresy pro koncová zařízení. 
+
+
 % LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
 
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
@@ -122,26 +144,6 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 %     \caption{RS485 transceiver \cite{rs485tr}}
 %     \label{fig:rs485transceiver}
 % \end{figure}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Implementace LoRaWAN sítě}
-% Jednokanálové použití technologie LoRa umožňuje použít transceiver navržený pro koncová zařízení, 
-% kterým jsou pakety kontinuálně odposlouchávány na jednom nastaveném kanále a SF. 
-% Tyto dva parametry jsou nakonfigurovány na všech zařízeních v síti stejně.
-
-% Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, 
-% použitý protokol pro komunikaci s control panelem přístupového systému firmy IMA zajišťuje posílání dat z koncových zařízení příkazem "průchod", 
-% který má kapacitu na data z koncového zařízení pouze 6 B. 
-% Systém je proto navržen neobvyklým způsobem. 
-% Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení,
-%  paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na zařízení typu master.
-
-% LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
-% Všechna zařízení v síti mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
-
-% Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -560,7 +562,7 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Využití non-volatile paměťi gatewaye}
+% \section{Využití non-volatile paměťi gatewaye}
 % Konfigurace a adresy s typy všech koncových zařízení v LoRaWAN síti jsou uloženy v non-volatile paměti EEPROM gatewaye o kapacitě 6144 B. 
 % Paměť je tedy rozdělená tak, že od adresy 0 až po 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po 6144 je prostor pro ukládání konfigurace gatewaye.
 
@@ -569,7 +571,7 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Zapojení}
+% \section{Zapojení}
 % LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
 
 % \begin{figure}[!h]
@@ -606,7 +608,7 @@ Navržená gateway bere tento seznam platných karet jako seznam platných konco
 % \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Naprogramování}
+% \section{Naprogramování}
 % K naprogramování MCU byla použita HAL knihovna a inicializační nástroj STM32CubeMX poskytnuté výrobcem, tedy ST Microelectronics.
 % Zdrojové soubory programu byly vyvíjeny v textovém editoru VS-Code, ke kompilaci zdrojových souborů byl použit kompilátor arm-none-eabi-gcc a jako pomocný nástroj makefile skript. 
 

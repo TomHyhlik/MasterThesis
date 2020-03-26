@@ -12,3 +12,8 @@
 https://ieeexplore.ieee.org/
 https://ebookcentral.proquest.com/
 
+
+
+## todo
+vypocitat kapacitu navrzene WSN
+
