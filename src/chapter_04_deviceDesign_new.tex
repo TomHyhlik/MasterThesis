@@ -22,9 +22,10 @@ mechanismem kontroly integrity použitý v každé zprávě. V případě že za
 Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
 Navržená gateway bere seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává packety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
-Data z koncových zařízení jsou odesílána na servere řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá poze 6 B pro payload dat z koncového zařízení, což je velké omezení.
-LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální velikosti ?? B. Jako jedíné možné řešení je tedy dekódovat a dešifrovat LoRaWAN packet přímo v gatewayi, a odeslat pouze vybraná data z payloadu koncovéjo zařízení na server řízení přístupu skrze kontrolní panel. 
-
+Data z koncových zařízení jsou odesílána na server řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá poze 6 B pro data z koncového zařízení, což je velké omezení.
+%Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
+LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální velikosti 13 B. 
+Pro tento projekt je tedy zvoleno takové řešení, že LoRaWAN packety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
 
 % When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
 % The same procedure applies to the Gateway.
@@ -32,24 +33,22 @@ LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální v
 
 
 \section{Návrh WSN gatewaye}
+Jak již bylo zmíňeno v ředchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
+Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
+Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
 
- pro komunikaci s control panelem přístupového systému firmy IMA zajišťuje posílání dat z koncových zařízení příkazem "průchod", 
-% který má kapacitu na data z koncového zařízení pouze 6 B. 
-% Systém je proto navržen neobvyklým způsobem. 
-% Přijme-li gateway LoRaWAN paket, nejprve zkontroluje zda zná adresu zařízení, pokud ano, přečte z paměti i typ zařízení,
-%  paket dešifruje a dekóduje payload, čímž získá konečné hodnoty senzorů, které pak dále pošle přes RS485 rozhraní na zařízení typu master.
+
+
 
 % LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
 % Všechna zařízení v síti mají nastavené stejné šifrovací klíče a gateway je má uložené v EEPROM.
 
 % Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
 
-LoRaWAN protokol používá 4-byte dlouhé adresy pro koncová zařízení. 
 
 
-% LoRaWAN protocol uses 4-byte device address for nodes. These 4 bytes and node payload are included in the communication protocol between the Gateway and the Control Panel via RS485. In the case of lack of space, the node payload is decoded in the Gateway according to node payload documentation provided by manufacturer \cite{RHF1S001 pdf} and only the required data are transmitted to the Control Panel.
 
-%Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
+
 %Various LoRaWAN nodes use different payload size, therefore it's not possible to transmit the whole node payload to the Control Panel. Manufacturer of the node provides documentation of the payload \cite{RHF1S001 pdf}. This issue was solved by decoding the node payload in the Gateway acording to node payload documentation and transmitting only the required data to the Control Panel. This means that the Gateway must store the node type along with the node device address in its memory.
 
 % In summary, when the Gateway receives an encrypted LoRaWAN packet, it looks for whether the Node device address is in the list of known device addresses.
