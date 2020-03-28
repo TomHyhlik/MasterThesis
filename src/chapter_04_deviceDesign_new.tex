@@ -27,15 +27,22 @@ Data z koncových zařízení jsou odesílána na server řízení přístupu p�
 LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální velikosti 13 B. 
 Pro tento projekt je tedy zvoleno takové řešení, že LoRaWAN packety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
 
+
+
 % When the user presents his card to the Reader and the card ID matches one of the valid cards, the CKP device sends the data to the Access Control Server.
 % The same procedure applies to the Gateway.
 % When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
 
 \section{Návrh WSN gatewaye}
-Jak již bylo zmíňeno v ředchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
+Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
 Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
+
+LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
+
+Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přistupu, není zde možnost předávávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou.
+Pro jednoduchost má tato geteway tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
 
 
 
