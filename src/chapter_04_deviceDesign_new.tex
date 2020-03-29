@@ -48,7 +48,7 @@ Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako p
 V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru řízení přístupu na koncové zařízení, ale je také možné implementovat pro ovládání aktulátorů, jako je relé, motor, apod.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Vybraný HW}
+\subsubsection{Stavba gatewaye}
 % To test the proposed system design, the Gateway is built from one NUCLEO-L073RZ development board \cite{nucleoST}, RFM95w LoRa Shield \cite{RFM95w} and RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
 
 
@@ -91,10 +91,7 @@ V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru �
 % \label{tab:mcuFeatures}
 % \end{table}
 
-
-
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % \section{Výběr komponent}
+% \section{Výběr komponent}
 % \subsection{Microcontroller}
 % Pro toto zařízení je zvolen mikrocontroller STM32L073RZ se zaměřením na nízkou spotřebu, jelikož je levný, má dostačující vlastnosti a je dostupný ve formě vývojového kitu NUCLEO-L073RZ který byl použit pro  vývoj zařízení. Mezi hlavní vlastnosti patří \cite{nucleoST}:
 % \begin{itemize}    
@@ -224,10 +221,7 @@ V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru �
 % Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
 % Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
-
-
-\subsection{Odesílání dat z koncových zařízení} 
-todo continue
+% \subsection{Odesílání dat z koncových zařízení} 
 % \label{sec:Odesílání dat z koncových zařízení}
 % Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
 % První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
@@ -256,57 +250,67 @@ todo continue
 % Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Komunikace přes USB}
-% Gateway má implementovanou komunikaci přes USB, což má za účel konfiguraci systému a logování. K přípojení přes USB lze použít PC s  aplikací terminálu s nastavením viz tabulka \ref{table:usb_term}.
+\subsection{Komunikace přes sériovou linku}
+\label{Komunikace přes sériovou linku}
+Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
+K přípojení lze použít PC s libovolnou aplikací umožňující obousměrnou komunikaci přes sériovou linku s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
-% \begin{table}[!h]
-%     \centering
-%     \begin{tabular}{ |c|c| }
-%      \hline
+\begin{table}[!h]
+    \centering
+    \begin{ctucolortab}
+    \begin{tabular}{ |c|c| }
+     \hline
 
-%      Baud rate              & 115200           \\ \hline
-%      Data bits              & 8                 \\ \hline
-%      Parity                 & none              \\ \hline
-%      Stop bits              & 1                 \\ \hline
-%      Flow control           & none               \\ \hline
+     Baud rate              & 115200           \\ \hline
+     Data bits              & 8                 \\ \hline
+     Parity                 & none              \\ \hline
+     Stop bits              & 1                 \\ \hline
+     Flow control           & none               \\ \hline
 
-%     \end{tabular}
-%     \caption{Nastavení USB terminálu}
-%     \label{table:usb_term}
-% \end{table}
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Parametry sériové linky PC terminálu pro komunikaci s gatewayí}
+    \label{table:usb_term}
+\end{table}
 
-% Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
+Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Log aplikace}
-% Gateway loguje informace o proběhlých událostech přes USB. 
-% Níže je příklad výpisu dat pro případ, že gateway přjala LoRaWAN paket z koncového zařízení v síti.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Log Gatewaye}
+Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech.
+Níže je příklad výpisu logu pro případ, že gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
-% Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
-% Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k zařízení typu master přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od zařízení typu master.
-
-% \begin{lstlisting}
 % ______________________________________________________
-% Rx -> LoRaWAN, pktCntr: 6
-% RSSI: -51, SNR: 9, length: 22
+% \begin{ctucolortab}
+\begin{lstlisting}[style=log]
 
-% Message type: Unconfirmed Data Up
-% Packet rawData: "40F61F0128C0D62508D970CB071595D115BAC68F6663"
-% Device Address: "F61F0128"
-% FCnt: 9686
-% message (encrypted): "D970CB071595D115BA"
-% MHDR: 40; FCtrl: C0; FPort: 08; MIC: "C68F6663"
-% adaptive data rate: true; ack: false
-% message HEX (decrypted): "013566779600FFFFAF"
+________________________________________________
+Rx -> LoRaWAN, pktCntr: 6
+RSSI: -51, SNR: 9, length: 22
 
-% Sensor type: RHF1S001
-% temperature: 23.30 C, humidity: 52 %
-% period: 300 s, RSSI: -51 dBm, SNR: 9 dB, battery voltage: 3.2 V
-% Tx -> RS-485: "FF1F100D00D0F61F01281A0934CDFFFF09202E"
-% ______________________________________________________
-% Rx -> RS-485: "AA1FFF060000E6"
-% ACK
-% \end{lstlisting}
+Message type: Unconfirmed Data Up
+Packet rawData: "40F61F0128C0D62508D970CB071595D115BAC68F6663"
+Device Address: "F61F0128"
+FCnt: 9686
+message (encrypted): "D970CB071595D115BA"
+MHDR: 40; FCtrl: C0; FPort: 08; MIC: "C68F6663"
+adaptive data rate: true; ack: false
+message HEX (decrypted): "013566779600FFFFAF"
+
+Sensor type: RHF1S001
+temperature: 23.30 C, humidity: 52 %
+period: 300 s, RSSI: -51 dBm, SNR: 9 dB, battery voltage: 3.2 V
+Tx -> RS-485: "FF1F100D00D0F61F01281A0934CDFFFF09202E"
+________________________________________________
+Rx -> RS-485: "AA1FFF060000E6"
+ACK
+\end{lstlisting}
+% \end{ctucolortab}
+
+
+Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
+Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k zařízení typu master přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od zařízení typu master.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Konfigurace systému}
@@ -461,7 +465,7 @@ todo continue
 % \end{table}
 
 
-\newpage
+% \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Koncová zařízení}
 % Jelikož používaný protokol ke komunikaci se zařízením typu master je omezen na pouhých 6 B na jeden paket, payload koncových zařízení je dekódován v gatewayi a v paketu odeslaném na zařízení typu master jsou pouze vybraná nejdůležitější data, která se vejdou do této velikosti.
@@ -486,36 +490,37 @@ todo continue
 % \subsection{Zpracování dat jednotlivých typů koncových zařízení}
 % Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán na zařízení typu master příkazem "průchod".
 
-% \subsubsection{RHF1S001}
-% Senzor od firmy RisingHF měří teplotu a vlhkost.
+\subsubsection{RHF1S001}
+Senzor od firmy RisingHF měří teplotu a vlhkost.
 
-% \begin{lstlisting}[style=CStyle]
-%     /* RHF1S001 data structure */   
-%     typedef struct {
-%         int16_t temperature;
-%         uint8_t humidity;
-%         uint16_t period;
-%         int8_t rssi;
-%         int8_t snr;
-%         uint8_t battery;
-%     } RHF1S001_data_t;
 
-%     /* Print the data from the structure */
-%     printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
-%     printf("humidity: %d %%\n", RHF1S001_data.humidity);
-%     printf("period: %d s, ", (int)RHF1S001_data.period);
-%     printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
-%     printf("SNR: %d dB, ", RHF1S001_data.snr);
-%     printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
+\begin{lstlisting}[style=CStyle]
+    /* RHF1S001 data structure */   
+    typedef struct {
+        int16_t temperature;
+        uint8_t humidity;
+        uint16_t period;
+        int8_t rssi;
+        int8_t snr;
+        uint8_t battery;
+    } RHF1S001_data_t;
 
-%     /* Put the data into 6B long buffer, that is transmitted to the master */
-%     buffer[0] = RHF1S001_data.temperature & 0xFF;
-%     buffer[1] = RHF1S001_data.temperature >> 8;
-%     buffer[2] = RHF1S001_data.humidity;
-%     buffer[3] = RHF1S001_data.rssi;
-%     buffer[4] = RHF1S001_data.snr;
-%     buffer[5] = RHF1S001_data.battery;
-% \end{lstlisting}
+    /* Print the data from the structure */
+    printf("temperature: %d.%d C, ", RHF1S001_data.temperature / 100, RHF1S001_data.temperature % 100);
+    printf("humidity: %d %%\n", RHF1S001_data.humidity);
+    printf("period: %d s, ", (int)RHF1S001_data.period);
+    printf("RSSI: %d dBm, ", RHF1S001_data.rssi);
+    printf("SNR: %d dB, ", RHF1S001_data.snr);
+    printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
+
+    /* Put the data into 6B long buffer, that is transmitted to the master */
+    buffer[0] = RHF1S001_data.temperature & 0xFF;
+    buffer[1] = RHF1S001_data.temperature >> 8;
+    buffer[2] = RHF1S001_data.humidity;
+    buffer[3] = RHF1S001_data.rssi;
+    buffer[4] = RHF1S001_data.snr;
+    buffer[5] = RHF1S001_data.battery;
+\end{lstlisting}
 
 
 % \subsubsection{IMA\_tempPress}
