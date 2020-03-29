@@ -1,4 +1,5 @@
 \chapter{Realizace zařízení}
+Tato kapitola popisuje kompletní návrh řešení rozšíření komernčně používaného sytému o senzorovou síť.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace WSN do přístupového systému}
@@ -48,7 +49,8 @@ Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako p
 V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru řízení přístupu na koncové zařízení, ale je také možné implementovat pro ovládání aktulátorů, jako je relé, motor, apod.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Stavba gatewaye}
+\subsection{Stavba gatewaye}
+todo
 % To test the proposed system design, the Gateway is built from one NUCLEO-L073RZ development board \cite{nucleoST}, RFM95w LoRa Shield \cite{RFM95w} and RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
 
 
@@ -250,10 +252,11 @@ V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru �
 % Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Komunikace přes sériovou linku}
+\subsubsection{Komunikace přes sériovou linku}
 \label{Komunikace přes sériovou linku}
 Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
-K přípojení lze použít PC s libovolnou aplikací umožňující obousměrnou komunikaci přes sériovou linku s nastavením parametrů dle tabulky \ref{table:usb_term}.
+K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
+sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
 \begin{table}[!h]
     \centering
@@ -276,193 +279,195 @@ K přípojení lze použít PC s libovolnou aplikací umožňující obousměrno
 Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Log Gatewaye}
-Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech.
-Níže je příklad výpisu logu pro případ, že gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
+\subsection{Log Gatewaye}
+Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
+Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
-% ______________________________________________________
-% \begin{ctucolortab}
 \begin{lstlisting}[style=log]
+    ________________________________________________
+    Rx -> LoRaWAN, pktCntr: 6
+    RSSI: -51, SNR: 9, length: 22
 
-________________________________________________
-Rx -> LoRaWAN, pktCntr: 6
-RSSI: -51, SNR: 9, length: 22
+    Message type: Unconfirmed Data Up
+    Packet rawData: "40F61F0128C0D62508D970CB071595D115BAC68F6663"
+    Device Address: "F61F0128"
+    FCnt: 9686
+    message (encrypted): "D970CB071595D115BA"
+    MHDR: 40; FCtrl: C0; FPort: 08; MIC: "C68F6663"
+    adaptive data rate: true; ack: false
+    message HEX (decrypted): "013566779600FFFFAF"
 
-Message type: Unconfirmed Data Up
-Packet rawData: "40F61F0128C0D62508D970CB071595D115BAC68F6663"
-Device Address: "F61F0128"
-FCnt: 9686
-message (encrypted): "D970CB071595D115BA"
-MHDR: 40; FCtrl: C0; FPort: 08; MIC: "C68F6663"
-adaptive data rate: true; ack: false
-message HEX (decrypted): "013566779600FFFFAF"
-
-Sensor type: RHF1S001
-temperature: 23.30 C, humidity: 52 %
-period: 300 s, RSSI: -51 dBm, SNR: 9 dB, battery voltage: 3.2 V
-Tx -> RS-485: "FF1F100D00D0F61F01281A0934CDFFFF09202E"
-________________________________________________
-Rx -> RS-485: "AA1FFF060000E6"
-ACK
+    Sensor type: RHF1S001
+    temperature: 23.30 C, humidity: 52 %
+    period: 300 s, RSSI: -51 dBm, SNR: 9 dB, battery voltage: 3.2 V
+    Tx -> RS-485: "FF1F100D00D0F61F01281A0934CDFFFF09202E"
+    ________________________________________________
+    Rx -> RS-485: "AA1FFF060000E6"
+    ACK
 \end{lstlisting}
-% \end{ctucolortab}
 
-
-Nejprve jsou vypsána data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload, typ zařízení a konečné informace dekódované z payloadu.
-Řádek začínajci předponou "Tx -> RS-485:" obsahuje data odeslané k zařízení typu master přes RS485 síť a následující řádek začínající předponou "Rx -> RS-485:" obsahuje odpověď od zařízení typu master.
+Nejprve jsou vypsány data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload koncového zařízení, typ zařízení a výsledné hodnoty dekódované z payloadu.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-% \subsection{Konfigurace systému}
-% \label{sec:konfigurace}
-% Konfigurace gatewaye se provádí opět přes USB port. Je do ní vstoupeno odesláním příkazu
-% "config", následuje vypsání současného stavu konfigurace a dále je vypsáno konfigurační menu, kde uživatel vybere jednotlivý bod menu zadáním jeho čísla na začátku řádku.
-% Níže je zobrazen příklad výpisu po vstupu do konfigurace.
+\subsection{Konfigurace gatewaye}
+\label{Konfigurace gatewaye}
+Konfigurace gatewaye se provádí obousměrnou komunikací po sériové lince s připojením dle instrukcí v sekci \nameref{Komunikace přes sériovou linku}.
+Po spuštění je gateway v normálním pracovním režimu, přeposílá tedy packety ze senzorové sítě přes RS485 síť na kontrolní panel a informace loguje přes sériovou linku.
+Po vstoupení do stavu konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace s kontrolním panelem v síti RS485 nejsou aktivní.
+Do režimu konfigurace je vstoupeno odesláním "config", následuje vypsání současného stavu konfigurace a následně uživatel postupuje zadáním čísla pro výběr možnosti z menu či konkrétního parametru dle vyzvání. Z konfigurace je možné vystoupit kdykoliv bez uložení změn příkazem "quit". 
+Procházení jednotlivými menu je navrženo jedodušše tak, aby uživatel nepotřeboval dokumentaci a aby zde vždy bylo uvedeno dost informací pro srozumitelnost.
+Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující informaci o aktuální konfiguraci a hlavní konfigurační menu.
 
-% \begin{lstlisting}
-%     _________________Entering configuration setup________________
+\begin{lstlisting}[style=log]
+
+    _________________Entering configuration setup________________
     
-%     System configuration:
+    System configuration:
     
-%     *** LoRa channel: 
-%     channel: 0 (868.1 Mhz)
-%     SF7
+    *** LoRa channel: 
+    channel: 0 (868.1 Mhz)
+    SF7
     
-%     *** RS485 channel: 
-%     my address: 10
-%     master address: FF
-%     timeout: 3 s
+    *** RS485 channel: 
+    my address: 10
+    master address: FF
+    timeout: 3 s
     
-%     *** LoRaWAN keys: 
-%     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
-%     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
+    *** LoRaWAN keys: 
+    NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
+    AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
     
     
-%     Config menu:
-%     1 -> Config LoRa channel
-%     2 -> Config RS485 channel
-%     3 -> Config LoRaWAN protocol
-%     4 -> Print all LoRaWAN devices
-%     5 -> Erase all LoRaWAN devices
-%     6 -> Restore to default configuration
-%     7 -> Exit without save
-%     8 -> Save and exit
-% \end{lstlisting}
+    Config menu:
+    1 -> Config LoRa channel
+    2 -> Config RS485 channel
+    3 -> Config LoRaWAN protocol
+    4 -> Print all LoRaWAN devices
+    5 -> Erase all LoRaWAN devices
+    6 -> Restore to default configuration
+    7 -> Exit without save
+    8 -> Save and exit
+
+\end{lstlisting}
     
 
-% Z konfigurace je možné vystoupit kdykoliv bez uložení změn příkazem "quit". 
-% Při vstoupení do konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace se zařízením typu master v síti RS485 nejsou aktivní.
-% Jsou zde tedy 3 stavy konfigurace, přičemž je možné vždy jednotlivá nastavení přeskakovat odesláním "prázdného příkazu" 0x0D (v terminálu obvykle stačí stisknout Enter). Systém při konfiguraci vždy vypíše jaká data mají být zadána v jakém tvaru a zároveň současnou hodnotu měněného parametru. Zadaná data uživatelem jsou vždy zkontrolována zda splňují požadovaný tvar. Pokud ne, uživatel je o tom informován a vyzván k dalšímu pokusu.
-% Po provedení konfigurace následuje vždy návrat zpět do hlavního menu. Pro uložení nové konfigurace je potřeba v menu vybrat "Save and exit", gateway pak následně vypíše které parametry byly změněny a provede restart.
+Jsou zde tedy tři sekce konfigurace, LoRa kanál, RS485 kanál a parametry LoRaWAN protoklu.
+Dále jsou zde další možnosti hlavně pro diagnostické účely, a to možnost ručně přidat LoRaWAN koncové zařízení a vymazání všech koncových zařízení, ačkoliv je to obvykle prováděno ze serveru řízení přístupu, a navrácení stavu gatewaye do defaultního stavu. Dále jsou zde možnosti vystoupení z menu s či bez uložení změn, tedy zapsání nově nakonfigurovaných parametrů do non-volatile paměti.
 
-% \subsubsection{Config LoRa channel}
-% Konfigurace LoRa RF kanálu zahrnuje nastavení SF a frekvenční pásmo. Níže je příklad konfigurace.
-
-% \begin{lstlisting}
-% LoRa channel configuration:
-% Enter SF number (7-12)
-% (current: 7)
-% 8
-% SF8 set.
-
-% Enter LoRa channel number (0-7)
-% ch0 is 868.1 Mhz
-% ch1 is 868.3 Mhz
-% ch2 is 868.5 Mhz
-% ch3 is 867.1 Mhz
-% ch4 is 867.3 Mhz
-% ch5 is 867.5 Mhz
-% ch6 is 867.7 Mhz
-% ch7 is 869.0 Mhz
-% (current: 0)
-% 1
-% channel 1 set.
-% \end{lstlisting}
-
-% \subsubsection{Config RS485 channel}
-% Konfigurace RS485 kanálu pro komunikaci se zařízením typu master zahrnuje nastavení adresy tohoto zařízení, adresa zařízení typu master a timeout, což je doba čekání na potvrzení od zařízení typu master po odeslání příkazu "průchod". Níže je příklad konfigurace.
-
-% \begin{lstlisting}
-% RS485 channel configuration:
-% Enter address of this device, FF and 00 are reserved.
-% (current: 10)
-% 11
-% Address of this device is set to: 11
-
-% Enter master address: 
-% (current: FF)
-% FE
-% Master address is set to: FE
-
-% Enter timeout (seconds)
-% (current: 3)
-% 5
-% timeout set to: 5 s
-% \end{lstlisting}
+Při procházení jednou ze tří možných konfigurací je vždy pro každý parametr vypsáno jaká data mají být uživatelem zadána v jakém tvaru a zároveň současnou hodnotu měněného parametru. Zadaná data uživatelem jsou vždy zkontrolována zda splňují požadovaný tvar. Pokud ne, uživatel je o tom informován a vván k dalšímu pokusu.
+Pokud uživatel některý parametr nehodlá měnit, přeskočí ho odesláním ASCII znaku LF (0x0D) u většiny terminálových aplikací stačí pouze stisknout na klávesnici Enter.
+Po provedení některé konfigurace následuje vždy návrat zpět do hlavního menu. Pro uložení nové konfigurace je potřeba v menu vybrat "Save and exit", gateway pak následně vypíše které parametry byly změněny a provede restart. Pokud je vybráno "Exit without save", gateway se pouze restartuje.
 
 
-% \subsubsection{Config LoRaWAN protocol}
-% Konfigurace LoRaWAN protokolu zahrnuje nastavení šifrovacích klíčů NwkSKey a AppSKey. Níže je příklad konfigurace.
+\subsubsection{Konfigurace LoRa kanálu}
+Položka v menu pod názvem "Config LoRa channel" zahrnuje nastavení SF, tedy přenosovou rychlost a frekvenční kanál. Níže je příklad konfigurace.
 
-% \begin{lstlisting}
-% LoRaWAN protocol configuration:
-% Enter NwkSKey (16 bytes in HEX)
-% (current:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47)
-% 11111111222222223333333344444444
-% NwSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
+\begin{lstlisting}[style=log]
+    LoRa channel configuration:
+    Enter SF number (7-12)
+    (current: 7)
+    8
+    SF8 set.
 
-% Enter AppSKey (16 bytes in HEX)
-% (current:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33)
-% 11111111222222223333333344444444
-% AppSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
-% \end{lstlisting}
+    Enter LoRa channel number (0-7)
+    ch0 is 868.1 Mhz
+    ch1 is 868.3 Mhz
+    ch2 is 868.5 Mhz
+    ch3 is 867.1 Mhz
+    ch4 is 867.3 Mhz
+    ch5 is 867.5 Mhz
+    ch6 is 867.7 Mhz
+    ch7 is 869.0 Mhz
+    (current: 0)
+    1
+    channel 1 set.
+\end{lstlisting}
+
+\subsubsection{Konfigurace RS485 kanálu}
+Položka v menu pod názvem "Config RS485 channel" zahrnuje nastavení adresy gatewaye, tedy tohoto zařízení, adresy kontrolního panelu a timeout, což je doba čekání na potvrzení od kontrolního panelu po odeslání příkazu "průchod". Níže je příklad konfigurace.
+
+\begin{lstlisting}[style=log]
+    RS485 channel configuration:
+    Enter address of this device, FF and 00 are reserved.
+    (current: 10)
+    11
+    Address of this device is set to: 11
+
+    Enter master address: 
+    (current: FF)
+    FE
+    Master address is set to: FE
+
+    Enter timeout (seconds)
+    (current: 3)
+    5
+    timeout set to: 5 s
+\end{lstlisting}
 
 
-% \subsubsection{Print all LoRaWAN devices}
-% Vypíše všechna LoRaWAN zařízení uložená v paměti. Níže je příklad.
+\subsubsection{Konfigurace LoRaWAN protokolu}
+Položka v menu pod názvem "Config LoRaWAN protocol" zahrnuje nastavení šifrovacích klíčů NwkSKey a AppSKey. Níže je příklad konfigurace.
+
+\begin{lstlisting}[style=log]    
+    LoRaWAN protocol configuration:
+    Enter NwkSKey (16 bytes in HEX)
+    (current:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47)
+    11111111222222223333333344444444
+    NwSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
+
+    Enter AppSKey (16 bytes in HEX)
+    (current:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33)
+    11111111222222223333333344444444
+    AppSKey set to: 11 11 11 11 22 22 22 22 33 33 33 33 44 44 44 44
+\end{lstlisting}
 
 
-% \begin{lstlisting}
-% number.......................0:
-% Device Address:  B1 C4 12 00
-% Device Type: RH1S001
-% number.......................1:
-% Device Address:  B2 C4 12 00
-% Device Type: RH1S001
-% number.......................2:
-% Device Address:  B3 C4 12 00
-% Device Type: RH1S001
-% number.......................3:
-% Device Address:  B4 C4 12 00
-% Device Type: IMA_tempPress
-% number.......................4:
-% Device Address:  B5 C4 12 00
-% Device Type: IMA_tempPress
-% \end{lstlisting}
+\subsubsection{Print all LoRaWAN devices}
+Vypíše všechna LoRaWAN zařízení uložená v paměti. Níže je příklad.
+
+
+\begin{lstlisting}[style=log]    
+    number.......................0:
+    Device Address:  B1 C4 12 00
+    Device Type: RH1S001
+    number.......................1:
+    Device Address:  B2 C4 12 00
+    Device Type: RH1S001
+    number.......................2:
+    Device Address:  B3 C4 12 00
+    Device Type: RH1S001
+    number.......................3:
+    Device Address:  B4 C4 12 00
+    Device Type: IMA_tempPress
+    number.......................4:
+    Device Address:  B5 C4 12 00
+    Device Type: IMA_tempPress
+\end{lstlisting}
 
 
 
-% \subsubsection{Restore default configuration}
-% Po zvolení této možnosti je načtena defaultní konfigurace systému, která obsahuje hodnoty viz tabulka \ref{table:5}. Tyto defaultní hodnoty jsou nastaveny v programu a slouží především pro testovací účely.
+\subsubsection{Restore default configuration}
+Po zvolení této možnosti je načtena defaultní konfigurace systému, která obsahuje hodnoty viz tabulka \ref{table:5}. Tyto defaultní hodnoty jsou nastaveny v programu a slouží především pro testovací účely.
 
-% \begin{table}[!h]
-%     \centering
-%     \begin{tabular}{ |l|l| }
-%      \hline
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{ |l|l| }
+     \hline
 
-%      popis              & hodnota         \\ \hline \hline
-%      RS485 myAddr       & 0x10            \\ \hline
-%      RS485 MasterAddr   & 0xFF            \\ \hline
-%      RS485 timeout      & 3               \\ \hline
-%      LoRa SF            & SF7             \\ \hline
-%      LoRa channel       & 0 (868.1 Mhz)   \\ \hline
-%      NwSKey             & FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47  \\ \hline
-%      AppSKey            & 68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33  \\ \hline
+     popis              & hodnota         \\ \hline \hline
+     RS485 myAddr       & 0x10            \\ \hline
+     RS485 MasterAddr   & 0xFF            \\ \hline
+     RS485 timeout      & 3               \\ \hline
+     LoRa SF            & SF7             \\ \hline
+     LoRa channel       & 0 (868.1 Mhz)   \\ \hline
+     NwSKey             & FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47  \\ \hline
+     AppSKey            & 68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33  \\ \hline
 
-%     \end{tabular}
-%     \caption{Defaultní konfigurace systému}
-%     \label{table:5}
-% \end{table}
+    \end{tabular}
+    \caption{Defaultní konfigurace systému}
+    \label{table:5}
+\end{table}
 
 
 % \newpage
