@@ -3,6 +3,7 @@ Tato kapitola popisuje kompletní návrh řešení rozšíření komernčně pou
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace WSN do přístupového systému}
+\label{Implementace WSN do přístupového systému}
 Přístupový systém k rozšíření o WSN pro tento projekt je vytvořen firmou IMA a je komernčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhranní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat apodobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
 
 Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
@@ -451,6 +452,7 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 
 \begin{table}[!h]
     \centering
+    \begin{ctucolortab}
     \begin{tabular}{ |l|l| }
      \hline
 
@@ -464,39 +466,40 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
      AppSKey            & 68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33  \\ \hline
 
     \end{tabular}
+\end{ctucolortab}
     \caption{Defaultní konfigurace systému}
     \label{table:5}
 \end{table}
 
 
-% \newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Koncová zařízení}
-% Jelikož používaný protokol ke komunikaci se zařízením typu master je omezen na pouhých 6 B na jeden paket, payload koncových zařízení je dekódován v gatewayi a v paketu odeslaném na zařízení typu master jsou pouze vybraná nejdůležitější data, která se vejdou do této velikosti.
-% Prote společně s LoRaWAN device address koncového zařízení je v gatewayi uložen i typ zařízení zadefinován jedním bytem a na základě typu zařízení gateway rozpozná jak dekódovat payload.
+\subsection{Podpora koncových zařízení}
+Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z dat payloadu vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
+Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení. Tabulka \ref{table:TypyKoncZarizeni} ukazuje hodnotu bytu označující typ koncového zařízení odpovídající konkrétním typům koncových zařízení.
 
-% Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení.
+\begin{table}[!h]
+    \centering
+    \begin{ctucolortab}
+    \begin{tabular}{ |l|l| }
+     \hline
 
-% \begin{table}[!h]
-%     \centering
-%     \begin{tabular}{ |l|l| }
-%      \hline
+     Typ zařízení       & Hodnota         \\ \hline \hline
+     RHF1S001           & 0x00            \\ \hline
+     IMA\_tempPress     & 0x01            \\ \hline
 
-%      Typ zařízení       & Hodnota         \\ \hline \hline
-%      RHF1S001           & 0x00            \\ \hline
-%      IMA\_tempPress     & 0x01            \\ \hline
-
-%     \end{tabular}
-%     \caption{Typy koncových zařízení}
-%     \label{table:TypyKoncZarizeni}
-% \end{table}
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Typy koncových zařízení}
+    \label{table:TypyKoncZarizeni}
+\end{table}
 
 % \subsection{Zpracování dat jednotlivých typů koncových zařízení}
-% Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán na zařízení typu master příkazem "průchod".
+Níže je popsáno pro jednotlivá podporovaná koncová zařízení jak jsou data uložena v datové struktuře, jak jsou data z této struktury zpracována a zobrazena a nakonec jak vybraná data jsou zapsána do výsledného bufferu o délce 6 B, který je odeslán přes síť RS485 příkazem "průchod".
+
 
 \subsubsection{RHF1S001}
-Senzor od firmy RisingHF měří teplotu a vlhkost.
-
+Senzor od firmy RisingHF měřící teplotu a vlhkost \cite{RHF1S001 pdf}.
 
 \begin{lstlisting}[style=CStyle]
     /* RHF1S001 data structure */   
@@ -517,7 +520,7 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
     printf("SNR: %d dB, ", RHF1S001_data.snr);
     printf("battery voltage: %d.%d V\r\n", RHF1S001_data.battery/10, RHF1S001_data.battery % 10);
 
-    /* Put the data into 6B long buffer, that is transmitted to the master */
+    /* Put the data into 6 B long buffer, to be transmitted to the control panel */
     buffer[0] = RHF1S001_data.temperature & 0xFF;
     buffer[1] = RHF1S001_data.temperature >> 8;
     buffer[2] = RHF1S001_data.humidity;
@@ -527,42 +530,41 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
 \end{lstlisting}
 
 
-% \subsubsection{IMA\_tempPress}
-% Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
+\subsubsection{IMA\_tempPress}
+Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
-% \begin{lstlisting}[style=CStyle]
-%     /* IMA_tempPress data structure */   
-%     typedef struct {
-%         int16_t temperature;
-%         uint16_t pressure;
-%         int8_t rssi;
-%         int8_t snr;
-%     } IMA_tempPress_data_t;
+\begin{lstlisting}[style=CStyle]
+    /* IMA_tempPress data structure */   
+    typedef struct {
+        int16_t temperature;
+        uint16_t pressure;
+        int8_t rssi;
+        int8_t snr;
+    } IMA_tempPress_data_t;
+    
+    /* print the data from the structure */
+    printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
+    printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
+    printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
 
-%     /* print the data from the structure */
-%     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
-%     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
-%     printf("RSSI: %d dBm, SNR: %d dB\r\n", IMA_tempPress_data.rssi, IMA_tempPress_data.snr);
-
-%     /* Put the data into 6B long buffer, that is transmitted to the K4 server */
-%     buffer[0] = IMA_tempPress_data.temperature & 0xFF;
-%     buffer[1] = IMA_tempPress_data.temperature >> 8;
-%     buffer[2] = IMA_tempPress_data.pressure & 0xFF;
-%     buffer[3] = IMA_tempPress_data.pressure >> 8;
-%     buffer[4] = IMA_tempPress_data.rssi;
-%     buffer[5] = IMA_tempPress_data.snr;
-% \end{lstlisting}
+    /* Put the data into 6B long buffer, that is transmitted to the K4 server */
+    buffer[0] = IMA_tempPress_data.temperature & 0xFF;
+    buffer[1] = IMA_tempPress_data.temperature >> 8;
+    buffer[2] = IMA_tempPress_data.pressure & 0xFF;
+    buffer[3] = IMA_tempPress_data.pressure >> 8;
+    buffer[4] = IMA_tempPress_data.rssi;
+    buffer[5] = IMA_tempPress_data.snr;
+\end{lstlisting}
 
 
-\subsection{Přidávání koncových zařízení ze serveru řízení přístupu K4}
-% Koncocová zařízení sítě se nastavují ze serveru K4 v podobě seznamu offline karet s délkou UID 8 B.
-% LoRaWAN device address je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
-% Jelikož typ zařízení je uložen v gatewayi i na K4 serveru. Při odesílání příkazu průchod se tedy už typ zařízení neposílá z důvodu datového omezení tohoto příkazu.
-% Na serveru K4 se UID nastavuje jako dekadické číslo.
-% Níže je příklad vytvoření výsledného čísla obsahující DevAddr a typ zařízení, které se zadává do K4 serveru.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Přidávání koncových zařízení ze serveru řízení přístupu}
+Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhranní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID 8 B.
+Adresa koncového zařízení (LoRaWAN device address) je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
+Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu. Při odesílání příkazu "průchod" se tedy už typ zařízení neposílá z důvodu omezené velikosti tohoto příkazu.
+Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.
 
-% \subsubsection{Příklad}
-% Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do K4 serveru je tedy 8016149418.
+Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhranní serveru řízení přístupu je tedy 8016149418.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -656,7 +658,7 @@ Senzor od firmy RisingHF měří teplotu a vlhkost.
 % \end{figure}
 
 
-\subsection{Nahrání programu do MCU}
+% \subsection{Nahrání programu do MCU}
 % Výstupem kompilace je soubor s koncovkou .binary, který je nahrán do MCU. K tomuto nahrání není potřeba žádný speciální SW nebo HW.
 % Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
 % Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
