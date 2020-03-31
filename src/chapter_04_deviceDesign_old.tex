@@ -51,24 +51,23 @@ V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru �
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Stavba gatewaye}
-todo
-% To test the proposed system design, the Gateway is built from one NUCLEO-L073RZ development board \cite{nucleoST}, RFM95w LoRa Shield \cite{RFM95w} and RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
+Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
 
 
-% \begin{figure*}[!ht]
-%     \centering
-%     \includegraphics[width=0.9\textwidth]{5patro}
-%     \caption{Location of sensor nodes and CKP devices on the university floor}
-%     \label{fig:CorridorFloorPlan}
-% \end{figure*}
+\begin{figure*}[!ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{5patro}
+    \caption{Location of sensor nodes and CKP devices on the university floor}
+    \label{fig:CorridorFloorPlan}
+\end{figure*}
 
 
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width=0.48\textwidth]{LoRaWAN_gw_RS485_blockDiagram_2}
-%     \caption{Gateway block diagram, RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
-%     \label{fig:gatewayBlockDiagram}
-% \end{figure}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_2}
+    \caption{Gateway block diagram, RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
+    \label{fig:gatewayBlockDiagram}
+\end{figure}
 
 % The NUCLEO-L073RZ development board with STM32L073RZ microcontroller is suitable for the development purposes because of its parameters, Tab. \ref{tab:mcuFeatures}, price and available documentation.
 %It is  was used for the prototype, because it has all required parameters, it is cheap, powerful enough and easily prototypable.
@@ -566,6 +565,7 @@ Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu
 Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.
 
 Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhranní serveru řízení přístupu je tedy 8016149418.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
