@@ -15,5 +15,9 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-vypocitat kapacitu navrzene WSN
+    projekt misto vybrany pripad .... zmenit v kapitole device design   
+    paket misto packet
+    lw specifikace misto specification
 
+    jak prelozit LoRaWAN stack, payload
+    

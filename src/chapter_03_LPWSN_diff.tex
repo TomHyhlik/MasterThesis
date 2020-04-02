@@ -1,26 +1,33 @@
-  \chapter{Výběr bezdrátové technologue pro senzorovou síť}
-Navržená senzorová síť je napojena na infrastrukturu zavedeného přístupového systému v budově zákazníka s dosahem po celé budově a jejím okolí. Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
-Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
-Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat uplementaci celé sítě bez závislosti na siti třetích stran. 
+\chapter{Výběr bezdrátové technologie pro senzorovou síť}
+\DIFdelbegin \DIFdel{Navržená senzorová }\DIFdelend \DIFaddbegin \DIFadd{Mezi hlavní požadavky na navrženou senzorovou }\DIFaddend síť \DIFdelbegin \DIFdel{je napojena na infrastrukturu }\DIFdelend \DIFaddbegin \DIFadd{pro tento vybraný případ patří jednoduchá napojitelnost na infrastrukturu jiného systému. Pro tento vybraný případ se konkrétně jedná o infrastrukturu již }\DIFaddend zavedeného přístupového systému v \DIFaddbegin \DIFadd{budovách několika zákazníků.
+Takto nainstalovaná senzorová síť by pak měla umožňovat bezdrátové měření veličin např. teplota, vlhkost, CO2, pmocí koncových zařízení sítě, které vydrží několik let napájeny z tužkové baterie při periodě měření několik minut rozmístěných v }\DIFaddend budově \DIFdelbegin \DIFdel{zákazníka s dosahem po celé budově }\DIFdelend a jejím okolí.
+\DIFdelbegin \DIFdel{Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
+}\DIFdelend %DIF >  Naměřené hodnoty koncových zařízení jsou pak zpracovávány na serveru řízení přístupu.
+\DIFaddbegin 
+
+\DIFaddend Mezi hlavní kritéria pro vybranou bezdrátovou technologii \DIFaddbegin \DIFadd{pro tento případ }\DIFaddend patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
+Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat \DIFdelbegin \DIFdel{uplementaci }\DIFdelend \DIFaddbegin \DIFadd{iplementaci }\DIFaddend celé sítě bez závislosti na siti třetích stran. 
 
 \section{Kandidátní bezdrátové technlogie}
-Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento projekt.
+Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento \DIFdelbegin \DIFdel{projekt}\DIFdelend \DIFaddbegin \DIFadd{vybraný případ}\DIFaddend .
 
 \subsection{IQRF}
-IQRF je technologie vyvinuta IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK \cite{iqrf_sdk} a IDE \cite{iqrf_ide}.
+IQRF je technologie vyvinuta IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK \DIFaddbegin \DIFadd{(Software Development Kit) }\DIFaddend \cite{iqrf_sdk} a IDE \DIFaddbegin \DIFadd{(Integrated Development Environment) }\DIFaddend \cite{iqrf_ide}.
 Technologie IQRF bývá použita k realizaci sítí o topologii typu mesh nebo hvězdice.
 Jedna síť má jednoho koordinátora, který slouží jako gateway a může obsahovat až 240 zařízení (včetně koordinátora). Pro požadavek vyššího počtu zařízení je efektivnější zřetězit více sítí, s jednotlivými koordinátory a různými RF kanály pro vyšší propustnost.
 % https://iqrf.org/support/networkingfaq
-Dosah na přímou viditelnost je až 500 m a velikost payloadu jednoho packetu může být až 64 B.
-Z hlediska kriérií pro tento projekt je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
+Dosah na přímou viditelnost je až 500 m a velikost payloadu jednoho \DIFdelbegin \DIFdel{packetu }\DIFdelend \DIFaddbegin \DIFadd{paketu }\DIFaddend může být až 64 B.
+Z hlediska kriérií pro tento \DIFdelbegin \DIFdel{projekt }\DIFdelend \DIFaddbegin \DIFadd{vybraný případ }\DIFaddend je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
 Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde gateway je použita jedna z dostupných od IQRF aliance a koncová zařízení sítě jsou vytvořena vývojáři s použitím transceiverů od IQRF aliance
 \cite{paper_iqrf}.
 
 
 \subsection{Wireless M-Bus}
-Wireless M-Bus (Meter-Bus) je standard specifikovaný v evropské normě EN 13757, popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření jako rozšíření průmyslové datové sběrnice M-Bus \cite{wirelessMBus_automatizace}.
+Wireless M-Bus (Meter-Bus) je standard specifikovaný v evropské normě EN 13757 \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{EN 13757}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend , popisující fyzickou, síťovou a aplikační vrstvu, původně navržen pro aplikace bezdrátového měření jako rozšíření průmyslové datové sběrnice M-Bus \cite{wirelessMBus_automatizace}.
 Po několika letech v průmyslu bezdrátových měřících systémů se tato technologie rozšířila do oblasti průmyslu senzorových sítí.
-Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace a objemu vysílaných dat \cite{wirelessMBus01} \cite{wirelessMBus02}. 
+Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace a objemu vysílaných dat \cite{wirelessMBus01}\DIFaddbegin \DIFadd{, }\DIFaddend \cite{wirelessMBus02}. 
 Wireless M-Bus síť má hvězdicovou topologii o dosahu 500 m v pásmu 868 MHz.
 Komunikaci vždy zahajuje koncové zařízení, které koncentrátor obsluhuje.
 Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
@@ -28,13 +35,13 @@ Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 
 \subsection{LoRa}
 LoRa (Long Range) je modulace navržena firmou Semtech.
-LoRaWAN je otevřený standardizovaný síťový protokol a systémová architektura navržen LoRa Aliancí definovný v LoRaWAN Specification \cite{lorawan_specification} vytvářející MAC (media acess control) vrstvu nad fyzickou vrstvou LoRa se zabezpečením přenášených dat. 
+LoRaWAN je otevřený standardizovaný síťový protokol a systémová architektura navržen LoRa Aliancí definovný v LoRaWAN \DIFdelbegin \DIFdel{Specification }\DIFdelend \DIFaddbegin \DIFadd{specifikaci }\DIFaddend \cite{lorawan_specification} vytvářející MAC (media acess control) vrstvu nad fyzickou vrstvou LoRa se zabezpečením přenášených dat. 
 %The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
 Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje.
-Pro nízkou spotřebu protokol umožňuje ladit SF (Spreading Factor) neboli přenosovou rychlost, pro regulaci dosahu, který je až 15-22 km mimo městskou část a 3-8 km ve městské části \cite{lorawan_specification}.
-V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární, Na trhu je mnoho koncových zařízení i gatewayí, s jejichž vzájemnou kompatibilitou neni problém. Gateway přeposílá přijaté packety s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
+Pro nízkou spotřebu protokol umožňuje ladit SF (Spreading Factor) \DIFdelbegin \DIFdel{neboli přenosovou rychlost}\DIFdelend \DIFaddbegin \DIFadd{odpovídající přenosové rychlosti}\DIFaddend , pro regulaci dosahu, který je až 15-22 km mimo městskou část a 3-8 km ve městské části \cite{lorawan_specification}.
+V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární\DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{. }\DIFaddend Na trhu je mnoho koncových zařízení i gatewayí \DIFdelbegin \DIFdel{, }\DIFdelend s jejichž vzájemnou kompatibilitou neni problém. Gateway přeposílá přijaté \DIFdelbegin \DIFdel{packety }\DIFdelend \DIFaddbegin \DIFadd{pakety }\DIFaddend s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
 Semtech je jediným výrobcem integrovaných obvodů podporujících LoRa modulaci. Na trhu je dostupných mnoho transceiverů, které používají tento integrovaný obvod, některé dokonce obsahují implementovaný LoRaWAN stack.
-Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat packety od koncových zařízení na více kanálech a přenosových rychlostech. Je zde i možnost udělat jednokanálovou gateway, která je schopna přijímat v jednu chvíli pouze jednom kanále a jedné přenosové rychlosti s použitím transceiveru pro koncová zařízení za cenu okolo \$5-20. V takové sítí pak musí být všechna koncová zařízení nakonfigurována na jednu konkrétní frekvenci a přenosovou rychlost.
+Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat \DIFdelbegin \DIFdel{packety }\DIFdelend \DIFaddbegin \DIFadd{pakety }\DIFaddend od koncových zařízení na více kanálech a přenosových rychlostech. Je zde i možnost udělat jednokanálovou gateway, která je schopna přijímat v jednu chvíli pouze \DIFaddbegin \DIFadd{na }\DIFaddend jednom kanále a jedné přenosové rychlosti s použitím transceiveru pro koncová zařízení za cenu okolo \$5-20. V takové sítí pak musí být všechna koncová zařízení nakonfigurována na jednu konkrétní frekvenci a přenosovou rychlost.
 
 % \begin{figure}[!h]
 %     \centering
@@ -48,11 +55,11 @@ Transceiver pro gateway má cenu okolo \$130 a umožňuje současně přijímat 
 \subsection{Zigbee}
 Zigbee je specifikace navržena pro IoT aplikace, založena na standardu  IEEE 802.15.4, vyvinuta Zigbee alliancí \cite{Zigbee_alliance_about}.
 Technologii Zigbee podporuje topologie mesh a hvězdice, většinou je použita topologie mesh pro rozšíření dosahu sítě, který je mezi dvěma zařízeními do 300 m na přímou viditelnost a 75 až 100 m v budově \cite{Zigbee_alliance_solution}. Jedna síť může obsahovat až 65000 zařízení.
-Dostupné transceivery na trhu se pohybují okolo \$8–30 od více různých výrobců, taktéž je i na trhu dostupnýchmnoho Zigbee koncových zařízení.
+Dostupné transceivery na trhu se pohybují okolo \$8–30 od více různých výrobců, taktéž je i na trhu \DIFdelbegin \DIFdel{dostupnýchmnoho }\DIFdelend \DIFaddbegin \DIFadd{dostupných mnoho }\DIFaddend Zigbee koncových zařízení.
 
 
 \subsection{BLE}
-Bluetooth Low Energy (BLE) je verze Bluetooth navržena pro minimální spotřebu energie, podporující topologie point-to-point, broadcast a mesh \cite{BT_alliance}.
+\DIFaddbegin \DIFadd{BLE (}\DIFaddend Bluetooth Low Energy\DIFdelbegin \DIFdel{(BLE}\DIFdelend ) je verze Bluetooth navržena pro minimální spotřebu energie, podporující topologie point-to-point, broadcast a mesh \cite{BT_alliance}.
 Dosah mezi dvěmi zařízeními je až 100 m \cite{BT_nordic}.
 Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých výrobců. Stejně tak je i na trhu mnoho dostupných koncových zařízení, ale mnohdy jsou tato koncová zařízení kompatibilní pouze se zařízení v rámci jednoho výrobce, tudíž může být problém je implementovat do vlastní senzorové sítě. 
 
@@ -70,19 +77,42 @@ V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných te
 
 % \begin{tabular}{|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 
-\begin{table}[!h]
+%DIF <  \begin{table}[!h]
+%DIF <    \centering
+%DIF <    \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
+%DIF <        \hline
+%DIF <                             & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
+%DIF <      topology               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
+%DIF <      maximum size of packet & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
+%DIF <      data rate              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
+%DIF <      band (Europe)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
+%DIF <      range                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
+%DIF <      security               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
+%DIF <      max radio output power & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
+%DIF <    \end{tabular}
+%DIF <    \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
+%DIF <    \label{table:shrnutiTechnologii}
+%DIF <  \end{table}
+\DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < 
+%DIFDELCMD < 
+%DIFDELCMD < %%%
+\DIFdelend \begin{table}[!h]
   \centering
+  \begin{ctucolortab}    
   \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
       \hline
                            & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
-    topology               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
-    maximum size of packet & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
-    data rate              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
-    band (Europe)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
-    range                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
-    security               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
-    max radio output power & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
+    Topologie               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
+    Max. velikost paketu & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
+    Přenosová rychlost              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
+    Pásmo (Evropa)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
+    Dosah                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
+    Zabezp.               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
+    Max. vysílací výkon & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
   \end{tabular}
+  \end{ctucolortab}
   \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
   \label{table:shrnutiTechnologii}
 \end{table}
@@ -91,7 +121,7 @@ V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných te
 \section{Vybraná přenosová technologie}
 % Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.
-Pro tento projekt byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž není to plně LoRaWAN kompatibilní.
+Pro tento \DIFdelbegin \DIFdel{projekt }\DIFdelend \DIFaddbegin \DIFadd{vybraný případ }\DIFaddend byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž \DIFdelbegin \DIFdel{není to }\DIFdelend \DIFaddbegin \DIFadd{to není }\DIFaddend plně LoRaWAN kompatibilní.
 V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
 Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
 LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 

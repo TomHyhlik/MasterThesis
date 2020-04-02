@@ -1,4 +1,4 @@
-  \chapter{Výběr bezdrátové technologue pro senzorovou síť}
+\chapter{Výběr bezdrátové technologie pro senzorovou síť}
 Navržená senzorová síť je napojena na infrastrukturu zavedeného přístupového systému v budově zákazníka s dosahem po celé budově a jejím okolí. Takto navržená síť umožní v těchto prostorách snímání dat z desítek senzorů.
 Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat uplementaci celé sítě bez závislosti na siti třetích stran. 
@@ -70,22 +70,44 @@ V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných te
 
 % \begin{tabular}{|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
 
+% \begin{table}[!h]
+%   \centering
+%   \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
+%       \hline
+%                            & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
+%     topology               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
+%     maximum size of packet & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
+%     data rate              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
+%     band (Europe)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
+%     range                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
+%     security               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
+%     max radio output power & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
+%   \end{tabular}
+%   \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
+%   \label{table:shrnutiTechnologii}
+% \end{table}
+
+
+
 \begin{table}[!h]
   \centering
+  \begin{ctucolortab}    
   \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
       \hline
                            & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
-    topology               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
-    maximum size of packet & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
-    data rate              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
-    band (Europe)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
-    range                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
-    security               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
-    max radio output power & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
+    Topologie               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
+    Max. velikost paketu & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
+    Přenosová rychlost              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & up to 1 Mb/s                                              \\ \hline
+    Pásmo (Evropa)          & 868 MHz               & 868 MHz               & 868 MHz                         & 2.4 GHz                                  & 2.4 GHz                                                   \\ \hline
+    Dosah                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
+    Zabezp.               & AES-128               & AES-128               & AES-128                         & AES-128                                  & AES-128                                                   \\ \hline
+    Max. vysílací výkon & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
   \end{tabular}
+  \end{ctucolortab}
   \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
   \label{table:shrnutiTechnologii}
 \end{table}
+
 
 
 \section{Vybraná přenosová technologie}
