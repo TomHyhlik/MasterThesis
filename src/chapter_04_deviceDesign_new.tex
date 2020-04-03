@@ -45,8 +45,8 @@ Tento problěm je řešen ta, že LoRaWAN packety z koncových zařízení jsou 
 Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
 Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
-
-LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
+%% todo, cast teto vet uz je v predchozi kapitole
+LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
 
 Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přistupu, není zde možnost předávávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou zařízení. Geteway tedy má tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
 % LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.

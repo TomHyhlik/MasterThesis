@@ -15,9 +15,20 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-    projekt misto vybrany pripad .... zmenit v kapitole device design   
-    paket misto packet
-    lw specifikace misto specification
+    - neuvadi proc jste vybral LoRa technologii, na to by se oponent urcite zeptal. nejake shrnuti z te tabulky?
 
-    jak prelozit LoRaWAN stack, payload
-    
+    zmenit v kapitole device design   
+        projekt misto vybrany pripad
+        paket misto packet
+        lw specifikace misto specification
+
+    - "IQRF je technologie vyvinuta IQRF aliancí" opravdu? a nevyvinula to spolecnost Microrisc, ktera pak zalozila alianci?
+
+
+## mail
+    Jak prelozit: LoRaWAN stack, payload?
+
+    - nadpis tabulky se uvadi nad tabulkou
+    S tim souhlasim, ale LaTeX sablona kterou pouzivam viz odkaz nize to takhle ma nejak na pevno nastavene a me se nepodarilo to zmenit. Pripadne muzu pouzit jinou sablonu. Nicmene na BP jsem tuto sablonu taky mel a proslo to tak, ale uz si nepamatuju jak jsme to resili.
+    https://github.com/tohecz/ctuthesis
+

@@ -10,7 +10,7 @@ Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí použ
 Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento vybraný případ.
 
 \subsection{IQRF}
-IQRF je technologie vyvinuta IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK (Software Development Kit) \cite{iqrf_sdk} a IDE (Integrated Development Environment) \cite{iqrf_ide}.
+IQRF je technologie podporována IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK (Software Development Kit) \cite{iqrf_sdk} a IDE (Integrated Development Environment) \cite{iqrf_ide}.
 Technologie IQRF bývá použita k realizaci sítí o topologii typu mesh nebo hvězdice.
 Jedna síť má jednoho koordinátora, který slouží jako gateway a může obsahovat až 240 zařízení (včetně koordinátora). Pro požadavek vyššího počtu zařízení je efektivnější zřetězit více sítí, s jednotlivými koordinátory a různými RF kanály pro vyšší propustnost.
 % https://iqrf.org/support/networkingfaq
@@ -67,13 +67,17 @@ Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých v�
 % This technology based on IPv6 was developed for home network controlled by smartphone, tablet or PC \cite{29} \cite{30} \cite{31}.
 
 
-\section{Shrnutí vlastností vybraných technologií}
-V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
+% \section{Shrnutí vlastností vybraných technologií}
+% V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
 
+\newpage
+\section{Vybraná přenosová technologie}
+Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technologií.   
 
 % \begin{tabular}{|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-
+  
 \begin{table}[!h]
+  \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
   \centering
   \begin{ctucolortab}    
   \begin{tabular}{|p{1.5cm}||p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{2.5cm}|}
@@ -88,20 +92,21 @@ V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných te
     Max. vysílací výkon & up to 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
   \end{tabular}
   \end{ctucolortab}
-  \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
   \label{table:shrnutiTechnologii}
 \end{table}
 
 
-\section{Vybraná přenosová technologie}
 % Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.
 Pro tento vybraný případ byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž to není plně LoRaWAN kompatibilní.
 V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
 Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
 LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
-
-
+LoRaWAN síť má hvězdicovou topologii při dostatečném dosahu pro pokrytí budovy a jejím okolí, navíc dosah lze ladit parametrem SF. Pro tento vybraný případ je to vhodné, jelikož pravděpodobně všechna zařízení v síti budou senzory napájeny z baterie, a není předpokládáno, že by byly připojeny zařízení umožňující směrování paketů z důvodu spotřeby energie. 
+LoRaWAN síť umožňuje koncovým zařízením po změření dat senzory je ihned odeslat na gateway bez nutností čekání na potvrzení, tudíž se koncové zařízení může ihned přepnout do režimu spánku a tím eliminovat spotřebu energie. 
+Případné občasně kolize mají za důsledek selhání dorůčení paketu, ale pro tento vybraný případ to není příliš závažný problém.
+Frekvenční ISM pásmo 868 MHz, které používá LoRa je limitováno na maximální dobu vysílání 1\% času jedním zařízením a přenosová rychlost této technologie patři mezi nejnižší z kandidátních technologií. Pro tento vybraný případ se předpokládá přenášení pouhých hodnot senzorů o velikosti několik jednotek až desitek bytů s intervalem několika minut až hodin, tudíž to pro tento vybraný případ vyhovuje.
+LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné packety, tudíž je toto zabezpečení dostatečné. 
 
 
 
