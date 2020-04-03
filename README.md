@@ -15,14 +15,10 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-    - neuvadi proc jste vybral LoRa technologii, na to by se oponent urcite zeptal. nejake shrnuti z te tabulky?
-
     zmenit v kapitole device design   
         projekt misto vybrany pripad
         paket misto packet
         lw specifikace misto specification
-
-    - "IQRF je technologie vyvinuta IQRF aliancí" opravdu? a nevyvinula to spolecnost Microrisc, ktera pak zalozila alianci?
 
 
 ## mail
