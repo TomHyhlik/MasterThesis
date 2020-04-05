@@ -89,7 +89,7 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
 \DIFaddbegin \DIFadd{Vývojový kit NUCLEO-L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD\mbox{%DIFAUXCMD
 \cite{nucleoST}}\hspace{0pt}%DIFAUXCMD
 ). 
-K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj.
+K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje aplikace.
 LoRa transceiver RFM95w je PCB (Printed Circuit Board) s čipem SX1276. Pro tento prototyp je použit integrovaný v Dragino LoRa Shield \mbox{%DIFAUXCMD
 \cite{draginoWiki}}\hspace{0pt}%DIFAUXCMD
 , který má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ.
@@ -197,8 +197,8 @@ je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, kter�
     \label{fig:03}
 \end{figure}
 
-\DIFadd{TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
-Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1.
+%DIF >  TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
+\DIFadd{Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1.
 }
 
 \begin{table}[h]
@@ -233,12 +233,15 @@ Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB j
 
 \DIFaddend %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \DIFaddbegin \subsection{\DIFadd{Vývoj FW pro prototyp gatewaye}}
+
 \DIFadd{todo
 }
 
 \subsubsection{\DIFadd{Použité vývojové nástroje}}
 \DIFadd{todo
 }
+
+
 
 \subsubsection{\DIFadd{Nahrávání programu do procesoru a debugování}}
 \DIFadd{todo
