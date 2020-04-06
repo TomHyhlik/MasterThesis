@@ -43,7 +43,7 @@ Tento problěm je řešen ta, že LoRaWAN packety z koncových zařízení jsou 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh WSN gatewaye}
 Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
-Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
+Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW \DIFaddbegin \DIFadd{(FW) }\DIFaddend gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
 \DIFdelbegin %DIFDELCMD < 
 
@@ -86,7 +86,7 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
 %DIF < It is  was used for the prototype, because it has all required parameters, it is cheap, powerful enough and easily prototypable.
 %DIF <  The price of the devlopment board is \$13 USD\cite{nucleoST}.
 %DIF <  LoRa transceiver board RFM95w with SX1276 chip integrated into Dragino LoRa Shield has the same pinout as the NUCLEO-L073RZ development board. RS485 transceiver as an RS485/UART interface enables communication with Control Panel.
-\DIFaddbegin \DIFadd{Vývojový kit NUCLEO-L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD\mbox{%DIFAUXCMD
+\DIFaddbegin \DIFadd{Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD\mbox{%DIFAUXCMD
 \cite{nucleoST}}\hspace{0pt}%DIFAUXCMD
 ). 
 K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje aplikace.
@@ -100,7 +100,7 @@ RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s 
 \DIFaddbegin \begin{table}[h]
 \centering
 \footnotesize
-\caption{\DIFaddFL{Vlastnosti procesoru STM32L073RZ \mbox{%DIFAUXCMD
+\caption{\DIFaddFL{Vlastnosti mikrokontroléru STM32L073RZ \mbox{%DIFAUXCMD
 \cite{nucleoST}}\hspace{0pt}%DIFAUXCMD
 }}
 \begin{ctucolortab}
@@ -198,7 +198,7 @@ je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, kter�
 \end{figure}
 
 %DIF >  TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
-\DIFadd{Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1.
+\DIFadd{Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1. Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
 }
 
 \begin{table}[h]
@@ -207,7 +207,7 @@ je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, kter�
             \begin{tabular}{ |c|c|c| }
      \hline
 
-     \DIFaddFL{Periférie          }& \DIFaddFL{Název pinu }& \DIFaddFL{Pin procesoru           }\\ \hline \hline
+     \DIFaddFL{Periférie          }& \DIFaddFL{Název pinu }& \DIFaddFL{GPIO mikrokontroléru           }\\ \hline \hline
 
                         & \DIFaddFL{CS    }&  \DIFaddFL{PB6             }\\
                         & \DIFaddFL{CLK   }&  \DIFaddFL{PA5        }\\
@@ -226,24 +226,33 @@ je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, kter�
 
     \end{tabular}
     \end{ctucolortab}
-    \caption{\DIFaddFL{Pinout připojení externích periférií k procesoru}}
-    \label{table:3}
+    \caption{\DIFaddFL{Pinout připojení periférií k mikrokontroléru}}
+    \label{table:Pinout připojení periférií k mikrokontroléru}
 \end{table}
 
 
 \DIFaddend %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFaddbegin \subsection{\DIFadd{Vývoj FW pro prototyp gatewaye}}
-
-\DIFadd{todo
+\DIFaddbegin \subsection{\DIFadd{Použité vývojové nástroje}}
+\DIFadd{Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \mbox{%DIFAUXCMD
+\cite{stm32cubemx} }\hspace{0pt}%DIFAUXCMD
+ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
+Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci systémového hodinového signálu, watchdogu, GPIO a rozhranní.
 }
 
-\subsubsection{\DIFadd{Použité vývojové nástroje}}
-\DIFadd{todo
+\DIFadd{Kód byl vyvíjen v textovém editoru Visual Studio Code \mbox{%DIFAUXCMD
+\cite{vscode}}\hspace{0pt}%DIFAUXCMD
+, kompilován kompilátorem arm-none-eabi-gcc \mbox{%DIFAUXCMD
+\cite{arm-none-eabi-gcc} }\hspace{0pt}%DIFAUXCMD
+pomocí nástroje GNU make \mbox{%DIFAUXCMD
+\cite{makefile}}\hspace{0pt}%DIFAUXCMD
+, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \mbox{%DIFAUXCMD
+\cite{st-flash} }\hspace{0pt}%DIFAUXCMD
+a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \mbox{%DIFAUXCMD
+\cite{cortex-debug}}\hspace{0pt}%DIFAUXCMD
+.
 }
 
-
-
-\subsubsection{\DIFadd{Nahrávání programu do procesoru a debugování}}
+\subsubsection{\DIFadd{Nahrávání programu do mikrokontroléru a debugování}}
 \DIFadd{todo
 }
 
@@ -390,15 +399,15 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
 Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DIFaddbegin \newpage
+\DIFaddend %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Log Gatewaye}
 Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
 \DIFdelbegin %DIFDELCMD < \begin{lstlisting}[style=log]
 %DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \newpage
-\begin{lstlisting}[style=CStyle]
+\DIFdelend \DIFaddbegin \begin{lstlisting}[style=CStyle]
     ________________________________________________
     Rx -> LoRaWAN, pktCntr: 6
     RSSI: -51, SNR: 9, length: 22
@@ -434,8 +443,7 @@ Do režimu konfigurace je vstoupeno odesláním "config", následuje vypsání s
 Procházení jednotlivými menu je navrženo jedodušše tak, aby uživatel nepotřeboval dokumentaci a aby zde vždy bylo uvedeno dost informací pro srozumitelnost.
 Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující informaci o aktuální konfiguraci a hlavní konfigurační menu.
 
-\DIFaddbegin \newpage
-\DIFaddend \begin{lstlisting}[style=log]
+\begin{lstlisting}[style=log]
 
     _________________Entering configuration setup________________
     
@@ -587,8 +595,8 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \end{table}
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DIFaddbegin \newpage
+\DIFaddend %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Podpora koncových zařízení}
 Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z dat payloadu vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
 Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení. Tabulka \ref{table:TypyKoncZarizeni} ukazuje hodnotu bytu označující typ koncového zařízení odpovídající konkrétním typům koncových zařízení.

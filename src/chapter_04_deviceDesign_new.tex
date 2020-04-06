@@ -127,7 +127,7 @@ LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit 
 \end{figure}
 
 % TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
-Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1.
+Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1. Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
 
 \begin{table}[h]
     \centering
@@ -135,7 +135,7 @@ Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB j
             \begin{tabular}{ |c|c|c| }
      \hline
 
-     Periférie          & Název pinu & Pin mikrokontroléru           \\ \hline \hline
+     Periférie          & Název pinu & GPIO mikrokontroléru           \\ \hline \hline
 
                         & CS    &  PB6             \\
                         & CLK   &  PA5        \\
@@ -155,19 +155,16 @@ Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB j
     \end{tabular}
     \end{ctucolortab}
     \caption{Pinout připojení periférií k mikrokontroléru}
-    \label{table:3}
+    \label{table:Pinout připojení periférií k mikrokontroléru}
 \end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Použité vývojové nástroje}
 Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \cite{stm32cubemx} ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
-Pomocí tohoto nástroje byly ...
+Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci systémového hodinového signálu, watchdogu, GPIO a rozhranní.
 
-vscode
-makefile
-st-flash
-cortex-debug
+Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
 \subsubsection{Nahrávání programu do mikrokontroléru a debugování}
 todo
@@ -315,12 +312,12 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
 Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Log Gatewaye}
 Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
-\newpage
 \begin{lstlisting}[style=CStyle]
     ________________________________________________
     Rx -> LoRaWAN, pktCntr: 6
@@ -357,7 +354,6 @@ Do režimu konfigurace je vstoupeno odesláním "config", následuje vypsání s
 Procházení jednotlivými menu je navrženo jedodušše tak, aby uživatel nepotřeboval dokumentaci a aby zde vždy bylo uvedeno dost informací pro srozumitelnost.
 Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující informaci o aktuální konfiguraci a hlavní konfigurační menu.
 
-\newpage
 \begin{lstlisting}[style=log]
 
     _________________Entering configuration setup________________
@@ -511,7 +507,7 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \end{table}
 
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Podpora koncových zařízení}
 Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z dat payloadu vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
