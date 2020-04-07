@@ -166,8 +166,59 @@ Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci sys
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
+\subsection{Vývoj FW}
+
+
+
+
+
+
+
 \subsubsection{Nahrávání programu do mikrokontroléru a debugování}
 todo
+
+
+
+% \subsection{Zdrojové soubory projektu}
+% Pro šifrování LoRaWAN paketu byla použita knihovna AES-128, dostupná na githubu \cite{AESlib} a knihovna OpenPANA také dostupná z githubu \cite{CMAClib}.
+% Níže je seznam zdrojových souborů.
+
+% \begin{figure}[!h]
+%     \dirtree{%
+%         .1 Drivers \DTcomment{STM32 Drivers}.
+%         .1 Inc\DTcomment{Headers}.
+%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
+%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
+%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
+%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
+%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
+%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
+%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
+%             .2 main.h\DTcomment{Main file}.
+%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
+%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
+%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
+%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
+%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
+%         .1 Src\DTcomment{Sources}.
+%             .2 aes.c \DTcomment{source file to the aes.h}.
+%             .2 aes.c \DTcomment{source file to the cmac.h}.
+%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
+%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
+%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
+%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
+%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
+%             .2 main.c \DTcomment{main source file}.
+%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
+%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
+%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
+%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
+%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
+%             .2 usb.h \DTcomment{source file to the usb.h}.
+%     }
+% \end{figure}
+
+
 
 
 
@@ -576,7 +627,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-    
+     
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
@@ -612,49 +663,6 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 % Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro až 760 koncových zařízení.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Naprogramování}
-% K naprogramování MCU byla použita HAL knihovna a inicializační nástroj STM32CubeMX poskytnuté výrobcem, tedy ST Microelectronics.
-% Zdrojové soubory programu byly vyvíjeny v textovém editoru VS-Code, ke kompilaci zdrojových souborů byl použit kompilátor arm-none-eabi-gcc a jako pomocný nástroj makefile skript. 
-
-% \subsection{Zdrojové soubory projektu}
-% Pro šifrování LoRaWAN paketu byla použita knihovna AES-128, dostupná na githubu \cite{AESlib} a knihovna OpenPANA také dostupná z githubu \cite{CMAClib}.
-% Níže je seznam zdrojových souborů.
-
-% \begin{figure}[!h]
-%     \dirtree{%
-%         .1 Drivers \DTcomment{STM32 Drivers}.
-%         .1 Inc\DTcomment{Headers}.
-%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
-%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
-%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
-%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
-%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
-%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
-%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
-%             .2 main.h\DTcomment{Main file}.
-%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
-%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
-%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
-%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
-%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
-%         .1 Src\DTcomment{Sources}.
-%             .2 aes.c \DTcomment{source file to the aes.h}.
-%             .2 aes.c \DTcomment{source file to the cmac.h}.
-%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
-%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
-%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
-%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
-%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
-%             .2 main.c \DTcomment{main source file}.
-%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
-%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
-%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
-%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
-%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
-%             .2 usb.h \DTcomment{source file to the usb.h}.
-%     }
-% \end{figure}
 
 
 % \subsection{Nahrání programu do MCU}

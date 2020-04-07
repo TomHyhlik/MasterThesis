@@ -19,6 +19,3 @@ https://ebookcentral.proquest.com/
         projekt misto vybrany pripad
         paket misto packet
         lw specifikace misto specification
-
-    stack - datova struktura
-        https://cs.wikipedia.org/wiki/Z%C3%A1sobn%C3%ADk_(datov%C3%A1_struktura)

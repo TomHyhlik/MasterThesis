@@ -29,7 +29,7 @@ Navržená gateway bere seznam platných karet jako seznam platných koncových 
 Data z koncových zařízení jsou odesílána na server řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá poze 6 B pro data z koncového zařízení, což je velké omezení.
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the packet was received and the 6 remaining bytes are used for the node data.
 LoRaWAN protokol používá packet, jehož samotná hlavička je o minimální velikosti 13 B. 
-Různá LoRaWAN koncová zařízení používají různé velikosti payloadu, takže není možné odesílat celý payload koncového zařízení přes síť RS485.
+Různá LoRaWAN koncová zařízení používají různé velikosti datového obsahu (payloadu), takže není možné odesílat celý payload koncového zařízení přes síť RS485.
 Tento problěm je řešen ta, že LoRaWAN packety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
 % In summary, when the Gateway receives an encrypted LoRaWAN packet, it looks for whether the Node device address is in the list of known device addresses.
 % If this is the case, the packet is encoded in the communication protocol of the Gateway and sent to the Control Panel. If there is not enough space in communication protocol of the Gateway, the packet is decrypted and relevant data, i.e., sensor values, are selected.
@@ -42,8 +42,8 @@ Tento problěm je řešen ta, že LoRaWAN packety z koncových zařízení jsou 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh WSN gatewaye}
-Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
-Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW (FW) gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
+Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
+Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování datového obsahu (payloadu) ve FW (FW) gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
 %% todo, cast teto vet uz je v predchozi kapitole
 LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
@@ -166,8 +166,59 @@ Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci sys
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
+\subsection{Vývoj FW}
+
+
+
+
+
+
+
 \subsubsection{Nahrávání programu do mikrokontroléru a debugování}
 todo
+
+
+
+% \subsection{Zdrojové soubory projektu}
+% Pro šifrování LoRaWAN paketu byla použita knihovna AES-128, dostupná na githubu \cite{AESlib} a knihovna OpenPANA také dostupná z githubu \cite{CMAClib}.
+% Níže je seznam zdrojových souborů.
+
+% \begin{figure}[!h]
+%     \dirtree{%
+%         .1 Drivers \DTcomment{STM32 Drivers}.
+%         .1 Inc\DTcomment{Headers}.
+%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
+%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
+%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
+%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
+%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
+%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
+%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
+%             .2 main.h\DTcomment{Main file}.
+%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
+%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
+%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
+%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
+%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
+%         .1 Src\DTcomment{Sources}.
+%             .2 aes.c \DTcomment{source file to the aes.h}.
+%             .2 aes.c \DTcomment{source file to the cmac.h}.
+%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
+%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
+%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
+%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
+%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
+%             .2 main.c \DTcomment{main source file}.
+%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
+%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
+%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
+%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
+%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
+%             .2 usb.h \DTcomment{source file to the usb.h}.
+%     }
+% \end{figure}
+
+
 
 
 
@@ -341,7 +392,7 @@ Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket
     ACK
 \end{lstlisting}
 
-Nejprve jsou vypsány data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný payload koncového zařízení, typ zařízení a výsledné hodnoty dekódované z payloadu.
+Nejprve jsou vypsány data týkající se LoRaWAN protokolu, zašifrovaný i dešifrovaný datový obsah (payload) koncového zařízení, typ zařízení a výsledné hodnoty dekódované z payloadu.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -510,7 +561,7 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Podpora koncových zařízení}
-Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z dat payloadu vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
+Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z datového obsahu (payloadu) vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
 Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení. Tabulka \ref{table:TypyKoncZarizeni} ukazuje hodnotu bytu označující typ koncového zařízení odpovídající konkrétním typům koncových zařízení.
 
 \begin{table}[!h]
@@ -612,49 +663,6 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 % Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro až 760 koncových zařízení.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Naprogramování}
-% K naprogramování MCU byla použita HAL knihovna a inicializační nástroj STM32CubeMX poskytnuté výrobcem, tedy ST Microelectronics.
-% Zdrojové soubory programu byly vyvíjeny v textovém editoru VS-Code, ke kompilaci zdrojových souborů byl použit kompilátor arm-none-eabi-gcc a jako pomocný nástroj makefile skript. 
-
-% \subsection{Zdrojové soubory projektu}
-% Pro šifrování LoRaWAN paketu byla použita knihovna AES-128, dostupná na githubu \cite{AESlib} a knihovna OpenPANA také dostupná z githubu \cite{CMAClib}.
-% Níže je seznam zdrojových souborů.
-
-% \begin{figure}[!h]
-%     \dirtree{%
-%         .1 Drivers \DTcomment{STM32 Drivers}.
-%         .1 Inc\DTcomment{Headers}.
-%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
-%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
-%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
-%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
-%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
-%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
-%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
-%             .2 main.h\DTcomment{Main file}.
-%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
-%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
-%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
-%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
-%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
-%         .1 Src\DTcomment{Sources}.
-%             .2 aes.c \DTcomment{source file to the aes.h}.
-%             .2 aes.c \DTcomment{source file to the cmac.h}.
-%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
-%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
-%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
-%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
-%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
-%             .2 main.c \DTcomment{main source file}.
-%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
-%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
-%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
-%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
-%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
-%             .2 usb.h \DTcomment{source file to the usb.h}.
-%     }
-% \end{figure}
 
 
 % \subsection{Nahrání programu do MCU}
