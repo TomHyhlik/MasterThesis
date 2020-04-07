@@ -15,7 +15,4 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-    zmenit v kapitole device design   
-        projekt misto vybrany pripad
-        paket misto packet
-        lw specifikace misto specification
+
