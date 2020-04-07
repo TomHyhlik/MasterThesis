@@ -1,107 +1,130 @@
 % \chapter{Measurement Results and Discussion}
 \chapter{Měření výsledky a diskuse}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-One floor block of university building is selected to perform the test. It is equipped with twelve CKP devices, each controlling one Door Lock and one Reader. One Gateway is added to the infrastructure, i.e., thirteen devices are connected to one RS485 network. Two temperature/humidity sensor nodes are wirelessly connected to the Gateway. The Gateway and CKP devices are connected via RS485 network as shown in Fig. \ref{fig:Access control system architecture}. The specific location of CKP devices, Gateway and two sensor nodes on the floor is shown in Fig. \ref{fig:CorridorFloorPlan}.
 
 
-The long-term operation test is carried out from 21$^{st}$ September to 31$^{th}$ October, i.e., in the period involving the presence of students and employees in the classrooms and offices on the monitored floor of the university.
-During this period, the Control Panel received 1~876~978 packets (14~074~522 Bytes) and sent 1~101~556 packets (8~295~219 Bytes) from/to RS485 network. 
-The lengths of all 2~978~534 packets, i.e., 22~369~741 Bytes, are recorded in RS485 network during long-term operation test and the frequency analysis  method, i.e., the number of packet lengths in monitored period, is performed. Three packets reach the largest value, i.e., 40 Bytes. 
-Considering the total amount of packets, it is negligible quantity, i.e, 1.3E-04\%. However, given the nature of the system, i.e., the system with the primary function of access to a restricted area, the worst-case scenario is considered to be an uncrossable limit. 
-Number of sensor nodes that can be wirelessly connected to the Gateway and does not affect the existing access control system, can be calculated in dependence on used RS485 data rate. The reserve of the data rate is considered in order to protect the access control system from malfunction, e.g., a long waiting for the door to open.
+% \begin{figure*}[!ht]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{5patro}
+%     \caption{Location of sensor nodes and CKP devices on the university floor}
+%     \label{fig:CorridorFloorPlan}
+% \end{figure*}
 
-\begin{table}[h]
-\centering
-\footnotesize
-\caption{Packet length frequency analysis}
-\begin{tabular}{cr}
-Packet length &  Count \\ \hline
-\textbf{7}  &  \textbf{2~216~098}  \\
-8  &   619~127   \\
-9  &         3   \\
-11 &    58~393   \\
-13 &    58~620   \\
-16 &         1   \\
-18 &         2   \\
-\textbf{19} &    \textbf{26~286}   \\
-23 &         1   \\
-40 &         3   \\
-\end{tabular}
-\label{tab:FreqAnalysis}
-\end{table}
+% One floor block of university building is selected to perform the test. It is equipped with twelve CKP devices, each controlling one Door Lock and one Reader. One Gateway is added to the infrastructure, i.e., thirteen devices are connected to one RS485 network. Two temperature/humidity sensor nodes are wirelessly connected to the Gateway. The Gateway and CKP devices are connected via RS485 network as shown in Fig. \ref{fig:Access control system architecture}. The specific location of CKP devices, Gateway and two sensor nodes on the floor is shown in Fig. \ref{fig:CorridorFloorPlan}.
 
-\begin{figure*}[ht]
-    \centering
-    \includegraphics[width=1\textwidth]{03-dr-measured}
-    \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
-    \label{fig:PacketLengthMeasuredAll}
-\end{figure*}
 
-Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
+% The long-term operation test is carried out from 21$^{st}$ September to 31$^{th}$ October, i.e., in the period involving the presence of students and employees in the classrooms and offices on the monitored floor of the university.
+% During this period, the Control Panel received 1~876~978 packets (14~074~522 Bytes) and sent 1~101~556 packets (8~295~219 Bytes) from/to RS485 network. 
+% The lengths of all 2~978~534 packets, i.e., 22~369~741 Bytes, are recorded in RS485 network during long-term operation test and the frequency analysis  method, i.e., the number of packet lengths in monitored period, is performed. Three packets reach the largest value, i.e., 40 Bytes. 
+% Considering the total amount of packets, it is negligible quantity, i.e, 1.3E-04\%. However, given the nature of the system, i.e., the system with the primary function of access to a restricted area, the worst-case scenario is considered to be an uncrossable limit. 
+% Number of sensor nodes that can be wirelessly connected to the Gateway and does not affect the existing access control system, can be calculated in dependence on used RS485 data rate. The reserve of the data rate is considered in order to protect the access control system from malfunction, e.g., a long waiting for the door to open.
 
-%Fig. \ref{fig:PacketLengthMeasuredAll} shows 
-%Two imporatnt characteristics are displayed, maximal length of packet (red colored dash line) and median length of packet (red colored solid line). It is determined by frequency analysis method as shown in Tab. \ref{tab:FreqAnalysis}. Average RS485 network channel traffic load is 6.38 pps, i.e., 0.85 Bps.
-%shows lengths of captured packet  during
-%Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
-% 7,51 Byte --> simple arithmetic mean
-
-During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
-Fig.~\ref{fig:PacketLengthMeasuredAll}.
-Red colored dashed line (with value of 2520~bps) shows one second time interval in which a sum of captured packets is transported in RS485 network. It shows, based on detailed knowledge of the IMA protocol, less than 20\% of the RS485 network capacity is used. 
-%This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
-
-To avoid RS485 network congestion the maximum number of sensor nodes $ S_{MAX} $ can be calculated as:
-\begin{equation}
-S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
-\label{equ:max-count-of-sensors}
-\end{equation}
-
-where:
-
-\begin{tabular}{l @{  } l}
-$v_{485}$ & 485 network data rate [bps]\\
- B        & bits to Byte \\
-$l_{MAX}$ & maximal packet length \\
- R        & reserve of the data rate [\%]\\
- P        & number of packets to transmit sensor data \\
-\end{tabular}
-
-Considering above mentioned limits, desired reserves and RS485 data rates, the maximum number of sensor nodes simultaneously transmitting their data on RS485 network is calculated, Tab. \ref{tab:max-sensor-nodes}.
-
-Values for calculation are:
-
-\begin{tabular}{l @{ $=$ } l}
-$v_{485}$ & RS485 network data rate \\
- B        & 8 \\
-$l_{MAX}$ & 40 \\
- P        & 2 \\
-\end{tabular}
-
-% todo: this table makes error
-% \begin{table}[ht]
+% \begin{table}[h]
 % \centering
 % \footnotesize
-% \caption{Maximum number of sensor nodes simultaneously transmitting their data in RS485 network with desired reserve}
-% \begin{tabular}{r|rrrr}
-% \multicolumn{1}{c|}{\textbf{RS485}}     & \multicolumn{4}{c}{\multirow{2}{*}{\textbf{Reserve} $R$}}\\
-% \multicolumn{1}{c|}{\textbf{data rate}} &   \\
-% $v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
-%   1200~~~ &    1	&    1	&    1	&    1 \\
-%   2400~~~ &    3	&    3	&    3	&    2 \\
-%   4800~~~ &    7	&    6	&    6	&    5 \\
-%   9600~~~ &   15	&   13	&   12	&   10 \\
-%  19200~~~ &   30	&   27	&   24	&   21 \\
-%  38400~~~ &   60	&   54	&   48	&   42 \\
-%  57600~~~ &   90	&   81	&   72	&   63 \\
-% 115200~~~ &  180	&  162	&  144	&  126 \\
-% 230400~~~ &  360	&  324	&  288	&  252 \\
-% 460800~~~ &  720	&  648	&  576	&  504 \\
-% 921600~~~ & 1440	& 1296	& 1152	& 1008 \\
+% \caption{Packet length frequency analysis}
+% \begin{tabular}{cr}
+% Packet length &  Count \\ \hline
+% \textbf{7}  &  \textbf{2~216~098}  \\
+% 8  &   619~127   \\
+% 9  &         3   \\
+% 11 &    58~393   \\
+% 13 &    58~620   \\
+% 16 &         1   \\
+% 18 &         2   \\
+% \textbf{19} &    \textbf{26~286}   \\
+% 23 &         1   \\
+% 40 &         3   \\
 % \end{tabular}
-% \label{tab:max-sensor-nodes}
+% \label{tab:FreqAnalysis}
 % \end{table}
 
-For example, WSN can connect up to 162 sensor nodes that work in RS485 network with a 115200~bps data rate and 10 \% reserve, or up to 126 sensor nodes with a 115200~bps data rate and 30 \% reserve. The results also show, one floor block of university building, i.e., one RS485 network, can operates dozens of sensors with sufficient reserve protecting the access control system from malfunction.   
+% \begin{figure*}[ht]
+%     \centering
+%     \includegraphics[width=1\textwidth]{03-dr-measured}
+%     \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
+%     \label{fig:PacketLengthMeasuredAll}
+% \end{figure*}
+
+% Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
+
+% %Fig. \ref{fig:PacketLengthMeasuredAll} shows 
+% %Two imporatnt characteristics are displayed, maximal length of packet (red colored dash line) and median length of packet (red colored solid line). It is determined by frequency analysis method as shown in Tab. \ref{tab:FreqAnalysis}. Average RS485 network channel traffic load is 6.38 pps, i.e., 0.85 Bps.
+% %shows lengths of captured packet  during
+% %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
+% % 7,51 Byte --> simple arithmetic mean
+
+% During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
+% Fig.~\ref{fig:PacketLengthMeasuredAll}.
+% Red colored dashed line (with value of 2520~bps) shows one second time interval in which a sum of captured packets is transported in RS485 network. It shows, based on detailed knowledge of the IMA protocol, less than 20\% of the RS485 network capacity is used. 
+% %This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
+
+% To avoid RS485 network congestion the maximum number of sensor nodes $ S_{MAX} $ can be calculated as:
+% \begin{equation}
+% S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
+% \label{equ:max-count-of-sensors}
+% \end{equation}
+
+% where:
+
+% \begin{tabular}{l @{  } l}
+% $v_{485}$ & 485 network data rate [bps]\\
+%  B        & bits to Byte \\
+% $l_{MAX}$ & maximal packet length \\
+%  R        & reserve of the data rate [\%]\\
+%  P        & number of packets to transmit sensor data \\
+% \end{tabular}
+
+% Considering above mentioned limits, desired reserves and RS485 data rates, the maximum number of sensor nodes simultaneously transmitting their data on RS485 network is calculated, Tab. \ref{tab:max-sensor-nodes}.
+
+% Values for calculation are:
+
+% \begin{tabular}{l @{ $=$ } l}
+% $v_{485}$ & RS485 network data rate \\
+%  B        & 8 \\
+% $l_{MAX}$ & 40 \\
+%  P        & 2 \\
+% \end{tabular}
+
+% % todo: this table makes error
+% % \begin{table}[ht]
+% % \centering
+% % \footnotesize
+% % \caption{Maximum number of sensor nodes simultaneously transmitting their data in RS485 network with desired reserve}
+% % \begin{tabular}{r|rrrr}
+% % \multicolumn{1}{c|}{\textbf{RS485}}     & \multicolumn{4}{c}{\multirow{2}{*}{\textbf{Reserve} $R$}}\\
+% % \multicolumn{1}{c|}{\textbf{data rate}} &   \\
+% % $v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
+% %   1200~~~ &    1	&    1	&    1	&    1 \\
+% %   2400~~~ &    3	&    3	&    3	&    2 \\
+% %   4800~~~ &    7	&    6	&    6	&    5 \\
+% %   9600~~~ &   15	&   13	&   12	&   10 \\
+% %  19200~~~ &   30	&   27	&   24	&   21 \\
+% %  38400~~~ &   60	&   54	&   48	&   42 \\
+% %  57600~~~ &   90	&   81	&   72	&   63 \\
+% % 115200~~~ &  180	&  162	&  144	&  126 \\
+% % 230400~~~ &  360	&  324	&  288	&  252 \\
+% % 460800~~~ &  720	&  648	&  576	&  504 \\
+% % 921600~~~ & 1440	& 1296	& 1152	& 1008 \\
+% % \end{tabular}
+% % \label{tab:max-sensor-nodes}
+% % \end{table}
+
+% For example, WSN can connect up to 162 sensor nodes that work in RS485 network with a 115200~bps data rate and 10 \% reserve, or up to 126 sensor nodes with a 115200~bps data rate and 30 \% reserve. The results also show, one floor block of university building, i.e., one RS485 network, can operates dozens of sensors with sufficient reserve protecting the access control system from malfunction.   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

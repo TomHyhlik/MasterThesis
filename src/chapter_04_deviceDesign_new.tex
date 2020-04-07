@@ -576,7 +576,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-    
+     
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);

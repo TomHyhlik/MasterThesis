@@ -20,11 +20,5 @@ https://ebookcentral.proquest.com/
         paket misto packet
         lw specifikace misto specification
 
-
-## mail
-    Jak prelozit: LoRaWAN stack, payload?
-
-    - nadpis tabulky se uvadi nad tabulkou
-    S tim souhlasim, ale LaTeX sablona kterou pouzivam viz odkaz nize to takhle ma nejak na pevno nastavene a me se nepodarilo to zmenit. Pripadne muzu pouzit jinou sablonu. Nicmene na BP jsem tuto sablonu taky mel a proslo to tak, ale uz si nepamatuju jak jsme to resili.
-    https://github.com/tohecz/ctuthesis
-
+    stack - datova struktura
+        https://cs.wikipedia.org/wiki/Z%C3%A1sobn%C3%ADk_(datov%C3%A1_struktura)

@@ -1,6 +1,8 @@
 \chapter{Realizace zařízení}
 Tato kapitola popisuje kompletní návrh řešení rozšíření komernčně používaného sytému o senzorovou síť.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace WSN do přístupového systému}
 \label{Implementace WSN do přístupového systému}
@@ -36,31 +38,26 @@ Tento problěm je řešen ta, že LoRaWAN packety z koncových zařízení jsou 
 % The same procedure applies to the Gateway.
 % When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh WSN gatewaye}
 Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje packety z koncových zařízení a na základě typu koncového zařízení vypočítává z payloadu hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
-Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
+Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW (FW) gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
-
-LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
+%% todo, cast teto vet uz je v predchozi kapitole
+LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené packety nebo odesílat falešné packety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
 
 Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přistupu, není zde možnost předávávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou zařízení. Geteway tedy má tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
 % LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
 % Pro tento projekt byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
 V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru řízení přístupu na koncové zařízení, ale je také možné implementovat pro ovládání aktulátorů, jako je relé, motor, apod.
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Stavba gatewaye}
-Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, Fig. \ref{fig:gatewayBlockDiagram}.
-
-
-\begin{figure*}[!ht]
-    \centering
-    \includegraphics[width=0.9\textwidth]{5patro}
-    \caption{Location of sensor nodes and CKP devices on the university floor}
-    \label{fig:CorridorFloorPlan}
-\end{figure*}
-
+\subsection{Sestavení HW k vytvoření prototypu gatewaye k testování}
+Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, viz. obr. \ref{fig:gatewayBlockDiagram}.
 
 \begin{figure}[!h]
     \centering
@@ -69,41 +66,28 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
     \label{fig:gatewayBlockDiagram}
 \end{figure}
 
-% The NUCLEO-L073RZ development board with STM32L073RZ microcontroller is suitable for the development purposes because of its parameters, Tab. \ref{tab:mcuFeatures}, price and available documentation.
-%It is  was used for the prototype, because it has all required parameters, it is cheap, powerful enough and easily prototypable.
-% The price of the devlopment board is \$13 USD\cite{nucleoST}.
-% LoRa transceiver board RFM95w with SX1276 chip integrated into Dragino LoRa Shield has the same pinout as the NUCLEO-L073RZ development board. RS485 transceiver as an RS485/UART interface enables communication with Control Panel.
+Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD\cite{nucleoST}). 
+K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje aplikace.
+LoRa transceiver RFM95w je PCB (Printed Circuit Board) s čipem SX1276. Pro tento prototyp je použit integrovaný v Dragino LoRa Shield \cite{draginoWiki}, který má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ.
+RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
-%RS485 transceiver SparkFun Breakout is used for the communication with the Control Panel. It converts interfaces UART to RS485, Fig. \ref{fig:gatewayBlockDiagram}.
-
-
-% \begin{table}[h]
-% \centering
-% \footnotesize
-% \caption{The STM32L073RZ features \cite{nucleoST}}
-% \begin{tabular}{|l|p{3.5cm}|}
-% \hline
-% Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
-% Internal flash memory & 192 KB \\ \hline
-% Internal SRAM memory & 20 kB \\ \hline
-% Internal EEPROM memory & 6 kB \\ \hline
-% CPU frequency & up to 32 MHz \\ \hline
-% Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
-% \end{tabular}
-% \label{tab:mcuFeatures}
-% \end{table}
-
-% \section{Výběr komponent}
-% \subsection{Microcontroller}
-% Pro toto zařízení je zvolen mikrocontroller STM32L073RZ se zaměřením na nízkou spotřebu, jelikož je levný, má dostačující vlastnosti a je dostupný ve formě vývojového kitu NUCLEO-L073RZ který byl použit pro  vývoj zařízení. Mezi hlavní vlastnosti patří \cite{nucleoST}:
-% \begin{itemize}    
-%     \item {Architektura ARM Cortex-M0+ 32-bit RISC}
-%     \item{Interní Flash paměť 192 KB}
-%     \item{Interní SRAM paměť 20 KB}
-%     \item{Interní EEPROM paměť 6 KB}
-%     \item {Až 32 MHz CPU}
-%     \item {2X SPI, 3x I2C, 4x USART, LIN, ADC}
-% \end{itemize}
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
+\begin{ctucolortab}
+\begin{tabular}{|l|p{3.5cm}|}
+\hline
+Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
+Internal flash memory & 192 KB \\ \hline
+Internal SRAM memory & 20 kB \\ \hline
+Internal EEPROM memory & 6 kB \\ \hline
+CPU frequency & up to 32 MHz \\ \hline
+Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+\end{tabular}
+\end{ctucolortab}
+\label{tab:mcuFeatures}
+\end{table}
 
 % Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}.
 % \begin{figure}[!h]
@@ -112,11 +96,6 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
 %     \caption{Vývojový kit NUCLEO-L073RZ \cite{nucleoST}}
 %     \label{fig:02}
 % \end{figure}
-
-% \subsection{LoRa transceiver}
-% Lora transceiver čip doposud vyrábí pouze Semtech, pro použití v Evropském pásmu je určen typ SX1276.
-% V tomto návrhu je použita deska RFM95w od firmy HopeRF s integrovaným čipem SX1276 \cite{RFM95w}.
-% Pro vývoj zařízení byl využit tento transciever v tzv. Dragino LoRa Shield \cite{draginoWiki}, který má stejně jako použitý vývojový kit, pinout kompatibilní s Arduino UNO. Pořizovací cena samotného transceiveru RFM95w je okolo \$7, cena Dragino Shieldu se pohybuje okolo \$22 na ebay.
 
 % \begin{figure}[!h]
 %     \centering
@@ -134,6 +113,61 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
 %     \caption{RS485 transceiver \cite{rs485tr}}
 %     \label{fig:rs485transceiver}
 % \end{figure}
+
+
+\subsubsection{Zapojení}
+LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. 
+% Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{foto01}
+    \caption{foto zapojení}
+    \label{fig:03}
+\end{figure}
+
+% TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
+Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1. Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
+
+\begin{table}[h]
+    \centering
+    \begin{ctucolortab}
+            \begin{tabular}{ |c|c|c| }
+     \hline
+
+     Periférie          & Název pinu & GPIO mikrokontroléru           \\ \hline \hline
+
+                        & CS    &  PB6             \\
+                        & CLK   &  PA5        \\
+    LoRa transceiver    & MISO  &  PA6     \\
+                        & MOSI  &  PA7        \\
+                        & RST   & PC7          \\
+                        & DIO0  & PA10         \\
+                        \hline
+     
+                        & RX  &   PC1            \\
+    RS485 transceiver   & TX  &   PC0       \\
+                        & RTS  &  PB1      \\     \hline
+
+    USB konektor        & RX    & PA3    \\
+                        & TX    & PA2   \\          \hline
+
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Pinout připojení periférií k mikrokontroléru}
+    \label{table:Pinout připojení periférií k mikrokontroléru}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Použité vývojové nástroje}
+Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \cite{stm32cubemx} ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
+Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci systémového hodinového signálu, watchdogu, GPIO a rozhranní.
+
+Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
+
+\subsubsection{Nahrávání programu do mikrokontroléru a debugování}
+todo
 
 
 
@@ -252,7 +286,7 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
 % Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Komunikace přes sériovou linku}
+\subsubsection{Komunikace přes sériovou linku USB}
 \label{Komunikace přes sériovou linku}
 Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
 K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
@@ -278,12 +312,13 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
 Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Log Gatewaye}
 Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
-\begin{lstlisting}[style=log]
+\begin{lstlisting}[style=CStyle]
     ________________________________________________
     Rx -> LoRaWAN, pktCntr: 6
     RSSI: -51, SNR: 9, length: 22
@@ -472,7 +507,7 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 \end{table}
 
 
-
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Podpora koncových zařízení}
 Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN packety koncových zařízení dekódovány v gatewayi a z dat payloadu vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
@@ -558,7 +593,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Přidávání koncových zařízení ze serveru řízení přístupu}
+\subsection{Přidávání koncových zařízení ze serveru řízení přístupu}
 Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhranní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID 8 B.
 Adresa koncového zařízení (LoRaWAN device address) je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
 Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu. Při odesílání příkazu "průchod" se tedy už typ zařízení neposílá z důvodu omezené velikosti tohoto příkazu.
@@ -576,43 +611,6 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 % Každé LoRaWan zařízení v síti má v paměti uložené LoRaWAN device address (4 byty), typ zařízení (1 byte) a další 3 byty jsou rezervovány. 
 % Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro až 760 koncových zařízení.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Zapojení}
-% LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
-
-% \begin{figure}[!h]
-%     \centering
-%     \includegraphics[width=1\textwidth]{foto01}
-%     \caption{foto zapojení}
-%     \label{fig:03}
-% \end{figure}
-
-% Pro komunikaci s LoRa transceiverem je tedy použito SPI1, pro komunikaci přes USB je použito USART2 a pro komunikaci přes RS485 je použito UART1.
-
-% \begin{table}[h]
-%     \centering
-%     \begin{tabular}{ |c|c|c| }
-%      \hline
-
-%      Periférie          & Název pinu & Pin procesoru           \\ \hline \hline
-     
-%                         & RX  &   PC1            \\
-%     RS485 transceiver   & TX  &   PC0       \\
-%                         & RTS  &  PB1      \\     \hline
-
-%                         & CS    &  PB6             \\
-%                         & CLK   &  PA5        \\
-%    LoRa transceiver     & MISO  &  PA6     \\
-%                         & MOSI  &  PA7        \\
-%                         & RST   & PC7          \\
-%                         & DIO0  & PA10         \\
-%                         \hline
-
-%     \end{tabular}
-%     \caption{Pinout připojení externích periférií k procesoru}
-%     \label{table:3}
-% \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Naprogramování}
