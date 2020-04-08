@@ -66,27 +66,30 @@ Pro otestování navrženého řešení rozšíření přístupového systému o
     \label{fig:gatewayBlockDiagram}
 \end{figure}
 
-Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD\cite{nucleoST}). 
+Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD \cite{nucleoST}). 
 K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje aplikace.
 LoRa transceiver RFM95w je PCB (Printed Circuit Board) s čipem SX1276. Pro tento prototyp je použit integrovaný v Dragino LoRa Shield \cite{draginoWiki}, který má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ.
 RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
-\begin{table}[h]
-\centering
-\footnotesize
-\caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
-\begin{ctucolortab}
-\begin{tabular}{|l|p{3.5cm}|}
-\hline
-Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
-Internal flash memory & 192 KB \\ \hline
-Internal SRAM memory & 20 kB \\ \hline
-Internal EEPROM memory & 6 kB \\ \hline
-CPU frequency & up to 32 MHz \\ \hline
-Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
-\end{tabular}
-\end{ctucolortab}
-\label{tab:mcuFeatures}
+\begin{table}[!h]
+    \centering
+    \footnotesize
+    \caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
+    \begin{ctucolortab}
+    \begin{tabular}{|l|p{3.5cm}|}
+    \hline
+
+    Parametr          & Informace            \\ \hline \hline
+
+    Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
+    Internal flash memory & 192 KB \\ \hline
+    Internal SRAM memory & 20 kB \\ \hline
+    Internal EEPROM memory & 6 kB \\ \hline
+    CPU frequency & up to 32 MHz \\ \hline
+    Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+    \end{tabular}
+    \end{ctucolortab}
+    \label{tab:mcuFeatures}
 \end{table}
 
 % Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}.
@@ -129,7 +132,7 @@ LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit 
 % TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
 Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1. Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
 
-\begin{table}[h]
+\begin{table}[!h]
     \centering
     \begin{ctucolortab}
             \begin{tabular}{ |c|c|c| }
@@ -170,29 +173,64 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 \subsection{Vývoj FW}
 Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
 
-Vyvinutá aplikace je rozdělena na nékolik nezávislých pod   programů viz tabulka \ref{table:sw_div}.
+Vyvinutá aplikace je rozdělena na nékolik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
 
-\begin{table}[h]
+\begin{table}[!h]
     \centering
     \begin{ctucolortab}
-            \begin{tabular}{ |c|c| }
+            \begin{tabular}{ |l|p{8cm}| }
      \hline
 
      Název podprogramu  & Popis           \\ \hline \hline
 
-    LoRa            &  knihovna zahrnující komunikaci LoRa transceiverem po rozhranní SPI    \\
-    eeprom          &  knihovna zahrnující zápis do non-volatile paměti procesoru EEPROM     \\
-    LoRa_sensors    &  PA5        \\
-    LoRaWAN_packet  &  PA5        \\
-    rs485_protocol  &  PA5        \\
-    usb             &  PA5        \\
+    LoRa            &  Knihovna zahrnující komunikaci s transceiverem SX1276 po rozhranní SPI, nainicializovaném v režimu komunikace LoRa    \\ \hline
+    LoRaWAN\_packet  & Knihovna zahrnující LoRaWAN protokol, tedy dekódování a dešifrování přijatého LoraWAN paketu i vytvoření paketu pro odeslání. Tato knihovna je závislá na knihovnách aes a cmac.  \\ \hline
+    LoRa\_sensors    & Knihovna zahrnující dekôdování payloadu podporovaných koncových zařízení a zapsání výsledných hodnot do bufferu, který je pak odeslán na kontrolní panel přes síť RS485       \\ \hline
+    rs485\_protocol  & Podprogram zahrnující síťový protokol v síti RS485         \\ \hline
+    usb             &  Podprogram zahrnující konfiguraci systému přes USB        \\ \hline
+    eeprom          &  Knihovna zahrnující práci s non-volatile paměti procesoru EEPROM     \\ \hline
 
     \end{tabular}
     \end{ctucolortab}
-    \caption{Rozdělení aplikace gatewaye na nezávislé programy}
+    \caption{Rozdělení aplikace na nezávislé podprogramy}
     \label{table:sw_div}
 \end{table}
 
+Každý z těchto podprogramů je implementován ve zdrojovém souboru (source file) s koncovkou .c a hlavičkovém souboru (header file) s koncovkou .h.
+Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source knihovny pro šifrování, tiny-AES128-C \cite{lib_tiny-AES128-C} pro zašifrování payloadu a openpana \cite{lib_openpana} pro vytvoření CMAC (Cipher-based Message Authentication Code)
+
+
+\begin{table}[!h]
+    \centering
+    \begin{ctucolortab}
+            \begin{tabular}{ |l|p{8cm}| }
+     \hline
+
+     Název podprogramu  & Popis           \\ \hline \hline
+
+    buffer\_ring            & Knihovna implementující cyklický buffer   \\ \hline
+    ByteArray               & Knihovna zahrnující pomocné funkce pro práci s polem bytů       \\ \hline
+    LinkedList\_ByteArray   & Knihovna implementující linked list s neomezenou velikostí o datové struktuře pole bytů s ukládáním do části paměti heap    \\ \hline
+    aes                     & Knihovna implementující šifrování AES-128 \cite{lib_tiny-AES128-C}                \\ \hline
+    cmac                    & Knihovna pro výpočet CMAC, převzatý pouze potřebný kód z knihovný \cite{lib_openpana}       \\ \hline
+
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Dodatečné pomocné podprogramy}
+    \label{table:sw_div}
+\end{table}
+
+
+Po spuštění aplikace je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog).
+Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz.
+
+
+Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
+
+
+
+
+main loop
 
 
 
@@ -392,7 +430,7 @@ Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x
 Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
-\begin{lstlisting}[style=CStyle]
+\begin{lstlisting}[style=log]
     ________________________________________________
     Rx -> LoRaWAN, pktCntr: 6
     RSSI: -51, SNR: 9, length: 22
