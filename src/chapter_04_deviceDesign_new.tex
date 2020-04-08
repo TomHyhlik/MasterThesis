@@ -169,10 +169,8 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 
 \subsection{Vývoj FW}
 Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
-Vyvinutá aplikace je rozdělena na nékolik nezávislých programů viz tabulka \ref{table:sw_div}.
 
-
-
+Vyvinutá aplikace je rozdělena na nékolik nezávislých pod   programů viz tabulka \ref{table:sw_div}.
 
 \begin{table}[h]
     \centering
@@ -182,8 +180,12 @@ Vyvinutá aplikace je rozdělena na nékolik nezávislých programů viz tabulka
 
      Název podprogramu  & Popis           \\ \hline \hline
 
-    CS    &  PB6             \\
-    CLK   &  PA5        \\
+    LoRa            &  knihovna zahrnující komunikaci LoRa transceiverem po rozhranní SPI    \\
+    eeprom          &  knihovna zahrnující zápis do non-volatile paměti procesoru EEPROM     \\
+    LoRa_sensors    &  PA5        \\
+    LoRaWAN_packet  &  PA5        \\
+    rs485_protocol  &  PA5        \\
+    usb             &  PA5        \\
 
     \end{tabular}
     \end{ctucolortab}
