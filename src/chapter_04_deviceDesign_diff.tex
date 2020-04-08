@@ -41,7 +41,7 @@ Tento problěm je řešen ta, že LoRaWAN \DIFdelbegin \DIFdel{packety }\DIFdele
 % The same procedure applies to the Gateway.
 % When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
-
+    
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh WSN gatewaye}
@@ -170,15 +170,38 @@ Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci sys
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
+
 \subsection{Vývoj FW}
+\DIFaddbegin \DIFadd{Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
+Vyvinutá aplikace je rozdělena na nékolik nezávislých programů viz tabulka \ref{table:sw_div}.
+}\DIFaddend 
+
+
+
+
+\DIFaddbegin \begin{table}[h]
+    \centering
+    \begin{ctucolortab}
+            \begin{tabular}{ |c|c| }
+     \hline
+
+     \DIFaddFL{Název podprogramu  }& \DIFaddFL{Popis           }\\ \hline \hline
+
+    \DIFaddFL{CS    }&  \DIFaddFL{PB6             }\\
+    \DIFaddFL{CLK   }&  \DIFaddFL{PA5        }\\
+
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{\DIFaddFL{Rozdělení aplikace gatewaye na nezávislé programy}}
+    \label{table:sw_div}
+\end{table}
 
 
 
 
 
 
-
-\subsubsection{Nahrávání programu do mikrokontroléru a debugování}
+\DIFaddend \subsubsection{Nahrávání programu do mikrokontroléru a debugování}
 todo
 
 
