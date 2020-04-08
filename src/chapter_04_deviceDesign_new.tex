@@ -20,8 +20,7 @@ K jednomu přístupovému systému je možné přípojit několik WSN gatewayí 
 \end{figure}
 
 
-WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
-mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
+WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
 Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
@@ -224,8 +223,14 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 Po spuštění aplikace je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog).
 Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz.
 
-
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
+Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.
+IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že aplikace spadne.
+Komunikace s LoRa transceiverem RFM95W přes rozhranní SPI1 je implementována v blokujícím módu zápisem a čtením registrů.
+Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti 256 B, který je zpracováván v hlavní smyčce běhu aplikace. 
+Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, 
+
+
 
 
 
