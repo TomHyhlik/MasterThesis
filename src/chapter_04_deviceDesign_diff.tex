@@ -20,8 +20,7 @@ K jednomu přístupovému systému je možné přípojit několik WSN gatewayí 
 \end{figure}
 
 
-WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem "listen before talk", kolize jsou detekovány 
-mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
+WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem \DIFdelbegin \DIFdel{"listen before talk"}\DIFdelend \DIFaddbegin \DIFadd{LBT (Listen Before Talk)}\DIFaddend , kolize jsou detekovány mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
 
 Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
@@ -130,7 +129,8 @@ LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit 
 \end{figure}
 
 % TODO: popsat jak funguje na nucleu uart <-> USB prevodnik.
-Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito USART1. Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
+Pro komunikaci s LoRa transceiverem je použito SPI1, pro komunikaci přes USB je použito USART2 a pro připojení RS485 transceiveru je použito \DIFdelbegin \DIFdel{USART1}\DIFdelend \DIFaddbegin \DIFadd{LPUART1}\DIFaddend . 
+Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru}.
 
 \begin{table}[!h]
     \centering
@@ -171,7 +171,8 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 
 
 \subsection{Vývoj FW}
-Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
+Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. 
+K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
 
 Vyvinutá aplikace je rozdělena na nékolik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
 
@@ -183,7 +184,7 @@ Vyvinutá aplikace je rozdělena na nékolik nezávislých podprogramů viz tabu
 
      Název podprogramu  & Popis           \\ \hline \hline
 
-    LoRa            &  Knihovna zahrnující komunikaci s transceiverem SX1276 po rozhranní SPI, nainicializovaném v režimu komunikace LoRa    \\ \hline
+    LoRa            &  Knihovna zahrnující komunikaci s transceiverem \DIFdelbeginFL \DIFdelFL{SX1276 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{RFM95W }\DIFaddendFL po rozhranní SPI, nainicializovaném v režimu komunikace LoRa    \\ \hline
     LoRaWAN\_packet  & Knihovna zahrnující LoRaWAN protokol, tedy dekódování a dešifrování přijatého LoraWAN paketu i vytvoření paketu pro odeslání. Tato knihovna je závislá na knihovnách aes a cmac.  \\ \hline
     LoRa\_sensors    & Knihovna zahrnující dekôdování payloadu podporovaných koncových zařízení a zapsání výsledných hodnot do bufferu, který je pak odeslán na kontrolní panel přes síť RS485       \\ \hline
     rs485\_protocol  & Podprogram zahrnující síťový protokol v síti RS485         \\ \hline
@@ -208,7 +209,7 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 
      Název podprogramu  & Popis           \\ \hline \hline
 
-    buffer\_ring            & Knihovna implementující cyklický buffer   \\ \hline
+    buffer\_ring            & Knihovna implementující cyklický buffer \DIFaddbeginFL \DIFaddFL{o velikosti 256 B   }\DIFaddendFL \\ \hline
     ByteArray               & Knihovna zahrnující pomocné funkce pro práci s polem bytů       \\ \hline
     LinkedList\_ByteArray   & Knihovna implementující linked list s neomezenou velikostí o datové struktuře pole bytů s ukládáním do části paměti heap    \\ \hline
     aes                     & Knihovna implementující šifrování AES-128 \cite{lib_tiny-AES128-C}                \\ \hline
@@ -221,31 +222,30 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 \end{table}
 
 
-Po spuštění aplikace je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog).
-Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz.
-
-Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
-\DIFaddbegin \DIFadd{Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.
-IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že aplikace spadne.
-LoRa transceiver RFM95W je připjen k rozhranní SPI1 a komunikace je implementována v blokujícím módu zápis a čtení registru.
+Po spuštění aplikace je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz. \DIFaddbegin \DIFadd{Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou dokola nepřetržitě zpracovávány cyklické buffery a fronty tvořeny linked listy. 
 }\DIFaddend 
 
+Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
+\DIFaddbegin \DIFadd{Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že by aplikace spadla.
+}\DIFaddend 
+
+\DIFdelbegin \DIFdel{main loop
+}\DIFdelend \DIFaddbegin \DIFadd{Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu aplikace. 
+Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, vysílání je zde blokováno po dobu 20 ms od posledního přijatého bytu.
+}\DIFaddend 
+
+\DIFaddbegin \DIFadd{Komunikace s LoRa transceiverem RFM95W přes rozhranní SPI1 je implementována v blokujícím módu zápisem a čtením registrů. 
+LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu aplikace, kde pakety z této fronty jsou postupně dekódovány a diešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracováváné v hlavní smyčce běhu programu.
+}
+
+\DIFadd{Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání neni blokováno během přijímání, jelikož se jedná o full-duplex.
+}
 
 
 
-
-
-
-
-
-main loop
-
-
-
-
-
-\subsubsection{Nahrávání programu do mikrokontroléru a debugování}
-todo
+\DIFaddend \subsubsection{Nahrávání programu do mikrokontroléru a debugování}
+\DIFaddbegin \DIFadd{jaktoze se stlink zobrazi jako flash drive pamet?
+}\DIFaddend todo
 
 
 
@@ -418,7 +418,8 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
     \begin{tabular}{ |c|c| }
      \hline
 
-     Baud rate              & 115200           \\ \hline
+    \DIFaddbeginFL \DIFaddFL{Parametr                }& \DIFaddFL{Hodnota           }\\ \hline \hline
+     \DIFaddendFL Baud rate              & 115200           \\ \hline
      Data bits              & 8                 \\ \hline
      Parity                 & none              \\ \hline
      Stop bits              & 1                 \\ \hline
