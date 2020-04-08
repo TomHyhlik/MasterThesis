@@ -38,7 +38,7 @@ Tento problěm je řešen ta, že LoRaWAN pakety z koncových zařízení jsou d
 % The same procedure applies to the Gateway.
 % When the Gateway receives data from a Node and the Node address matches one of the valid device address list, the Gateway sends the data to the Access Control Server.
 
-
+    
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh WSN gatewaye}
@@ -166,8 +166,30 @@ Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci sys
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
-\subsection{Vývoj FW}
 
+\subsection{Vývoj FW}
+Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
+Vyvinutá aplikace je rozdělena na nékolik nezávislých programů viz tabulka \ref{table:sw_div}.
+
+
+
+
+\begin{table}[h]
+    \centering
+    \begin{ctucolortab}
+            \begin{tabular}{ |c|c|c| }
+     \hline
+
+     Periférie          & Název pinu & GPIO mikrokontroléru           \\ \hline \hline
+
+                        & CS    &  PB6             \\
+                        & CLK   &  PA5        \\
+ 
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Rozdělení aplikace gatewaye na nezávislé programy}
+    \label{table:sw_div}
+\end{table}
 
 
 
