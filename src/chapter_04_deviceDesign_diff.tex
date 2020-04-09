@@ -1,9 +1,9 @@
-\chapter{Realizace \DIFdelbegin \DIFdel{zařízení}\DIFdelend \DIFaddbegin \DIFadd{WSN}\DIFaddend }
-Tato kapitola popisuje kompletní návrh řešení rozšíření komernčně používaného sytému o senzorovou síť.
+\chapter{\DIFdelbegin \DIFdel{Realizace }\DIFdelend \DIFaddbegin \DIFadd{Návrh }\DIFaddend WSN}
+Tato kapitola popisuje \DIFdelbegin \DIFdel{kompletní }\DIFdelend návrh řešení rozšíření \DIFdelbegin \DIFdel{komernčně používaného }\DIFdelend \DIFaddbegin \DIFadd{přístupového }\DIFaddend sytému o senzorovou síť.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\DIFdelbegin \DIFdel{Implementace }\DIFdelend \DIFaddbegin \DIFadd{Návrh integrace }\DIFaddend WSN \DIFaddbegin \DIFadd{gatewaye }\DIFaddend do \DIFaddbegin \DIFadd{stávajcí infrastruktury }\DIFaddend přístupového systému}
+\section{Návrh integrace WSN gatewaye do stávajcí infrastruktury přístupového systému}
 \label{Implementace WSN do přístupového systému}
 Přístupový systém k rozšíření o WSN pro tento vybraný případ je vytvořen firmou IMA a je komernčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhranní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat apodobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
 
@@ -20,11 +20,7 @@ K jednomu přístupovému systému je možné přípojit několik WSN gatewayí 
 
 
 WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA.
-\DIFdelbegin \DIFdel{Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
-}%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
+Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
 Navržená gateway bere seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává pakety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
 Data z koncových zařízení jsou odesílána na server řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá poze 6 B pro data z koncového zařízení, což je velké omezení.
@@ -41,14 +37,9 @@ Tento problěm je řešen ta, že LoRaWAN pakety z koncových zařízení jsou d
 
     
 
-%DIF < %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \section{\DIFdel{Návrh WSN gatewaye}}
-%DIFAUXCMD
-\addtocounter{section}{-1}%DIFAUXCMD
-\DIFdel{Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje pakety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
-}\DIFdelend %DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%DIF >  \section{Návrh WSN gatewaye}
-%DIF >  Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje pakety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Návrh WSN gatewaye}
+% Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje pakety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
 Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování datového obsahu (payloadu) ve FW (FW) gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
 %% todo, cast teto vet uz je v predchozi kapitole
@@ -61,25 +52,20 @@ V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru �
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Sestavení HW k vytvoření prototypu gatewaye k testování}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Protokol CKP v síti RS485 pro komunikaci s kontrolním panelem}}
-\DIFadd{CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. 
+\section{Protokol CKP v síti RS485 pro komunikaci s kontrolním panelem}
+CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. 
 V této síti je jedno zařízení typu master, a jedno nebo více zařízení typu slave, přičemž zařízení typu master je kontrolní panel a zařízení typu slave je jakékoliv CKP zařízení, v tomto vybraném případě gateway.
 Každé zařízení má svoji adresu definovanou jedním bytem, která musí být unikátní pro jednu síť a každý příkaz v této síti obsahuje v hlavičce adresu odesílatele a adresu příjemce.
 Zařízení typu slave má dva možné statusy, offline a online, periodický odesílá příkaz s informací o jeho aktuálním statusu, má povoleno odesílat příkaz s daty z koncového zařízení senzorové sítě "průchod" pouze má-li status online a změnu statusu daného zařízení typu slave provádí zařízení typu master. 
 Zařízení typu slave svůj status změní samo z online na offline v případě, že zařízení typu master přestane odpovídat na příkaz "průchod".
-}
 
-\DIFadd{Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá příkaz s informaci o jeho statusu na kontrolní panel, který po obdržení tohoto příkazu předá seznam adres koncových zařízení senzorové sítě sekvení několika příkazů a pak ho přepde do statusu online. V této chvíli již gateway přeposílá data z koncových zařízení senzorové síťe na kontrolní panel.
-}
+Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá příkaz s informaci o jeho statusu na kontrolní panel, který po obdržení tohoto příkazu předá seznam adres koncových zařízení senzorové sítě sekvení několika příkazů a pak ho přepde do statusu online. V této chvíli již gateway přeposílá data z koncových zařízení senzorové síťe na kontrolní panel.
 
 
 
-%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{\DIFadd{Sestavení HW k vytvoření prototypu gatewaye k testování}}
-\DIFaddend Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, viz. obr. \ref{fig:gatewayBlockDiagram}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sestavení HW k vytvoření prototypu gatewaye k testování}
+Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, viz. obr. \ref{fig:gatewayBlockDiagram}.
 
 \begin{figure}[!h]
     \centering
@@ -89,7 +75,7 @@ Zařízení typu slave svůj status změní samo z online na offline v případ�
 \end{figure}
 
 Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD \cite{nucleoST}). 
-K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje \DIFdelbegin \DIFdel{aplikace}\DIFdelend \DIFaddbegin \DIFadd{FW}\DIFaddend .
+K vytvoření prototypu byl použit, přotože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje FW.
 LoRa transceiver RFM95w je PCB (Printed Circuit Board) s čipem SX1276. Pro tento prototyp je použit integrovaný v Dragino LoRa Shield \cite{draginoWiki}, který má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ.
 RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
@@ -137,14 +123,13 @@ RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s 
 %     \includegraphics[width=0.4\textwidth]{rs485transceiver}
 %     \caption{RS485 transceiver \cite{rs485tr}}
 %     \label{fig:rs485transceiver}
-%DIF <  \end{figure}
-%DIF >  \end{figure} 23
+% \end{figure} 23
 
 
-\DIFdelbegin \subsubsection{\DIFdel{Zapojení}}
-%DIFAUXCMD
-\addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \subsection{\DIFadd{Zapojení}}
+\subsection{Zapojení}
+\DIFaddbegin \DIFadd{CKP zařízení daného přístupového systému jsou obvykle napájena napětím 12 V z kontrolního panelu. Použitý kit NUCLEO-L073RZ obsahuje stabilizátor tudíž je možné připojit gateway přímo ke kontrolnímu panelu přes vyvedené svorky GND, +12V, A a B.
+}
+
 \DIFaddend LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. 
 % Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
 
@@ -191,26 +176,20 @@ Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru j
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Použité vývojové nástroje k vytvoření FW}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Použité vývojové nástroje k vytvoření FW}}
-\DIFaddend Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \cite{stm32cubemx} ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
+\section{Použité vývojové nástroje k vytvoření FW}
+Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \cite{stm32cubemx} ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
 Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci systémového hodinového signálu, watchdogu, GPIO a rozhranní.
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Vývoj FW}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Návrh FW gatewaye}}
-\DIFaddend Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. 
+\section{Návrh FW gatewaye}
+Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. 
 K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
 
-\DIFdelbegin \DIFdel{Vyvinutá aplikace je rozdělena }\DIFdelend %DIF >  \subsection{Rozdělení programu}
-\DIFaddbegin \DIFadd{Vyvinutý program je rozdělen }\DIFaddend na nékolik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
+% \subsection{Rozdělení programu}
+Vyvinutý program je rozdělen na nékolik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
 
 \begin{table}[!h]
     \centering
@@ -229,7 +208,7 @@ K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS
 
     \end{tabular}
     \end{ctucolortab}
-    \caption{Rozdělení \DIFdelbeginFL \DIFdelFL{aplikace }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{programu }\DIFaddendFL na nezávislé podprogramy}
+    \caption{Rozdělení programu na nezávislé podprogramy}
     \label{table:sw_div}
 \end{table}
 
@@ -257,7 +236,7 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
     \label{table:sw_div}
 \end{table}
 
-%DIF >  \subsection{Ukládání informací do non-volatile paměti}
+% \subsection{Ukládání informací do non-volatile paměti}
 Do non-volatile paměti je ukládána konfigurace a adresa a typ všech koncových zařízení senzorové sítě.
 Jako non-volatile paměť je zde využita EEPROM (Electrically Erasable Programmable Read-Only Memory) o velikosti 6144 B. 
 Paměť je tedy rozdělená tak, že od adresy 0 až po adresu 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po adresu 6144 je prostor pro ukládání konfigurace gatewaye.
@@ -286,181 +265,24 @@ Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry uklád�
     \label{table:Parametry ukládány do non-volatile paměti gatewaye}
 \end{table}
 
-%DIF >  \subsection{Běh programu}
-Po spuštění \DIFdelbegin \DIFdel{aplikace }\DIFdelend \DIFaddbegin \DIFadd{programu }\DIFaddend je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou dokola nepřetržitě zpracovávány cyklické buffery a fronty tvořeny linked listy. 
+% \subsection{Běh programu}
+Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou dokola nepřetržitě zpracovávány cyklické buffery a fronty tvořeny linked listy. 
 
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
-Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že by \DIFdelbegin \DIFdel{aplikace spadla}\DIFdelend \DIFaddbegin \DIFadd{se program zhroutil}\DIFaddend .
+Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že by se program zhroutil.
 
-Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu \DIFdelbegin \DIFdel{aplikace}\DIFdelend \DIFaddbegin \DIFadd{programu}\DIFaddend . 
+Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
 Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, vysílání je zde blokováno po dobu 20 ms od posledního přijatého bytu.
 
 Komunikace s LoRa transceiverem RFM95W přes rozhranní SPI1 je implementována v blokujícím módu zápisem a čtením registrů. 
-LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu \DIFdelbegin \DIFdel{aplikace}\DIFdelend \DIFaddbegin \DIFadd{programu}\DIFaddend , kde pakety z této fronty jsou postupně dekódovány a diešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracováváné v hlavní smyčce běhu programu.
+LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu, kde pakety z této fronty jsou postupně dekódovány a diešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracováváné v hlavní smyčce běhu programu.
 
 Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání neni blokováno během přijímání, jelikož se jedná o full-duplex.
 
 
-%DIF < %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \section{\DIFdel{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}}
-%DIFAUXCMD
-\addtocounter{section}{-1}%DIFAUXCMD
-\DIFdel{todo
-%DIF <  V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
-%DIF <  Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
-}%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \begin{table}[!h]
-%DIF <      \centering
-%DIF <      \begin{tabular}{ |c|c| }
-%DIF <       \hline
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <       Baud rate              & 9600           \\ \hline
-%DIF <       Data bits              & 8                 \\ \hline
-%DIF <       Parity                 & none              \\ \hline
-%DIF <       Stop bits              & 1                 \\ \hline
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <      \end{tabular}
-%DIF <      \caption{Fyzické vlastnosti IMA\_RS485 sítě}
-%DIF <      \label{table:3}
-%DIF <  \end{table}
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \newpage
-%DIF <  \subsection{Syntaxe příkazů}
-%DIF <  Komunikace v síti probíhá formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \begin{table}[!h]
-%DIF <      \centering
-%DIF <  \begin{tabular}{ |c|| p{1.5cm} | p{1.5cm} | p{1cm} | p{1cm} | p{1cm} | p{1cm} | }
-%DIF <   \hline
-%DIF <   popis      & adresa příjemce & adresa odesílatele & typ příkazu & délka dat & data & crc\\ \hline
-%DIF <   počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
-%DIF <   \hline
-%DIF <  \end{tabular}
-%DIF <      \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
-%DIF <      \label{table:syntaxePrikazu}
-%DIF <  \end{table}
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
-%DIF <  Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
-%DIF <  CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Adresace zařízení v síti}
-%DIF <  Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Statusy}
-%DIF <  Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
-%DIF <  Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
-%DIF <  Pro status online je tento byte 0x00 a pro status offline 0xEE. 
-%DIF <  Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
-%DIF <  Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
-%DIF <  Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
-%DIF <  Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
-%DIF <  Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Přidávání LoRaWAN zařízení do systému}
-%DIF <  Pokud zařízení typu master přijme příkaz od zařízení typu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
-%DIF <  Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \begin{table}[!h]
-%DIF <      \begin{tabular}{ |l|p{10cm}| }
-%DIF <      \hline
-%DIF <      příkaz      &  data    \\ \hline \hline
-%DIF <      master: start      &  AA 10 FF 8F 02 00 00 00 62    \\ \hline
-%DIF <      slave: ACK        &  FF 10 06 02 00 8F 00 64    \\ \hline
-%DIF <      master: data     &  AA 10 FF 8F 21 00 01 B1 C4 12 00 00 00 00 00 B2 C4 12 00 00 00 00 00 B3 C4 12 00 00 00 00 00 B4 C4 12 00 00 00 00 00 44 \\ \hline
-%DIF <      slave: ACK      &  FF 10 06 02 00 8F 01 65   \\ \hline
-%DIF <      master: data     &  AA 10 FF 8F 19 00 02 B5 C4 12 00 00 00 00 00 B6 C4 12 00 00 00 00 00 F6 1F 01 26 00 00 00 00 B6 \\ \hline
-%DIF <      slave: ACK      &   FF 10 06 02 00 8F 02 66   \\ \hline
-%DIF <      master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
-%DIF <      slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
-%DIF <      \end{tabular}
-%DIF <      \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
-%DIF <      \label{table:2}
-%DIF <  \end{table}
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  LoraWAN protokol používá 4-bytové adresy koncových zařízení.
-%DIF <  Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, pátý byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  První Byte dat je counter paketu začínající od nuly, který označuje číslo odeslaného paketu v sekvenci. Na každý tento paket v sekvenci zařízení typu slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech paketu navíc obsahuje counter pakety v sekvenci.
-%DIF <  První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
-%DIF <  Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
-%DIF <  Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Odesílání dat z koncových zařízení} 
-%DIF <  \label{sec:Odesílání dat z koncových zařízení}
-%DIF <  Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
-%DIF <  První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
-%DIF <  Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
-%DIF <  Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \begin{table}[!h]
-%DIF <      \centering
-%DIF <  \begin{tabular}{ | p{1.5cm} | p{3cm} | p{2.5cm} | p{1.3cm} | p{1.3cm} |  }
-%DIF <   \hline
-%DIF <   typ průchodu & LoRaWAN device address & data (4B)     & cas   & data (2B) \\ \hline
-%DIF <   D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
-%DIF <   \hline
-%DIF <  \end{tabular}
-%DIF <      \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
-%DIF <      \label{table:prikladprikazpruchod}
-%DIF <  \end{table}
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Zařízení typu slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, zařízení typu slave příkaz "průchod" zopakuje přičemž změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, zařízení typu slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Potvrzení}
-%DIF <  Zařízení typu slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
-%DIF <  Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF <  \subsection{Dotaz na příznaky}
-%DIF <  Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
-%DIFDELCMD < 
-
-%DIFDELCMD < %%%
-%DIF < %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{\DIFdel{Komunikace přes sériovou linku USB}}
-%DIFAUXCMD
-\addtocounter{subsubsection}{-1}%DIFAUXCMD
-\DIFdelend %DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFaddbegin \subsection{\DIFadd{Komunikace přes sériovou linku USB}}
-\DIFaddend \label{Komunikace přes sériovou linku}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Komunikace přes sériovou linku USB}
+\label{Komunikace přes sériovou linku}
 Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
 K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
 sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
@@ -484,18 +306,15 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
     \label{table:usb_term}
 \end{table}
 
-Při komunikaci jsou data \DIFdelbegin \DIFdel{standardně }\DIFdelend oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A \DIFaddbegin \DIFadd{v hexadecimálním tvaru}\DIFaddend . 
+Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
 
 
 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Log Gatewaye}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Log Gatewaye}}
-\DIFaddend Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
+\section{Log Gatewaye}
+Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
 \begin{lstlisting}[style=log]
@@ -525,13 +344,9 @@ Nejprve jsou vypsány data týkající se LoRaWAN protokolu, zašifrovaný i de�
 
 
 
-%DIF < %%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Konfigurace gatewaye}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend %DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFaddbegin \section{\DIFadd{Konfigurace gatewaye}}
-\DIFaddend \label{Konfigurace gatewaye}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Konfigurace gatewaye}
+\label{Konfigurace gatewaye}
 Konfigurace gatewaye se provádí obousměrnou komunikací po sériové lince s připojením dle instrukcí v sekci \nameref{Komunikace přes sériovou linku}.
 Po spuštění je gateway v normálním pracovním režimu, přeposílá tedy pakety ze senzorové sítě přes RS485 síť na kontrolní panel a informace loguje přes sériovou linku.
 Po vstoupení do stavu konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN síťě a komunikace s kontrolním panelem v síti RS485 nejsou aktivní.
@@ -694,11 +509,8 @@ Po zvolení této možnosti je načtena defaultní konfigurace systému, která 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Podpora koncových zařízení}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Podpora koncových zařízení}}
-\DIFaddend Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN pakety koncových zařízení dekódovány v gatewayi a z datového obsahu (payloadu) vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
+\section{Podpora koncových zařízení}
+Jak již bylo zmíněno v sekci \label{Implementace WSN do přístupového systému}, z důvodu datového omezení protokolu sítě RS485 jsou LoRaWAN pakety koncových zařízení dekódovány v gatewayi a z datového obsahu (payloadu) vypočítány konečné hodnoty dle dokumentace daného LoRaWAN zařízení a přes síť RS485 na kontrolní panel jsou odeslány pouze vybraná data. Gateway má pro každé koncové zařízení uloženou 4 byty dlouhou adresu a 1 byte typ zařízení.
 Momentálně jsou podporovány dva typy koncových zařízení, dle potřeby je možné rozšířit FW gatewaye o další typy koncových zařízení. Tabulka \ref{table:TypyKoncZarizeni} ukazuje hodnotu bytu označující typ koncového zařízení odpovídající konkrétním typům koncových zařízení.
 
 \begin{table}[!h]
@@ -781,23 +593,67 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\DIFdelbegin \subsection{\DIFdel{Přidávání koncových zařízení ze serveru řízení přístupu}}
-%DIFAUXCMD
-\addtocounter{subsection}{-1}%DIFAUXCMD
-\DIFdelend \DIFaddbegin \section{\DIFadd{Přidávání koncových zařízení ze serveru řízení přístupu}}
-\DIFaddend Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhranní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID 8 B.
+\section{Přidávání koncových zařízení ze serveru řízení přístupu}
+Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhranní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID 8 B.
 Adresa koncového zařízení (LoRaWAN device address) je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
 Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu. Při odesílání příkazu "průchod" se tedy už typ zařízení neposílá z důvodu omezené velikosti tohoto příkazu.
 Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.
 
-Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhranní serveru řízení přístupu je tedy 8016149418.
-
+\DIFaddbegin \subsubsection{\DIFadd{Příklad}}
+\DIFaddend Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhranní serveru řízení přístupu je tedy 8016149418.
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   NOT USED
+\DIFaddbegin \section{\DIFadd{Návrh WSN gatewaye verze 2}}
+\DIFadd{Pro lepší mechanické uspořádání byla navržena verze 2, kde je použit i jiný vývojový kit NUCLEO-L432KC s procesorem STM32L432KC, který je výkonnější.
+Navíc je zde přidán externí stabilizátor, napěťový filtr, přepínačem volitelné impedanční zakončení síťě RS485 a proudové ochrany.
+}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{minigateway_schema}
+    \caption{\DIFaddFL{Návrh WSN gatewaye verze 2 - schéma}}
+    \label{fig:minigateway_schema}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{minigateway_plosnak}
+    \caption{\DIFaddFL{Návrh WSN gatewaye verze 2 - plošný spoj}}
+    \label{fig:minigateway_plosnak}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DIFaddend %   NOT USED
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -840,8 +696,9 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 
 
 
-
-% \subsection{Nahrání programu do MCU}
+%DIF <  \subsection{Nahrání programu do MCU}
+%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DIF >  \section{Nahrání programu do MCU}
 % Výstupem kompilace je soubor s koncovkou .binary, který je nahrán do MCU. K tomuto nahrání není potřeba žádný speciální SW nebo HW.
 % Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
 % Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
@@ -853,118 +710,116 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 
 
 
-%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%DIF >  \section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
-%DIF >  V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
-%DIF >  Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
-\DIFaddbegin 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
+% V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
+% Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
 
-%DIF >  \begin{table}[!h]
-%DIF >      \centering
-%DIF >      \begin{tabular}{ |c|c| }
-%DIF >       \hline
+% \begin{table}[!h]
+%     \centering
+%     \begin{tabular}{ |c|c| }
+%      \hline
 
-%DIF >       Baud rate              & 9600           \\ \hline
-%DIF >       Data bits              & 8                 \\ \hline
-%DIF >       Parity                 & none              \\ \hline
-%DIF >       Stop bits              & 1                 \\ \hline
+%      Baud rate              & 9600           \\ \hline
+%      Data bits              & 8                 \\ \hline
+%      Parity                 & none              \\ \hline
+%      Stop bits              & 1                 \\ \hline
 
-%DIF >      \end{tabular}
-%DIF >      \caption{Fyzické vlastnosti IMA\_RS485 sítě}
-%DIF >      \label{table:3}
-%DIF >  \end{table}
+%     \end{tabular}
+%     \caption{Fyzické vlastnosti IMA\_RS485 sítě}
+%     \label{table:3}
+% \end{table}
 
-%DIF >  \newpage
-%DIF >  \subsection{Syntaxe příkazů}
-%DIF >  Komunikace v síti probíhá formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
+% \newpage
+% \subsection{Syntaxe příkazů}
+% Komunikace v síti probíhá formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
 
-%DIF >  \begin{table}[!h]
-%DIF >      \centering
-%DIF >  \begin{tabular}{ |c|| p{1.5cm} | p{1.5cm} | p{1cm} | p{1cm} | p{1cm} | p{1cm} | }
-%DIF >   \hline
-%DIF >   popis      & adresa příjemce & adresa odesílatele & typ příkazu & délka dat & data & crc\\ \hline
-%DIF >   počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
-%DIF >   \hline
-%DIF >  \end{tabular}
-%DIF >      \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
-%DIF >      \label{table:syntaxePrikazu}
-%DIF >  \end{table}
+% \begin{table}[!h]
+%     \centering
+% \begin{tabular}{ |c|| p{1.5cm} | p{1.5cm} | p{1cm} | p{1cm} | p{1cm} | p{1cm} | }
+%  \hline
+%  popis      & adresa příjemce & adresa odesílatele & typ příkazu & délka dat & data & crc\\ \hline
+%  počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
+%  \hline
+% \end{tabular}
+%     \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
+%     \label{table:syntaxePrikazu}
+% \end{table}
 
-%DIF >  Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
-%DIF >  Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
-%DIF >  CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
+% Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
+% Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
+% CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
 
-%DIF >  \subsection{Adresace zařízení v síti}
-%DIF >  Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
+% \subsection{Adresace zařízení v síti}
+% Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
 
-%DIF >  \subsection{Statusy}
-%DIF >  Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
-%DIF >  Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
-%DIF >  Pro status online je tento byte 0x00 a pro status offline 0xEE. 
-%DIF >  Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
-%DIF >  Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
-%DIF >  Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
-%DIF >  Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
-%DIF >  Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
-
-
-%DIF >  \subsection{Přidávání LoRaWAN zařízení do systému}
-%DIF >  Pokud zařízení typu master přijme příkaz od zařízení typu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
-%DIF >  Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
-
-%DIF >  Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
+% \subsection{Statusy}
+% Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
+% Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
+% Pro status online je tento byte 0x00 a pro status offline 0xEE. 
+% Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
+% Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
+% Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
+% Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
+% Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
 
 
-%DIF >  \begin{table}[!h]
-%DIF >      \begin{tabular}{ |l|p{10cm}| }
-%DIF >      \hline
-%DIF >      příkaz      &  data    \\ \hline \hline
-%DIF >      master: start      &  AA 10 FF 8F 02 00 00 00 62    \\ \hline
-%DIF >      slave: ACK        &  FF 10 06 02 00 8F 00 64    \\ \hline
-%DIF >      master: data     &  AA 10 FF 8F 21 00 01 B1 C4 12 00 00 00 00 00 B2 C4 12 00 00 00 00 00 B3 C4 12 00 00 00 00 00 B4 C4 12 00 00 00 00 00 44 \\ \hline
-%DIF >      slave: ACK      &  FF 10 06 02 00 8F 01 65   \\ \hline
-%DIF >      master: data     &  AA 10 FF 8F 19 00 02 B5 C4 12 00 00 00 00 00 B6 C4 12 00 00 00 00 00 F6 1F 01 26 00 00 00 00 B6 \\ \hline
-%DIF >      slave: ACK      &   FF 10 06 02 00 8F 02 66   \\ \hline
-%DIF >      master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
-%DIF >      slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
-%DIF >      \end{tabular}
-%DIF >      \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
-%DIF >      \label{table:2}
-%DIF >  \end{table}
+% \subsection{Přidávání LoRaWAN zařízení do systému}
+% Pokud zařízení typu master přijme příkaz od zařízení typu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
+% Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
 
-%DIF >  LoraWAN protokol používá 4-bytové adresy koncových zařízení.
-%DIF >  Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, pátý byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
+% Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
 
-%DIF >  První Byte dat je counter paketu začínající od nuly, který označuje číslo odeslaného paketu v sekvenci. Na každý tento paket v sekvenci zařízení typu slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech paketu navíc obsahuje counter pakety v sekvenci.
-%DIF >  První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
-%DIF >  Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
-%DIF >  Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
-%DIF >  \subsection{Odesílání dat z koncových zařízení} 
-%DIF >  \label{sec:Odesílání dat z koncových zařízení}
-%DIF >  Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
-%DIF >  První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
-%DIF >  Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
-%DIF >  Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
+% \begin{table}[!h]
+%     \begin{tabular}{ |l|p{10cm}| }
+%     \hline
+%     příkaz      &  data    \\ \hline \hline
+%     master: start      &  AA 10 FF 8F 02 00 00 00 62    \\ \hline
+%     slave: ACK        &  FF 10 06 02 00 8F 00 64    \\ \hline
+%     master: data     &  AA 10 FF 8F 21 00 01 B1 C4 12 00 00 00 00 00 B2 C4 12 00 00 00 00 00 B3 C4 12 00 00 00 00 00 B4 C4 12 00 00 00 00 00 44 \\ \hline
+%     slave: ACK      &  FF 10 06 02 00 8F 01 65   \\ \hline
+%     master: data     &  AA 10 FF 8F 19 00 02 B5 C4 12 00 00 00 00 00 B6 C4 12 00 00 00 00 00 F6 1F 01 26 00 00 00 00 B6 \\ \hline
+%     slave: ACK      &   FF 10 06 02 00 8F 02 66   \\ \hline
+%     master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
+%     slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
+%     \end{tabular}
+%     \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
+%     \label{table:2}
+% \end{table}
 
-%DIF >  \begin{table}[!h]
-%DIF >      \centering
-%DIF >  \begin{tabular}{ | p{1.5cm} | p{3cm} | p{2.5cm} | p{1.3cm} | p{1.3cm} |  }
-%DIF >   \hline
-%DIF >   typ průchodu & LoRaWAN device address & data (4B)     & cas   & data (2B) \\ \hline
-%DIF >   D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
-%DIF >   \hline
-%DIF >  \end{tabular}
-%DIF >      \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
-%DIF >      \label{table:prikladprikazpruchod}
-%DIF >  \end{table}
+% LoraWAN protokol používá 4-bytové adresy koncových zařízení.
+% Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, pátý byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
 
-%DIF >  Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Zařízení typu slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, zařízení typu slave příkaz "průchod" zopakuje přičemž změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, zařízení typu slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
+% První Byte dat je counter paketu začínající od nuly, který označuje číslo odeslaného paketu v sekvenci. Na každý tento paket v sekvenci zařízení typu slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech paketu navíc obsahuje counter pakety v sekvenci.
+% První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
+% Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
+% Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
 
-%DIF >  \subsection{Potvrzení}
-%DIF >  Zařízení typu slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
-%DIF >  Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
+% \subsection{Odesílání dat z koncových zařízení} 
+% \label{sec:Odesílání dat z koncových zařízení}
+% Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
+% První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
+% Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
+% Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
 
-%DIF >  \subsection{Dotaz na příznaky}
-%DIF >  Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
- \DIFaddend
+% \begin{table}[!h]
+%     \centering
+% \begin{tabular}{ | p{1.5cm} | p{3cm} | p{2.5cm} | p{1.3cm} | p{1.3cm} |  }
+%  \hline
+%  typ průchodu & LoRaWAN device address & data (4B)     & cas   & data (2B) \\ \hline
+%  D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
+%  \hline
+% \end{tabular}
+%     \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
+%     \label{table:prikladprikazpruchod}
+% \end{table}
+
+% Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Zařízení typu slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, zařízení typu slave příkaz "průchod" zopakuje přičemž změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, zařízení typu slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
+
+% \subsection{Potvrzení}
+% Zařízení typu slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
+% Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
+
+% \subsection{Dotaz na příznaky}
+% Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).

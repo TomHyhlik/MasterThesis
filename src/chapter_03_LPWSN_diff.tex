@@ -1,6 +1,10 @@
 \chapter{Výběr bezdrátové technologie pro senzorovou síť}
-Mezi hlavní požadavky na navrženou senzorovou síť pro tento vybraný případ patří jednoduchá napojitelnost na infrastrukturu jiného systému. Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
-Takto nainstalovaná senzorová síť by pak měla umožňovat bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
+\DIFaddbegin \DIFadd{Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ a na závěr vysvětluje která technologie byla nakonec výbrána a z jakých důvodů.
+}\\
+\DIFaddend Mezi hlavní požadavky na navrženou senzorovou síť \DIFdelbegin \DIFdel{pro tento vybraný případ patří jednoduchá napojitelnost na infrastrukturu jiného systému. Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného }\DIFdelend \DIFaddbegin \DIFadd{implementovanou do infrastruktury }\DIFaddend přístupového systému \DIFdelbegin \DIFdel{v budovách několika podniků.
+}\DIFdelend \DIFaddbegin \DIFadd{patří jednoduchost napojení.
+%DIF >  Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
+}\DIFaddend Takto nainstalovaná senzorová síť by pak měla umožňovat bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
 % Naměřené hodnoty koncových zařízení jsou pak zpracovávány na serveru řízení přístupu.
 
 Mezi hlavní kritéria pro vybranou bezdrátovou technologii pro tento případ patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
@@ -80,10 +84,8 @@ Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technolog
   \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
   \centering
   \begin{ctucolortab}    
-  \DIFdelbeginFL %DIFDELCMD < \begin{tabular}{|p{1.5cm}||p{1.4cm}|p{1.5cm}|p{1.4cm}|p{1.5cm}|p{2.8cm}|}
-%DIFDELCMD <       %%%
-\DIFdelendFL \DIFaddbeginFL \begin{tabular}{|p{1.5cm}||p{1.3cm}|p{1.5cm}|p{1.4cm}|p{1.5cm}|p{2.8cm}|}
-      \DIFaddendFL \hline
+  \begin{tabular}{|p{1.5cm}||p{1.3cm}|p{1.5cm}|p{1.4cm}|p{1.5cm}|p{2.8cm}|}
+      \hline
                            & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
     Topologie               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
     Max. velikost paketu & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline

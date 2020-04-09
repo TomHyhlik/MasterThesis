@@ -15,4 +15,12 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
+zminit jak je zarizeni napajeno
 
+
+# email
+    pokusil jsem se kapitoly lépe uvézt, ale předpokládám, že halvní vysvětlení proč tento projekt vznikl bude vysvětleno v kapitole 1 úvod.
+
+    Sepsal jsem kapitolu 4, snad jsem na nic nezapomel. Na konci teto kapitoly jsem naznacil navrh gatewaye verze 2, ale je to pouze naznak, jelikoz si nejsem jist, zda se to tam hodi, tak zatim jen pro predstavu.
+
+    Fotku protypu gatewaye můžu udělat lepší až se stavim v IMA po karantene. Momentalne je zde fotka kde zarizeni ani neni cele videt.

@@ -1,5 +1,5 @@
-\chapter{Realizace WSN}
-Tato kapitola popisuje kompletní návrh řešení rozšíření komernčně používaného sytému o senzorovou síť.
+\chapter{Návrh WSN}
+Tato kapitola popisuje návrh řešení rozšíření přístupového sytému o senzorovou síť.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,6 +127,8 @@ RS485 transceiver konvertuje rozhranní RS485/UART pro umožnění komunikace s 
 
 
 \subsection{Zapojení}
+CKP zařízení daného přístupového systému jsou obvykle napájena napětím 12 V z kontrolního panelu. Použitý kit NUCLEO-L073RZ obsahuje stabilizátor tudíž je možné připojit gateway přímo ke kontrolnímu panelu přes vyvedené svorky GND, +12V, A a B.
+
 LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. 
 % Jumpery na Dragino LoRa shieldu musí také být stejně jako v obrázku.
 
@@ -603,7 +605,24 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Návrh WSN gatewaye verze 2}
+Pro lepší mechanické uspořádání byla navržena verze 2, kde je použit i jiný vývojový kit NUCLEO-L432KC s procesorem STM32L432KC, který je výkonnější.
+Navíc je zde přidán externí stabilizátor, napěťový filtr, přepínačem volitelné impedanční zakončení síťě RS485 a proudové ochrany.
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\textwidth]{minigateway_schema}
+    \caption{Návrh WSN gatewaye verze 2 - schéma}
+    \label{fig:minigateway_schema}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{minigateway_plosnak}
+    \caption{Návrh WSN gatewaye verze 2 - plošný spoj}
+    \label{fig:minigateway_plosnak}
+\end{figure}
 
 
 
