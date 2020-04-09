@@ -20,8 +20,7 @@ K jednomu přístupovému systému je možné přípojit několik WSN gatewayí 
 \end{figure}
 
 
-WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA. Jedná se o kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každé zprávě. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování.
-
+WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA.
 Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přistupu příkazem tzv. "průchod".
 Navržená gateway bere seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává pakety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
@@ -48,7 +47,7 @@ Gateway tedy má uloženou informaci o typu koncového zařízení společně s 
 LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
 
 Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přistupu, není zde možnost předávávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou zařízení. Geteway tedy má tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
-% LoRaWAN device address a typ každého zařízení v síti je uložena v EEPROM (non-volatile) paměti gatewaye a jsou nastavována na z access control serveru.
+% LoRaWAN device address a typ každého zařízení v síti je uložena v non-volatile paměti gatewaye a jsou nastavována na z access control serveru.
 % Pro tento vybraný případ byla vyvinuta knihovna pro dekódování payloadu na základě dokumentů \cite{lwSpec} \cite{lwSecur}.
 V tomto návrhu neni implementován opačný směr komunikace, tedy ze serveru řízení přístupu na koncové zařízení, ale je také možné implementovat pro ovládání aktulátorů, jako je relé, motor, apod.
 
@@ -163,13 +162,15 @@ Připojení periférií k GPIO (General Purpose Input Output) mikrokontroléru j
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Použité vývojové nástroje}
+\subsection{Použité vývojové nástroje k vytvoření FW}
 Výrobce použitého mikrokontroléru STMicroelectronics poskytuje grafický nástroj STM32CubeMX \cite{stm32cubemx} ke konfiguraci mikrokontrolérů STM32 a generování odpovídajícího kôdu v programovacím jazyce C.
 Pomocí tohoto nástroje byl vygenerován kód pro předběžnou konfiguraci systémového hodinového signálu, watchdogu, GPIO a rozhranní.
 
 Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilován kompilátorem arm-none-eabi-gcc \cite{arm-none-eabi-gcc} pomocí nástroje GNU make \cite{makefile}, výsledný binární soubor byl nahráván do procesoru pomocí nástroje st-flash \cite{st-flash} a debugován pomocí Visual Studio Code rozšíření Cortex-Debug \cite{cortex-debug}.
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Vývoj FW}
 Pro tento vybraný případ neni využit RTOS (Real Time Operating System), jelikož zde neni potřeba řešení více úloh souběžně. 
 K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
@@ -222,6 +223,35 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 \end{table}
 
 
+Do non-volatile paměti je ukládána konfigurace a adresa a typ všech koncových zařízení senzorové sítě.
+Jako non-volatile paměť je zde využita EEPROM (Electrically Erasable Programmable Read-Only Memory) o velikosti 6144 B. 
+Paměť je tedy rozdělená tak, že od adresy 0 až po adresu 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po adresu 6144 je prostor pro ukládání konfigurace gatewaye.
+Každé LoRaWan zařízení v síti má v paměti uložené LoRaWAN device address (4 byty), typ zařízení (1 byte) a další 3 byty jsou rezervovány. 
+Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro 760 koncových zařízení.
+Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry ukládány do non-volatile paměti gatewaye} má celkovou velikost 37 B, na konfiguraci je vyhrazeno 64 B, tudíž je zde rezerva 27 B.
+
+\begin{table}[!h]
+    \centering
+    \begin{ctucolortab}
+            \begin{tabular}{ |c|p{7cm}| }
+    \hline
+
+    Velikost [B]          & Parametr           \\ \hline \hline
+    1    & Adresa gatewaye v síti RS485       \\    \hline
+    1    & Adresa kontrolního panelu v síti RS485       \\  \hline
+    1    & Doba čekání na potvrzení od kontrolního panelu v síti RS485       \\ \hline
+    1    & LoRa kanál       \\  \hline
+    1    & LoRa SF       \\ \hline
+    16    & LoRaWAN NwkSKey       \\ \hline
+    16    & LoRaWAN AppSKey       \\ \hline
+ 
+    \end{tabular}
+    \end{ctucolortab}
+    \caption{Parametry ukládány do non-volatile paměti gatewaye}
+    \label{table:Parametry ukládány do non-volatile paměti gatewaye}
+\end{table}
+
+
 Po spuštění aplikace je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhranní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou dokola nepřetržitě zpracovávány cyklické buffery a fronty tvořeny linked listy. 
 
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
@@ -237,58 +267,10 @@ Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v 
 
 
 
-\subsubsection{Nahrávání programu do mikrokontroléru a debugování}
-jaktoze se stlink zobrazi jako flash drive pamet?
-todo
-
-
-
-% \subsection{Zdrojové soubory projektu}
-% Pro šifrování LoRaWAN paketu byla použita knihovna AES-128, dostupná na githubu \cite{AESlib} a knihovna OpenPANA také dostupná z githubu \cite{CMAClib}.
-% Níže je seznam zdrojových souborů.
-
-% \begin{figure}[!h]
-%     \dirtree{%
-%         .1 Drivers \DTcomment{STM32 Drivers}.
-%         .1 Inc\DTcomment{Headers}.
-%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
-%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
-%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
-%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
-%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
-%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
-%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
-%             .2 main.h\DTcomment{Main file}.
-%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
-%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
-%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
-%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
-%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
-%         .1 Src\DTcomment{Sources}.
-%             .2 aes.c \DTcomment{source file to the aes.h}.
-%             .2 aes.c \DTcomment{source file to the cmac.h}.
-%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
-%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
-%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
-%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
-%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
-%             .2 main.c \DTcomment{main source file}.
-%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
-%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
-%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
-%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
-%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
-%             .2 usb.h \DTcomment{source file to the usb.h}.
-%     }
-% \end{figure}
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
-% V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
-% Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
+\section{Implementace komunkičního protokolu CKP v síti IMA\_RS485 pro komunikaci s kontrolním panelem}
+todo
+CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. V této síti je jedno zařízení typu master, a jedno nebo více zařízení typu slave.
 
 % \begin{table}[!h]
 %     \centering
@@ -425,7 +407,7 @@ sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
     \label{table:usb_term}
 \end{table}
 
-Při komunikaci jsou data standardně oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A. 
+Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -718,13 +700,49 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Využití non-volatile paměťi gatewaye}
-% Konfigurace a adresy s typy všech koncových zařízení v LoRaWAN síti jsou uloženy v non-volatile paměti EEPROM gatewaye o kapacitě 6144 B. 
-% Paměť je tedy rozdělená tak, že od adresy 0 až po 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po 6144 je prostor pro ukládání konfigurace gatewaye.
 
-% Každé LoRaWan zařízení v síti má v paměti uložené LoRaWAN device address (4 byty), typ zařízení (1 byte) a další 3 byty jsou rezervovány. 
-% Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro až 760 koncových zařízení.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   NOT USED
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \subsection{Zdrojové soubory projektu}
+% Níže je seznam zdrojových souborů.
+% \begin{figure}[!h]
+%     \dirtree{%
+%         .1 Drivers \DTcomment{STM32 Drivers}.
+%         .1 Inc\DTcomment{Headers}.
+%             .2 aes.h\DTcomment{AES-128 library for LoRaWAN paket encryption}.
+%             .2 cmac.h\DTcomment{library for CMAC calculation in LoRaWAN protocol}.
+%             .2 LinkedList\_ByteArray.h \DTcomment{Byte array linked list library for stacks}.
+%             .2 LoRaWAN\_paket.h\DTcomment{LoRaWAN library for paket data decoding}.
+%             .2 stm32l0xx\_hal\_conf.h\DTcomment{HAL initialization of peripherals}.
+%             .2 ByteArray.h\DTcomment{Library for Byte array operations}.
+%             .2 LoRa.h\DTcomment{Library for interfacing LoRa transceiver}.
+%             .2 main.h\DTcomment{Main file}.
+%             .2 stm32l0xx\_it.h\DTcomment{HAL initialization of peripherals}.
+%             .2 eeprom.h\DTcomment{Library for eeprom operations}.
+%             .2 LoRa\_sensors.h\DTcomment{Library for decoding data from payload}.
+%             .2 rs485\_protocol.h\DTcomment{Library for RS485 IMA protocol}.
+%             .2 usb.h \DTcomment{Library for USB communication and system configuration}.
+%         .1 Src\DTcomment{Sources}.
+%             .2 aes.c \DTcomment{source file to the aes.h}.
+%             .2 aes.c \DTcomment{source file to the cmac.h}.
+%             .2 LinkedList\_ByteArray.c \DTcomment{source file to the LinkedList\_ByteArray.h}.
+%             .2 LoRaWAN\_paket.c  \DTcomment{source file to the LoRaWAN\_paket.h}.
+%             .2 stm32l0xx\_hal\_msp.c \DTcomment{HAL source file}.
+%             .2 ByteArray.c  \DTcomment{source file to the ByteArray.h}.
+%             .2 LoRa.c \DTcomment{source file to the LoRa.h}.
+%             .2 main.c \DTcomment{main source file}.
+%             .2 stm32l0xx\_it.c \DTcomment{HAL source file}.
+%             .2 eeprom.c \DTcomment{source file to the eeprom.h}.
+%             .2 LoRa\_sensors.c \DTcomment{source file to the LoRa\_sensors.h}.
+%             .2 rs485\_protocol.c  \DTcomment{source file to the rs485\_protocol.h}.
+%             .2 system\_stm32l0xx.c \DTcomment{HAL source file}.
+%             .2 usb.h \DTcomment{source file to the usb.h}.
+%     }
+% \end{figure}
 
 
 
@@ -734,3 +752,123 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 % Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
 % Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
 % Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{sec:konfigurace}.  
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Implementace komunkičního protokolu v síti IMA\_RS485 pro komunikaci s control panelem}
+% V tomto projektu je komunikace protokolu IMA\_RS485 naprogramována v souborech rs485\_protocol.h a rs485\_protocol.c. 
+% Jedná se o kolizní protokol v síti, kde je připojen jedno zařízení typu master, a jeden nebo více zařízení v typu slave.
+
+% \begin{table}[!h]
+%     \centering
+%     \begin{tabular}{ |c|c| }
+%      \hline
+
+%      Baud rate              & 9600           \\ \hline
+%      Data bits              & 8                 \\ \hline
+%      Parity                 & none              \\ \hline
+%      Stop bits              & 1                 \\ \hline
+
+%     \end{tabular}
+%     \caption{Fyzické vlastnosti IMA\_RS485 sítě}
+%     \label{table:3}
+% \end{table}
+
+% \newpage
+% \subsection{Syntaxe příkazů}
+% Komunikace v síti probíhá formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
+
+% \begin{table}[!h]
+%     \centering
+% \begin{tabular}{ |c|| p{1.5cm} | p{1.5cm} | p{1cm} | p{1cm} | p{1cm} | p{1cm} | }
+%  \hline
+%  popis      & adresa příjemce & adresa odesílatele & typ příkazu & délka dat & data & crc\\ \hline
+%  počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
+%  \hline
+% \end{tabular}
+%     \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
+%     \label{table:syntaxePrikazu}
+% \end{table}
+
+% Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
+% Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
+% CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
+
+% \subsection{Adresace zařízení v síti}
+% Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
+
+% \subsection{Statusy}
+% Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
+% Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
+% Pro status online je tento byte 0x00 a pro status offline 0xEE. 
+% Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
+% Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
+% Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
+% Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
+% Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
+
+
+% \subsection{Přidávání LoRaWAN zařízení do systému}
+% Pokud zařízení typu master přijme příkaz od zařízení typu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
+% Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
+
+% Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
+
+
+% \begin{table}[!h]
+%     \begin{tabular}{ |l|p{10cm}| }
+%     \hline
+%     příkaz      &  data    \\ \hline \hline
+%     master: start      &  AA 10 FF 8F 02 00 00 00 62    \\ \hline
+%     slave: ACK        &  FF 10 06 02 00 8F 00 64    \\ \hline
+%     master: data     &  AA 10 FF 8F 21 00 01 B1 C4 12 00 00 00 00 00 B2 C4 12 00 00 00 00 00 B3 C4 12 00 00 00 00 00 B4 C4 12 00 00 00 00 00 44 \\ \hline
+%     slave: ACK      &  FF 10 06 02 00 8F 01 65   \\ \hline
+%     master: data     &  AA 10 FF 8F 19 00 02 B5 C4 12 00 00 00 00 00 B6 C4 12 00 00 00 00 00 F6 1F 01 26 00 00 00 00 B6 \\ \hline
+%     slave: ACK      &   FF 10 06 02 00 8F 02 66   \\ \hline
+%     master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
+%     slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
+%     \end{tabular}
+%     \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
+%     \label{table:2}
+% \end{table}
+
+% LoraWAN protokol používá 4-bytové adresy koncových zařízení.
+% Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, pátý byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
+
+% První Byte dat je counter paketu začínající od nuly, který označuje číslo odeslaného paketu v sekvenci. Na každý tento paket v sekvenci zařízení typu slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech paketu navíc obsahuje counter pakety v sekvenci.
+% První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
+% Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
+% Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
+
+% \subsection{Odesílání dat z koncových zařízení} 
+% \label{sec:Odesílání dat z koncových zařízení}
+% Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
+% První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
+% Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
+% Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
+
+% \begin{table}[!h]
+%     \centering
+% \begin{tabular}{ | p{1.5cm} | p{3cm} | p{2.5cm} | p{1.3cm} | p{1.3cm} |  }
+%  \hline
+%  typ průchodu & LoRaWAN device address & data (4B)     & cas   & data (2B) \\ \hline
+%  D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
+%  \hline
+% \end{tabular}
+%     \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
+%     \label{table:prikladprikazpruchod}
+% \end{table}
+
+% Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Zařízení typu slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, zařízení typu slave příkaz "průchod" zopakuje přičemž změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, zařízení typu slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
+
+% \subsection{Potvrzení}
+% Zařízení typu slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
+% Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
+
+% \subsection{Dotaz na příznaky}
+% Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
