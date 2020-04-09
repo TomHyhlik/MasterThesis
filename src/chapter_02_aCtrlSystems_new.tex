@@ -8,7 +8,7 @@ Tato kapitola osvětluje architekturu obecného přístupového systému jeliko�
 Obrázek \ref{fig:Access control system architecture} zobrazuje typickou architekturu přístupového systému, kde identifikátor (ID Credential) představuje prvek umožňující identifikovat uživatele, např. RFID tag, otisk prstu nebo QR kód. 
 Čtečka (Reader) slouží ke čtení dat z identifikátoru a v digitální podobě je odesílá k zařízení kontrolní panel (Control Panel).
 Zámek dveří (Door Lock) řídí fyzický přístup uživatelů do omezených prostor. 
-Kontrolní panel tvoří rozhranní mezi serverem řízení přístupu (Access Control Server) a páry čteček a zámků dveří.
+Kontrolní panel tvoří rozhraní mezi serverem řízení přístupu (Access Control Server) a páry čteček a zámků dveří.
 kontrolní panely jsou obvykle připojeny k serveru řízení přístupu přes TCP/IP síť a páry čtečka a zámků dveří jsou obvykle připojeny ke kontrolnímu panelu přes RS485 síť. Databáze obsahuje všechna uživatelské ID.
 Na serveru řízení přístupu je spuštěn Software (SW) spravující databázi a komunikující se všemi zařízeními typu Contril Panel.
 Čtečka čte uživatelská ID z předložených identifikátorů a přeposílá je na kontrolní panel, který je dále přeposílá na server řízení přístupu. 
