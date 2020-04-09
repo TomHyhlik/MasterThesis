@@ -15,7 +15,7 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-zminit jak je zarizeni napajeno
+zkontrolovat chyby v kapitole 4
 
 
 # email
