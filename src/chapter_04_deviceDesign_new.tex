@@ -597,6 +597,7 @@ Adresa koncového zařízení (LoRaWAN device address) je dlouhá 4 B, jeden byt
 Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu. Při odesílání příkazu "průchod" se tedy už typ zařízení neposílá z důvodu omezené velikosti tohoto příkazu.
 Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.
 
+\subsubsection{Příklad}
 Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhranní serveru řízení přístupu je tedy 8016149418.
 
 
