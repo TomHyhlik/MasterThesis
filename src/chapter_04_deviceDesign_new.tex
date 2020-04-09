@@ -269,117 +269,14 @@ Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementace komunkičního protokolu CKP v síti IMA\_RS485 pro komunikaci s kontrolním panelem}
-todo
-CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. V této síti je jedno zařízení typu master, a jedno nebo více zařízení typu slave.
+CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. 
+V této síti je jedno zařízení typu master, a jedno nebo více zařízení typu slave, přičemž zařízení typu master je kontrolní panel a zařízení typu slave je jakékoliv CKP zařízení, v tomto vybraném případě gateway.
+Každé zařízení má svoji adresu definovanou jedním bytem, která musí být unikátní pro jednu síť a každý příkaz v této síti obsahuje v hlavičce adresu odesílatele a adresu příjemce.
+Zařízení typu slave má dva možné statusy, offline a online, periodický odesílá příkaz s informací o jeho aktuálním statusu, má povoleno odesílat příkaz s daty z koncového zařízení senzorové sítě "průchod" pouze má-li status online a změnu statusu daného zařízení typu slave provádí zařízení typu master. 
+Zařízení typu slave svůj status změní samo z online na offline v případě, že zařízení typu master přestane odpovídat na příkaz "průchod".
 
-% \begin{table}[!h]
-%     \centering
-%     \begin{tabular}{ |c|c| }
-%      \hline
+Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá příkaz s informaci o jeho statusu na kontrolní panel, který po obdržení tohoto příkazu předá seznam adres koncových zařízení senzorové sítě sekvení několika příkazů a pak ho přepde do statusu online. V této chvíli již gateway přeposílá data z koncových zařízení senzorové síťe na kontrolní panel.
 
-%      Baud rate              & 9600           \\ \hline
-%      Data bits              & 8                 \\ \hline
-%      Parity                 & none              \\ \hline
-%      Stop bits              & 1                 \\ \hline
-
-%     \end{tabular}
-%     \caption{Fyzické vlastnosti IMA\_RS485 sítě}
-%     \label{table:3}
-% \end{table}
-
-% \newpage
-% \subsection{Syntaxe příkazů}
-% Komunikace v síti probíhá formou příkazů, které mají specifikovanou syntaxi v tabulce \ref{table:syntaxePrikazu}.
-
-% \begin{table}[!h]
-%     \centering
-% \begin{tabular}{ |c|| p{1.5cm} | p{1.5cm} | p{1cm} | p{1cm} | p{1cm} | p{1cm} | }
-%  \hline
-%  popis      & adresa příjemce & adresa odesílatele & typ příkazu & délka dat & data & crc\\ \hline
-%  počet bytů & 1               & 1   & 1     & 2     & délka dat     & 1 \\ 
-%  \hline
-% \end{tabular}
-%     \caption{Syntaxe příkazu pro komunikaci v síti IMA\_RS485}
-%     \label{table:syntaxePrikazu}
-% \end{table}
-
-% Typy příkazu jsou zadefinované konstanty s předponou CKP\_CMD\_ v souboru ./Inc/rs485\_protocol.h.
-% Příkazy odeslané zařízením typu master obsahují navíc synchronizační byte na začátku 0xAA.
-% CRC je pro kontrolu XOR přes všechny předchozí byty v celém příkazu kromě synchronizačního bytu.
-
-% \subsection{Adresace zařízení v síti}
-% Každé zařízení na této sběrnici má svoji adresu, která mu je nastavena externě. Zařízení typu master má adresu  0xFF, adresa pro všechny (broadcast) je 0x00 a zařízení v této sítí můžou mít adresu libovolnou (krom těchto dvou) nesmí zde však být připojena 2 zařízení s nastavenou stejnou adresou.
-
-% \subsection{Statusy}
-% Zařízení typu slave má dva možné statusy v síti IMA\_RS485, offline a online. Zařízení typu slave má povoleno odesílat příkaz "průchod" pouze má-li status online.  
-% Zařízení typu slave odesílá příkaz obsahující informaci o jeho statusu periodicky s typem příkazu 0x10 a jedním bytem dat označujícím status. 
-% Pro status online je tento byte 0x00 a pro status offline 0xEE. 
-% Tento příkaz je odesílán s intervalem 10 s, pokud zařízení má status offline a s intervalem 30 s, pokud má zařízení status online.
-% Status zařízení mění pouze zařízení typu master odesláním příkazu s typem 0x41 pro přepnutí na status online a 0x42 pro přepnutí na status offline.
-% Zařízení typu slave svůj status přepne samo pouze v případě, že má status online a zařízení typu master přestane odpovídat na příkaz průchod, jak je popsáno v sekci \ref{sec:Odesílání dat z koncových zařízení}.
-% Je-li zařízení spuštěno, je ve stavu offline a jelikož nemá povoleno odesílat příkaz "průchod", přijatá data z koncových zařízení jsou zahazována. 
-% Zařízení typu slave pouze odpovídá na příkazy od zařízení typu master a čeká na příkaz od zařízení typu master k přepnutí na status online.
-
-
-% \subsection{Přidávání LoRaWAN zařízení do systému}
-% Pokud zařízení typu master přijme příkaz od zařízení typu slave oznamující že je ve stavu offline, nejprve tomuto zařízení pošle seznam LoRaWAN adres všech známých koncových zařízení a následně toto zařízení přepne do stavu online.
-% Přijímání seznamu adres je realizováno sekvencí příkazů typu 0x8F. 
-
-% Níže v tabulce \ref{table:2} je příklad sekvence příkazů odesílaných mezi zařízením typu masterem a zařízením typu slavem během předávání seznamu LoRaWAN device address koncových zařízení, kde zařízení typu slave má adresu 0x10 a zařízení typu master standardně 0xFF. Jak již bylo řečeno, příkazy od zařízení typu master lze jednoduše odlišit tím, že vždy začínají bytem 0xAA.
-
-
-% \begin{table}[!h]
-%     \begin{tabular}{ |l|p{10cm}| }
-%     \hline
-%     příkaz      &  data    \\ \hline \hline
-%     master: start      &  AA 10 FF 8F 02 00 00 00 62    \\ \hline
-%     slave: ACK        &  FF 10 06 02 00 8F 00 64    \\ \hline
-%     master: data     &  AA 10 FF 8F 21 00 01 B1 C4 12 00 00 00 00 00 B2 C4 12 00 00 00 00 00 B3 C4 12 00 00 00 00 00 B4 C4 12 00 00 00 00 00 44 \\ \hline
-%     slave: ACK      &  FF 10 06 02 00 8F 01 65   \\ \hline
-%     master: data     &  AA 10 FF 8F 19 00 02 B5 C4 12 00 00 00 00 00 B6 C4 12 00 00 00 00 00 F6 1F 01 26 00 00 00 00 B6 \\ \hline
-%     slave: ACK      &   FF 10 06 02 00 8F 02 66   \\ \hline
-%     master: konec   &   AA 10 FF 8F 04 00 03 FF 2A 57 E5   \\ \hline
-%     slave: ACK      &   FF 10 06 02 00 8F 03 67  \\ \hline
-%     \end{tabular}
-%     \caption{Příklad sekvence příkazů odesílaných mezi zařízením typu master a zařízením typu slave během předávání seznamu LoRaWAN device address koncových zařízení}
-%     \label{table:2}
-% \end{table}
-
-% LoraWAN protokol používá 4-bytové adresy koncových zařízení.
-% Adresy předávány touto sekvencí jsou dlouhé 8-bytové. První 4 byty je tedy LoRaWAN device address, pátý byte je typ zařízení a zbylé 3 byty jsou nevyužity, jejich použití je možné v případě změn či rozšiřování vlastností systému. 
-
-% První Byte dat je counter paketu začínající od nuly, který označuje číslo odeslaného paketu v sekvenci. Na každý tento paket v sekvenci zařízení typu slave odpovídá ACK příkaz, který se liší od obyčejného ACK příkazu tím, že v datech paketu navíc obsahuje counter pakety v sekvenci.
-% První příkaz této sekvence má délku dat 2 byty, které mají hodnotu 0x00 přičemž první je counter.
-% Další příkazy hned za counter bytem obsahují několik osmibytových adres, jejichž počet je různý.
-% Příkaz ukončující tuto sekvenci příkazů má délku 4 byty, což je tedy counter, 0xFF a 2 byty CRC přes všechny odeslané adresy (nepodstatné, tudíž ho nepoužívám).
-
-% \subsection{Odesílání dat z koncových zařízení} 
-% \label{sec:Odesílání dat z koncových zařízení}
-% Jak je popsáno v sekci \ref{sec:Implementace IoT do přístupového systému firmy IMA}, tudíž data z koncových zařízení jsou odesílána příkazem "průchod", jehož typ je 0x10 a kapacita na data z koncového zařízení je pouze 6 B. 
-% První byte dat označuje typ průchodu, byl zvolen konstantní byte 0xD0. Dále následuje LoRaWAN adresa koncového zařízení od kterého byl paket přijat. Dále následují 4 byty dat ze senzoru, další 2 byty signalizující čas průchodu, což v tomto projektu není použito a tyto dva byty mají vždy hodnotu 0xFF. A nakonec jsou další 2 byty obsahující data ze senzoru.
-% Příklad příkazu: FF 1F 10 0D 00 D0 F6 1F 01 29 AD 0A 5A 27 FF FF DE 09 E1.
-% Data příkazu jsou níže rozepsána v tabulce \ref{table:prikladprikazpruchod}.
-
-% \begin{table}[!h]
-%     \centering
-% \begin{tabular}{ | p{1.5cm} | p{3cm} | p{2.5cm} | p{1.3cm} | p{1.3cm} |  }
-%  \hline
-%  typ průchodu & LoRaWAN device address & data (4B)     & cas   & data (2B) \\ \hline
-%  D0           & F6 1F 01 29            &  AD 0A 5A 27  & FF FF & DE 09     \\ 
-%  \hline
-% \end{tabular}
-%     \caption{Příklad dat příkazu "průchod" odeslaného z gatewaye na zarizeni typu master, obsahující data z koncových zařízení}
-%     \label{table:prikladprikazpruchod}
-% \end{table}
-
-% Zařízení typu master na příkaz "průchod" odpovídá příkazem ACK. Zařízení typu slave na tuto odpověď čeká standardně 3 sekundy, ale tento parametr je nastavitelný. Pokud v tomto timeoutu zařízení typu master neodpoví, zařízení typu slave příkaz "průchod" zopakuje přičemž změní typ příkazu na 0x20. Pokud zařízení typu master ani na třetí opakování neodpoví ACK, zařízení typu slave se přepne do stavu offline a vymaže frontu příkazů "průchod" k odeslání.
-
-% \subsection{Potvrzení}
-% Zařízení typu slave odpovídá na každý příkaz od zařízení typu master ACK. Typ příkazu ACK je 0x06 a data příkazu obsahují jeden byte signalizující typ příkazu na který je právě odpovídáno potvrzením.
-% Zařízení typu master odpovídá ACK se stejným typem příkazu 0x06, ale s žádnými daty příkazu.
-
-% \subsection{Dotaz na příznaky}
-% Zařízení typu master se může zeptat s jak dlouhými adresami zařízení typu slave pracuje s typem příkazu 0x49. Zařízení typu slave na to odpovídá ACK s tím, že v datech příkazu je navíc byte 0x04. Zařízení typu master pak počítá s tím, že zařízení typu slave pracuje se 64-bit adresami (ve skutečnosti ale používá 32-bitové a zbylé 4 byty v příkazu průchod jsou pro data z koncového zařízení).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Komunikace přes sériovou linku USB}
