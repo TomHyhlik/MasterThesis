@@ -15,12 +15,13 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-zkontrolovat chyby v kapitole 4
+    - jasne vypsana kriteria, podle kterych vybirate. Ideal jsou asi odrazky. Nebo, coz je mozna lepsi, napiste, proc zavrhujete ostatni technologie.
+
+
+Pozdeji jsem psal at napisete co tento konkretni pripad konkretne je ;-). Tedy do infrastruktury pristupove site. jeste se zamyslete, jak v teto fazi to musi byt konkretni, zda to plati pro obecnou infrastrukturu, nebo uz na vybranou, ktera se lisi xy.
+
+
 
 
 # email
-    pokusil jsem se kapitoly lépe uvézt, ale předpokládám, že halvní vysvětlení proč tento projekt vznikl bude vysvětleno v kapitole 1 úvod.
 
-    Sepsal jsem kapitolu 4, snad jsem na nic nezapomel. Na konci teto kapitoly jsem naznacil navrh gatewaye verze 2, ale je to pouze naznak, jelikoz si nejsem jist, zda se to tam hodi, tak zatim jen pro predstavu.
-
-    Fotku protypu gatewaye můžu udělat lepší až se stavim v IMA po karantene. Momentalne je zde fotka kde zarizeni ani neni cele videt.

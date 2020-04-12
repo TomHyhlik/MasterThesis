@@ -1,11 +1,21 @@
 \chapter{Výběr bezdrátové technologie pro senzorovou síť}
-Mezi hlavní požadavky na navrženou senzorovou síť pro tento vybraný případ patří jednoduchá napojitelnost na infrastrukturu jiného systému. Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
-Takto nainstalovaná senzorová síť by pak měla umožňovat bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
-% Naměřené hodnoty koncových zařízení jsou pak zpracovávány na serveru řízení přístupu.
+Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ a na závěr vysvětluje která technologie byla nakonec výbrána a z jakých důvodů.
 
-Mezi hlavní kritéria pro vybranou bezdrátovou technologii pro tento případ patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
-Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na siti třetích stran. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hlavní kritéria pro výběr bezdrátové technologie}
+% Mezi hlavní požadavky na navrženou senzorovou síť implementovanou do infrastruktury přístupového systému patří jednoduchost napojení.
+% Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
+% Navržená senzorová síť má být připojena do infrastruktury přístupového systému zavedeného v několika budovách. Jejím účelem je bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
+% Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na siti třetích stran. 
+% Dosah by tedy měl být pro pokrytí celé budovy a jejího okolí, ale je zde i možnost napojení více gatewayí rozmístěných po budově k dosažení požadovaného dosahu.
+Níže jsou vypsány hlavní kritéria pro výběr bezdrátové technologie pro tuto senzorovou síť.
+
+\begin{itemize}
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kandidátní bezdrátové technlogie}
 Níže jsou popsány dostupné bezdrátové technologie vyhovující stanoveným kritériím pro tento vybraný případ.
 
@@ -98,9 +108,8 @@ Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technolog
 
 % Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.
-Pro tento vybraný případ byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž to není plně LoRaWAN kompatibilní.
-V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
-Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
+% V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
+% Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
 LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
 LoRaWAN síť má hvězdicovou topologii při dostatečném dosahu pro pokrytí budovy a jejím okolí, navíc dosah lze ladit parametrem SF. Pro tento vybraný případ je to vhodné, jelikož pravděpodobně všechna zařízení v síti budou senzory napájeny z baterie, a není předpokládáno, že by byly připojeny zařízení umožňující směrování paketů z důvodu spotřeby energie. 
 LoRaWAN síť umožňuje koncovým zařízením po změření dat senzory je ihned odeslat na gateway bez nutností čekání na potvrzení, tudíž se koncové zařízení může ihned přepnout do režimu spánku a tím eliminovat spotřebu energie. 
