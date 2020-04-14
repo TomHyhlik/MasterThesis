@@ -16,45 +16,77 @@ Konkrétní rozmístění stávajcích dvanácti CKP zařízení, gatewaye a dvo
     \caption{\DIFdelbeginFL \DIFdelFL{Location of sensor nodes and }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Rozmístění koncových zařízení sítě a zařízení }\DIFaddendFL CKP \DIFdelbeginFL \DIFdelFL{devices on the university floor}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{v testovaných prostorách budovy}\DIFaddendFL }
     \label{fig:CorridorFloorPlan}
 \end{figure*}
-\DIFdelbegin %DIFDELCMD < 
 
-%DIFDELCMD < %%%
 %DIF <  One floor block of university building is selected to perform the test. It is equipped with twelve CKP devices, each controlling one Door Lock and one Reader. One Gateway is added to the infrastructure, i.e., thirteen devices are connected to one RS485 network. Two temperature/humidity sensor nodes are wirelessly connected to the Gateway. The Gateway and CKP devices are connected via RS485 network as shown in Fig. \ref{fig:Access control system architecture}. The specific location of CKP devices, Gateway and two sensor nodes on the floor is shown in Fig. \ref{fig:CorridorFloorPlan}.
-\DIFdelend 
+\DIFaddbegin \DIFadd{Testování probíhalo od 21. září do 31. října, tedy v době přítomnosti studentů a zaměstnanců v testovaných prostorách. 
+Po tuto dobu testování byly zaznamenávány přenášené pakety síti RS485, kontrolní panel přijal 1~876~978 paketů (14~074~522 B) a odeslal 1~101~556 paketů (8~295~219 B), dohromady tedy 2~978~534 paketů (22~369~741 B).
+Z naměřených hodnot byla provedena metoda frekvencni analízy. Z přenesených paketů byly nejdelší 3 o velikostí 40 bytů.
+S ohledem na celkové množství paketů je to zanedbatelné množství, tj. 1,3E-04 \%.
+Avšak vzhledem k povaze systému, tedy ystému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit.
+}\DIFaddend 
 
+%DIF <  The long-term operation test is carried out from 21$^{st}$ September to 31$^{th}$ October, i.e., in the period involving the presence of students and employees in the classrooms and offices on the monitored floor of the university.
+%DIF <  During this period, the Control Panel received 1~876~978 packets (14~074~522 Bytes) and sent 1~101~556 packets (8~295~219 Bytes) from/to RS485 network. 
+%DIF <  The lengths of all 2~978~534 packets, i.e., 22~369~741 Bytes, are recorded in RS485 network during long-term operation test and the frequency analysis  method, i.e., the number of packet lengths in monitored period, is performed. Three packets reach the largest value, i.e., 40 Bytes. 
+%DIF <  Considering the total amount of packets, it is negligible quantity, i.e, 1.3E-04\%. However, given the nature of the system, i.e., the system with the primary function of access to a restricted area, the worst-case scenario is considered to be an uncrossable limit. 
+%DIF <  Number of sensor nodes that can be wirelessly connected to the Gateway and does not affect the existing access control system, can be calculated in dependence on used RS485 data rate. The reserve of the data rate is considered in order to protect the access control system from malfunction, e.g., a long waiting for the door to open.
+\DIFaddbegin \DIFadd{Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z objemu přenášených dat v síti RS485. 
+Tato rezerva objemu přenášených dat je uvažována za účelem ochrany přístupového systému před poruchou, například před dlouhým čekáním na otevření dveří.
+}\DIFaddend 
 
-% The long-term operation test is carried out from 21$^{st}$ September to 31$^{th}$ October, i.e., in the period involving the presence of students and employees in the classrooms and offices on the monitored floor of the university.
-% During this period, the Control Panel received 1~876~978 packets (14~074~522 Bytes) and sent 1~101~556 packets (8~295~219 Bytes) from/to RS485 network. 
-% The lengths of all 2~978~534 packets, i.e., 22~369~741 Bytes, are recorded in RS485 network during long-term operation test and the frequency analysis  method, i.e., the number of packet lengths in monitored period, is performed. Three packets reach the largest value, i.e., 40 Bytes. 
-% Considering the total amount of packets, it is negligible quantity, i.e, 1.3E-04\%. However, given the nature of the system, i.e., the system with the primary function of access to a restricted area, the worst-case scenario is considered to be an uncrossable limit. 
-% Number of sensor nodes that can be wirelessly connected to the Gateway and does not affect the existing access control system, can be calculated in dependence on used RS485 data rate. The reserve of the data rate is considered in order to protect the access control system from malfunction, e.g., a long waiting for the door to open.
+%DIF <  \begin{table}[h]
+%DIF <  \centering
+%DIF <  \footnotesize
+%DIF <  \caption{Packet length frequency analysis}
+%DIF <  \begin{tabular}{cr}
+%DIF <  Packet length &  Count \\ \hline
+%DIF <  \textbf{7}  &  \textbf{2~216~098}  \\
+%DIF <  8  &   619~127   \\
+%DIF <  9  &         3   \\
+%DIF <  11 &    58~393   \\
+%DIF <  13 &    58~620   \\
+%DIF <  16 &         1   \\
+%DIF <  18 &         2   \\
+%DIF <  \textbf{19} &    \textbf{26~286}   \\
+%DIF <  23 &         1   \\
+%DIF <  40 &         3   \\
+%DIF <  \end{tabular}
+%DIF <  \label{tab:FreqAnalysis}
+%DIF <  \end{table}
+\DIFaddbegin \begin{table}[h]
+\centering
+\footnotesize
+\caption{\DIFaddFL{Packet length frequency analysis}}
+\begin{tabular}{cr}
+\DIFaddFL{Packet length }&  \DIFaddFL{Count }\\ \hline
+\textbf{\DIFaddFL{7}}  &  \textbf{\DIFaddFL{2~216~098}}  \\
+\DIFaddFL{8  }&   \DIFaddFL{619~127   }\\
+\DIFaddFL{9  }&         \DIFaddFL{3   }\\
+\DIFaddFL{11 }&    \DIFaddFL{58~393   }\\
+\DIFaddFL{13 }&    \DIFaddFL{58~620   }\\
+\DIFaddFL{16 }&         \DIFaddFL{1   }\\
+\DIFaddFL{18 }&         \DIFaddFL{2   }\\
+\textbf{\DIFaddFL{19}} &    \textbf{\DIFaddFL{26~286}}   \\
+\DIFaddFL{23 }&         \DIFaddFL{1   }\\
+\DIFaddFL{40 }&         \DIFaddFL{3   }\\
+\end{tabular}
+\label{tab:FreqAnalysis}
+\end{table}
+\DIFaddend 
 
-% \begin{table}[h]
-% \centering
-% \footnotesize
-% \caption{Packet length frequency analysis}
-% \begin{tabular}{cr}
-% Packet length &  Count \\ \hline
-% \textbf{7}  &  \textbf{2~216~098}  \\
-% 8  &   619~127   \\
-% 9  &         3   \\
-% 11 &    58~393   \\
-% 13 &    58~620   \\
-% 16 &         1   \\
-% 18 &         2   \\
-% \textbf{19} &    \textbf{26~286}   \\
-% 23 &         1   \\
-% 40 &         3   \\
-% \end{tabular}
-% \label{tab:FreqAnalysis}
-% \end{table}
-
-% \begin{figure*}[ht]
-%     \centering
-%     \includegraphics[width=1\textwidth]{03-dr-measured}
-%     \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
-%     \label{fig:PacketLengthMeasuredAll}
-% \end{figure*}
+%DIF <  \begin{figure*}[ht]
+%DIF <      \centering
+%DIF <      \includegraphics[width=1\textwidth]{03-dr-measured}
+%DIF <      \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
+%DIF <      \label{fig:PacketLengthMeasuredAll}
+%DIF <  \end{figure*}
+\DIFaddbegin \begin{figure*}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{03-dr-measured}
+    \caption{\DIFaddFL{Measured data rate in }[\DIFaddFL{bps}] \DIFaddFL{in RS485 network during long-term operation test}}
+    \label{fig:PacketLengthMeasuredAll}
+\end{figure*}
+\DIFaddend 
 
 % Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
 
