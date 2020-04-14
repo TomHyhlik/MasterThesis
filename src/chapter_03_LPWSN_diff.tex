@@ -1,33 +1,27 @@
 \chapter{Výběr bezdrátové technologie pro senzorovou síť}
-Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ \DIFaddbegin \DIFadd{senzorové sítě }\DIFaddend a na závěr vysvětluje která technologie byla nakonec výbrána a z jakých důvodů.
+Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ senzorové sítě a na závěr vysvětluje která technologie byla nakonec výbrána a z jakých důvodů.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Hlavní kritéria pro výběr bezdrátové technologie}
 % Mezi hlavní požadavky na navrženou senzorovou síť implementovanou do infrastruktury přístupového systému patří jednoduchost napojení.
 % Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
-%DIF <  Navržená senzorová síť má být připojena do infrastruktury přístupového systému zavedeného v několika budovách. Jejím účelem je bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
-%DIF <  Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na siti třetích stran. 
-%DIF <  Dosah by tedy měl být pro pokrytí celé budovy a jejího okolí, ale je zde i možnost napojení více gatewayí rozmístěných po budově k dosažení požadovaného dosahu.
-\DIFaddbegin \DIFadd{Navržená senzorová síť má být připojena do infrastruktury přístupového systému, který je již zaveden v několika budovách. Jejím účelem je bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
+Navržená senzorová síť má být připojena do infrastruktury přístupového systému, který je již zaveden v několika budovách. Jejím účelem je bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
 Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na siti třetích stran. 
 Dosah by tedy měl být pro pokrytí celé budovy a jejího okolí, ale je zde i možnost napojení více gatewayí rozmístěných po budově k dosažení požadovaného dosahu.
-}\DIFaddend Níže jsou vypsány hlavní kritéria pro výběr bezdrátové technologie pro tuto senzorovou síť.
+Níže jsou vypsány hlavní kritéria pro výběr bezdrátové technologie pro tuto senzorovou síť.
 
 \begin{itemize}
-  \DIFdelbegin %DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend \DIFaddbegin \item \DIFadd{Nízká cena HW
-  }\item \DIFadd{Jednoduché přípojení koncových zařízení třetích stran (Third party)
-  }\item \DIFadd{Velký počet dostupných koncových zařízení třetích stran na trhu 
-  }\item \DIFadd{Jednoduchá implementace
-  }\item \DIFadd{Nízká spotřeba energie koncových zařízení
-}\DIFaddend \end{itemize}
+  \item Nízká cena HW
+  \item Jednoduché přípojení koncových zařízení třetích stran (Third party)
+  \item Velký počet dostupných koncových zařízení třetích stran na trhu 
+  \item Jednoduchá implementace
+  \item Nízká spotřeba energie koncových zařízení
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kandidátní bezdrátové technlogie}
-\DIFdelbegin \DIFdel{Níže jsou popsány }\DIFdelend \DIFaddbegin \DIFadd{V této sekci jsou rozebrány }\DIFaddend dostupné bezdrátové technologie\DIFdelbegin \DIFdel{vyhovující }\DIFdelend \DIFaddbegin \DIFadd{, které jsou běžně používány pro bezdrátové měření zařízeními napájenými z baterie a vyhovují }\DIFaddend stanoveným kritériím \DIFdelbegin \DIFdel{pro tento vybraný případ}\DIFdelend \DIFaddbegin \DIFadd{vypsaných výše}\DIFaddend .
+V této sekci jsou rozebrány dostupné bezdrátové technologie, které jsou běžně používány pro bezdrátové měření zařízeními napájenými z baterie a vyhovují stanoveným kritériím vypsaných výše.
 
 \subsection{IQRF}
 IQRF je technologie podporována IQRF aliancí \cite{iqrf_alliance}, která je jediným výrobcem IQRF transceiveru \cite{iqrf_transceivers} za cenu v rozsahu \$15-20 za kus a k tomu poskytuje nástroje jako je SDK (Software Development Kit) \cite{iqrf_sdk} a IDE (Integrated Development Environment) \cite{iqrf_ide}.
@@ -35,8 +29,7 @@ Technologie IQRF bývá použita k realizaci sítí o topologii typu mesh nebo h
 Jedna síť má jednoho koordinátora, který slouží jako gateway a může obsahovat až 240 zařízení (včetně koordinátora). Pro požadavek vyššího počtu zařízení je efektivnější zřetězit více sítí, s jednotlivými koordinátory a různými RF kanály pro vyšší propustnost.
 % https://iqrf.org/support/networkingfaq
 Dosah na přímou viditelnost je až 500 m a velikost datového obsahu (payloadu) jednoho paketu může být až 64 B.
-\DIFdelbegin \DIFdel{Z hlediska kriérií pro tento vybraný případ je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
-}\DIFdelend %DIF >  Z hlediska kriérií pro tento vybraný případ je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
+% Z hlediska kriérií pro tento vybraný případ je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
 Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde gateway je použita jedna z dostupných od IQRF aliance a koncová zařízení sítě jsou vytvořena vývojáři s použitím transceiverů od IQRF aliance
 \cite{paper_iqrf}.
 
@@ -119,26 +112,21 @@ Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technolog
 
 % Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.
-%DIF <  V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a přenosovou rychlost.
-%DIF <  Výhoda použití této technolgie v jednokanálovém módu je, že gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
-\DIFdelbegin \DIFdel{LoRaWAN }\DIFdelend \DIFaddbegin 
 
-\DIFadd{Technologie IQRF byla zavrhnuta, jelikož je na truhu velmi málo dostupných koncových zařízení třetích stran, které bý bylo možné do sítě připojit. 
+Technologie IQRF byla zavrhnuta, jelikož je na truhu velmi málo dostupných koncových zařízení třetích stran, které bý bylo možné do sítě připojit. 
 ZigBee a BLE mají příliš krátký dosah, což by bylo možné vyřešit rozmístěním více gatewayí napojených na přístupový systém nebo použitím mesh topologie, ale zvyšuje to složitost instalace a cenu řešení. 
 Wireless M-bus a LoRa mají jako nevýhodu vysokou cenu transceiveru pro gateway. 
-LoRa má možnost použití v jednokanálovém módu, kde gateway může použít transceiver určen pro }\DIFaddend koncová zařízení\DIFaddbegin \DIFadd{, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU (Central Processing Unit) než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
-}\\
+LoRa má možnost použití v jednokanálovém módu, kde gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU (Central Processing Unit) než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
+\\
 
-\DIFadd{Pro tento vybraný případ senzorové sítě byla tedy vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \mbox{%DIFAUXCMD
-\cite{Analysis of Propagation Link for Remote Weather}}\hspace{0pt}%DIFAUXCMD
-, tudíž to není plně LoRaWAN kompatibilní.
+Pro tento vybraný případ senzorové sítě byla tedy vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž to není plně LoRaWAN kompatibilní.
 V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a SF.
-LoRaWAN koncová zařízení }\DIFaddend třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
-LoRaWAN síť má hvězdicovou topologii při dostatečném dosahu pro pokrytí budovy a jejím okolí, navíc dosah lze ladit parametrem SF. Pro tento vybraný případ \DIFaddbegin \DIFadd{senzorové sítě }\DIFaddend je to vhodné, jelikož pravděpodobně všechna zařízení v síti budou senzory napájeny z baterie, a není předpokládáno, že by byly připojeny zařízení umožňující směrování paketů z důvodu spotřeby energie. 
+LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
+LoRaWAN síť má hvězdicovou topologii při dostatečném dosahu pro pokrytí budovy a jejím okolí, navíc dosah lze ladit parametrem SF. Pro tento vybraný případ senzorové sítě je to vhodné, jelikož pravděpodobně všechna zařízení v síti budou senzory napájeny z baterie, a není předpokládáno, že by byly připojeny zařízení umožňující směrování paketů z důvodu spotřeby energie. 
 LoRaWAN síť umožňuje koncovým zařízením po změření dat senzory je ihned odeslat na gateway bez nutností čekání na potvrzení, tudíž se koncové zařízení může ihned přepnout do režimu spánku a tím eliminovat spotřebu energie. 
-Případné občasně kolize mají za důsledek selhání dorůčení paketu, ale pro \DIFdelbegin \DIFdel{tento }\DIFdelend vybraný případ \DIFaddbegin \DIFadd{měřícího systému }\DIFaddend to není příliš závažný problém.
+Případné občasně kolize mají za důsledek selhání dorůčení paketu, ale pro vybraný případ měřícího systému to není příliš závažný problém.
 Frekvenční ISM pásmo 868 MHz, které používá LoRa je limitováno na maximální dobu vysílání 1\% času jedním zařízením a přenosová rychlost této technologie patři mezi nejnižší z kandidátních technologií. 
-Pro \DIFdelbegin \DIFdel{tento }\DIFdelend vybraný případ \DIFaddbegin \DIFadd{měřícího systému }\DIFaddend se předpokládá přenášení pouhých hodnot senzorů o velikosti několik jednotek až desitek bytů s intervalem několika minut až hodin\DIFdelbegin \DIFdel{, tudíž to pro tento vybraný případ vyhovuje}\DIFdelend .
+Pro vybraný případ měřícího systému se předpokládá přenášení pouhých hodnot senzorů o velikosti několik jednotek až desitek bytů s intervalem několika minut až hodin.
 LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné packety, tudíž je toto zabezpečení dostatečné. 
 
 % tahle section by mozna mohla byt nekde jinde

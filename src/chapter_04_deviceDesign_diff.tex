@@ -5,7 +5,7 @@ Tato kapitola popisuje návrh řešení rozšíření přístupového sytému o 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh integrace WSN gatewaye do stávající infrastruktury přístupového systému}
 \label{Implementace WSN do přístupového systému}
-Přístupový systém k rozšíření o WSN \DIFdelbegin \DIFdel{pro tento vybraný případ }\DIFdelend je vytvořen firmou IMA a je komerčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhraní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat a podobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
+Přístupový systém k rozšíření o WSN je vytvořen firmou IMA a je komerčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhraní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat a podobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
 
 Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 V budovách, kde již je tento přístupový systém nainstalován je obvykle více kontrolních panelů, vždy jeden kontrolní panel pro několik dveří s CKP zařízeními propojenými sítí RS485. 
@@ -184,7 +184,7 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh FW gatewaye}
-Pro tento vybraný případ \DIFaddbegin \DIFadd{návrhu FW }\DIFaddend není využit RTOS (Real Time Operating System), jelikož zde není potřeba řešení více úloh souběžně. 
+Pro tento vybraný případ návrhu FW není využit RTOS (Real Time Operating System), jelikož zde není potřeba řešení více úloh souběžně. 
 K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
 
 % \subsection{Rozdělení programu}
