@@ -21,8 +21,8 @@ Z naměřených hodnot byla provedena metoda frekvencni analízy. Z přenesenýc
 S ohledem na celkové množství paketů je to zanedbatelné množství, tj. 1,3E-04 \%.
 Avšak vzhledem k povaze systému, tedy ystému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit.
 
-Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z objemu přenášených dat v síti RS485. 
-Tato rezerva objemu přenášených dat je uvažována za účelem ochrany přístupového systému před poruchou, například před dlouhým čekáním na otevření dveří.
+Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
+Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístupového systému před dysfunkcí nebo poruchou, například před dlouhým čekáním na otevření dveří.
 
 \begin{table}[h]
 \centering
@@ -51,20 +51,34 @@ Packet length &  Count \\ \hline
     \label{fig:PacketLengthMeasuredAll}
 \end{figure*}
 
-Na základě frekvenční analízy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485 a to paket s daty koncového zařízení a potvrzení.
+Na základě frekvenční analízy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485, tj. paket s daty koncového zařízení a paket potvrzení.
+
+
+
+
+
+V obrázku \ref{fig:PacketLengthMeasuredAll} jsou dvě důležité charakteristiky, maximální délka paketu 
+(červená přerušovaná čára) a medián délky paketu (červená nepřerušovaná čára), určeny frekvenční analízou v tabulce \ref{tab:FreqAnalysis}. 
+Průměrné zatížení provozu kanálu sítě RS485 je 6,38 pps, tj. 0,85 Bps.
+
+%shows lengths of captured packet  during
+%Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
+% 7,51 Byte --> simple arithmetic mean
 
 
 
 
 
 
-% Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
 
-% %Fig. \ref{fig:PacketLengthMeasuredAll} shows 
-% %Two imporatnt characteristics are displayed, maximal length of packet (red colored dash line) and median length of packet (red colored solid line). It is determined by frequency analysis method as shown in Tab. \ref{tab:FreqAnalysis}. Average RS485 network channel traffic load is 6.38 pps, i.e., 0.85 Bps.
-% %shows lengths of captured packet  during
-% %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
-% % 7,51 Byte --> simple arithmetic mean
+
+
+During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
+Fig.~\ref{fig:PacketLengthMeasuredAll}.
+Red colored dashed line (with value of 2520~bps) shows one second time interval in which a sum of captured packets is transported in RS485 network. It shows, based on detailed knowledge of the IMA protocol, less than 20\% of the RS485 network capacity is used. 
+%This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
+
+
 
 % During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
 % Fig.~\ref{fig:PacketLengthMeasuredAll}.

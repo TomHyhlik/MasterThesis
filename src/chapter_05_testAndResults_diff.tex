@@ -30,8 +30,8 @@ Avšak vzhledem k povaze systému, tedy ystému s primární funkcí řízení p
 %DIF <  The lengths of all 2~978~534 packets, i.e., 22~369~741 Bytes, are recorded in RS485 network during long-term operation test and the frequency analysis  method, i.e., the number of packet lengths in monitored period, is performed. Three packets reach the largest value, i.e., 40 Bytes. 
 %DIF <  Considering the total amount of packets, it is negligible quantity, i.e, 1.3E-04\%. However, given the nature of the system, i.e., the system with the primary function of access to a restricted area, the worst-case scenario is considered to be an uncrossable limit. 
 %DIF <  Number of sensor nodes that can be wirelessly connected to the Gateway and does not affect the existing access control system, can be calculated in dependence on used RS485 data rate. The reserve of the data rate is considered in order to protect the access control system from malfunction, e.g., a long waiting for the door to open.
-\DIFaddbegin \DIFadd{Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z objemu přenášených dat v síti RS485. 
-Tato rezerva objemu přenášených dat je uvažována za účelem ochrany přístupového systému před poruchou, například před dlouhým čekáním na otevření dveří.
+\DIFaddbegin \DIFadd{Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
+Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístupového systému před dysfunkcí nebo poruchou, například před dlouhým čekáním na otevření dveří.
 }\DIFaddend 
 
 %DIF <  \begin{table}[h]
@@ -88,13 +88,43 @@ Tato rezerva objemu přenášených dat je uvažována za účelem ochrany pří
 \end{figure*}
 \DIFaddend 
 
-% Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
+%DIF <  Based on the frequency analysis given in Tab.~\ref{tab:FreqAnalysis} and IMA know-how, 19 Bytes length packets transmit sensor data, and 7 Bytes length packets are general aknowledgemets of IMA protocol. At least two packets are required to handle sensor data via RS485 network, i.e., one carrying sensor data and the other with ackowledgement.
+\DIFaddbegin \DIFadd{Na základě frekvenční analízy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485, tj. paket s daty koncového zařízení a paket potvrzení.
+}\DIFaddend 
 
-% %Fig. \ref{fig:PacketLengthMeasuredAll} shows 
-% %Two imporatnt characteristics are displayed, maximal length of packet (red colored dash line) and median length of packet (red colored solid line). It is determined by frequency analysis method as shown in Tab. \ref{tab:FreqAnalysis}. Average RS485 network channel traffic load is 6.38 pps, i.e., 0.85 Bps.
-% %shows lengths of captured packet  during
-% %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
-% % 7,51 Byte --> simple arithmetic mean
+
+
+
+
+%DIF <  %Fig. \ref{fig:PacketLengthMeasuredAll} shows 
+%DIF <  %Two imporatnt characteristics are displayed, maximal length of packet (red colored dash line) and median length of packet (red colored solid line). It is determined by frequency analysis method as shown in Tab. \ref{tab:FreqAnalysis}. Average RS485 network channel traffic load is 6.38 pps, i.e., 0.85 Bps.
+%DIF <  %shows lengths of captured packet  during
+%DIF <  %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
+%DIF <  % 7,51 Byte --> simple arithmetic mean
+\DIFaddbegin \DIFadd{V obrázku \ref{fig:PacketLengthMeasuredAll} jsou dvě důležité charakteristiky, maximální délka paketu 
+(červená přerušovaná čára) a medián délky paketu (červená nepřerušovaná čára), určeny frekvenční analízou v tabulce \ref{tab:FreqAnalysis}. 
+Průměrné zatížení provozu kanálu sítě RS485 je 6,38 pps, tj. 0,85 Bps.
+}
+
+%DIF > shows lengths of captured packet  during
+%DIF > Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
+%DIF >  7,51 Byte --> simple arithmetic mean
+
+
+
+
+
+
+
+
+
+\DIFadd{During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
+Fig.~\ref{fig:PacketLengthMeasuredAll}.
+Red colored dashed line (with value of 2520~bps) shows one second time interval in which a sum of captured packets is transported in RS485 network. It shows, based on detailed knowledge of the IMA protocol, less than 20\% of the RS485 network capacity is used. 
+%DIF > This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
+}\DIFaddend 
+
+
 
 % During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
 % Fig.~\ref{fig:PacketLengthMeasuredAll}.
