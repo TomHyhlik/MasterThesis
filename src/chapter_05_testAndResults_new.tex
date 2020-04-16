@@ -53,29 +53,17 @@ Packet length &  Count \\ \hline
 
 Na základě frekvenční analízy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485, tj. paket s daty koncového zařízení a paket potvrzení.
 
-
-
-
-
 V obrázku \ref{fig:PacketLengthMeasuredAll} jsou dvě důležité charakteristiky, maximální délka paketu 
 (červená přerušovaná čára) a medián délky paketu (červená nepřerušovaná čára), určeny frekvenční analízou v tabulce \ref{tab:FreqAnalysis}. 
 Průměrné zatížení provozu kanálu sítě RS485 je 6,38 pps, tj. 0,85 Bps.
-
 %shows lengths of captured packet  during
 %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
 % 7,51 Byte --> simple arithmetic mean
 
 
-
-
-
-
-
-
-
-During long term operation test, lengths of transmitted packets ($ l $) are captured with the accuracy of timestamps of a thousandth of a second. Then resampled to one second resolution interval using the sum function to easily represent achieved data as a bit rate in bit per second (bps),
-Fig.~\ref{fig:PacketLengthMeasuredAll}.
-Red colored dashed line (with value of 2520~bps) shows one second time interval in which a sum of captured packets is transported in RS485 network. It shows, based on detailed knowledge of the IMA protocol, less than 20\% of the RS485 network capacity is used. 
+Z testování provozu jsou zachyceny délky přenášených paketů ($ l $) s časovou přesností na tisícinu sekundy. Údaje o čase jsou převedeny na jednotky sekund pomocí funkce sum, aby byly získány data jako bitová rychlost v bitech za sekundu (bps),
+V obrázku \ref{fig:PacketLengthMeasuredAll} červená přerušovaná čára s hodnotou 2520~bps) ukazuje jeden sekundový interval ve kterém součet přenesených paketů v síti RS485.
+Na základě podrobných znalosti protokolu IMA se ukazuje, že je využito méně než 20\% kapacity sítě RS485 
 %This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
 
 
