@@ -32,7 +32,9 @@ runLinux:
 
 
 runMac:
-	open $(OUTPUT) &
+	# open $(OUTPUT) &
+	/usr/bin/open -a "/Applications/Google Chrome.app" '$(OUTPUT)'
+
 
 run: runMac
 
