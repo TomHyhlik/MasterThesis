@@ -15,7 +15,7 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-    - jasne vypsana kriteria, podle kterych vybirate. Ideal jsou asi odrazky. Nebo, coz je mozna lepsi, napiste, proc zavrhujete ostatni technologie.
+    v kapitole testing projet nazvy tabulek
 
 
 Pozdeji jsem psal at napisete co tento konkretni pripad konkretne je ;-). Tedy do infrastruktury pristupove site. jeste se zamyslete, jak v teto fazi to musi byt konkretni, zda to plati pro obecnou infrastrukturu, nebo uz na vybranou, ktera se lisi xy.

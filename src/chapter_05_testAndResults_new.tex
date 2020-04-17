@@ -1,11 +1,12 @@
 % \chapter{Measurement Results and Discussion}
-\chapter{Měření, výsledky a diskuse}
-Tato kapitola zahrnuje testování navržené senzorové sítě v univerzítní budově ČVUT za reálného provozu.
+\chapter{Testování navrženého řešení}
+Tato kapitola zahrnuje testování navržené gatewaye senzorové sítě viz. kapitola \ref{Návrh WSN}, napojené přes síť RS485 na infrastrukturu přístupového systému firmy IMA v univerzítní budově univerzity ČVUT za reálného provozu s připojenými koncovými zařízeními senzorové sítě, které souběžně odesílají data. Ze zachyceného provozu dat v síti RS485 je odhadnut maximální počet připojených koncových zařízení souběžně odesílající data v senzorové síti při zachování správné funkce přístupového systému.
 
 Testování je provedeno v jednom bloku patra univerzity, kde je do jednoho kontrolního panelu připojeno dvanáct CKP zařízení přes síť RS485. Každé z nich ovládá jedny dveře, tedy jednu čtečku a dveřní zámek.
 Do této sítě RS485 je navíc připojena navržená gateway jako třinácté CKP zařízení.
-K této navržené gatewayi senzorové sítě jsou připojena koncová zařízení se senzory teploty a vlhkosti.
-Gateway a CKP zařízení jsou zapojena del blokového schematu v obrázku \ref{fig:ACS architecture IMA with geteway}.
+K této navržené gatewayi senzorové sítě jsou připojena dvě koncová zařízení typu RHF1S001, dostupné na trhu, vyrbené firmou RisingHF, obsahující senzory teploty a vlhkosti. Pro tento test jsou nakonfigurovány k odesílání dat ze senzorů s intervalem 5 minut.
+
+Gateway a CKP zařízení jsou zapojena dle blokového schematu v obrázku \ref{fig:ACS architecture IMA with geteway}.
 Konkrétní rozmístění stávajcích dvanácti CKP zařízení, gatewaye a dvou koncových zařízení senzorové sítě v testovaných prostorách budovy je zobrazeno v obrázku \ref{fig:CorridorFloorPlan}.
 
 \begin{figure*}[!ht]
@@ -17,19 +18,20 @@ Konkrétní rozmístění stávajcích dvanácti CKP zařízení, gatewaye a dvo
 
 Testování probíhalo od 21. září do 31. října, tedy v době přítomnosti studentů a zaměstnanců v testovaných prostorách. 
 Po tuto dobu testování byly zaznamenávány přenášené pakety síti RS485, kontrolní panel přijal 1~876~978 paketů (14~074~522 B) a odeslal 1~101~556 paketů (8~295~219 B), dohromady tedy 2~978~534 paketů (22~369~741 B).
-Z naměřených hodnot byla provedena metoda frekvencni analízy. Z přenesených paketů byly nejdelší 3 o velikostí 40 bytů.
+Z naměřených hodnot byla provedena metoda frekvenční analýzy. Z přenesených paketů byly nejdelší 3 o velikostí 40 bytů.
 S ohledem na celkové množství paketů je to zanedbatelné množství, tj. 1,3E-04 \%.
-Avšak vzhledem k povaze systému, tedy ystému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit.
+Avšak vzhledem k povaze systému, tedy systému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit.
 
-Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájcí přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
+Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájící přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
 Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístupového systému před dysfunkcí nebo poruchou, například před dlouhým čekáním na otevření dveří.
 
 \begin{table}[h]
 \centering
 \footnotesize
-\caption{Packet length frequency analysis}
+\caption{Frekvenční analýza délky paketu}
 \begin{ctucolortab}
-    \begin{tabular}{cr}
+    \begin{tabular}{|c|r|}
+        \hline
 Packet length &  Count \\ \hline
 \textbf{7}  &  \textbf{2~216~098}  \\
 8  &   619~127   \\
@@ -41,6 +43,7 @@ Packet length &  Count \\ \hline
 \textbf{19} &    \textbf{26~286}   \\
 23 &         1   \\
 40 &         3   \\
+\hline
 \end{tabular}
 \end{ctucolortab}
 \label{tab:FreqAnalysis}
@@ -49,14 +52,15 @@ Packet length &  Count \\ \hline
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=1\textwidth]{03-dr-measured}
-    \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
+    \caption{Měřená rychlost přenosu dat [bps] v síti RS485 během doby testování}
+    % \caption{Measured data rate in [bps] in RS485 network during long-term operation test}
     \label{fig:PacketLengthMeasuredAll}
 \end{figure*}
 
-Na základě frekvenční analízy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485, tj. paket s daty koncového zařízení a paket potvrzení.
+Na základě frekvenční analýzy uvedené v tabulce \ref{tab:FreqAnalysis} a IMA know-how, pakety přenášející data z koncových zařízení jsou dlouhé 19 bytů a pakety potvrzení IMA protokolu jsou dlouhé 7 bytů. Alespoň dva pakety jsou potřeba k přenesení dat z koncových zařízení přes síť RS485, tj. paket s daty koncového zařízení a paket potvrzení.
 
 V obrázku \ref{fig:PacketLengthMeasuredAll} jsou dvě důležité charakteristiky, maximální délka paketu 
-(červená přerušovaná čára) a medián délky paketu (červená nepřerušovaná čára), určeny frekvenční analízou v tabulce \ref{tab:FreqAnalysis}. 
+(červená přerušovaná čára) a medián délky paketu (červená nepřerušovaná čára), určeny frekvenční analýzou v tabulce \ref{tab:FreqAnalysis}. 
 Průměrné zatížení provozu kanálu sítě RS485 je 6,38 pps, tj. 0,85 Bps.
 %shows lengths of captured packet  during
 %Median of packet length is determined by using frequency analysis method, as shown in Tab. \ref{tab:FreqAnalysis}.
@@ -68,7 +72,7 @@ V obrázku \ref{fig:PacketLengthMeasuredAll} červená přerušovaná čára s h
 Na základě podrobných znalosti protokolu IMA se ukazuje, že je využito méně než 20\% kapacity sítě RS485 
 %This limit state is caused by data communication of two sensor nodes that occupied 2\% of capacity of used RS485 network.
 
-Aby bylo zabráněno přetížení sítě RS485, maxímální počet koncových zařízení připojených ke gatewayi $ S_{MAX} $ je možné vypočítat vztahem:
+Aby bylo zabráněno přetížení sítě RS485, maximální počet koncových zařízení připojených ke gatewayi $ S_{MAX} $ je možné vypočítat vztahem:
 
 \begin{equation}
 S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
@@ -129,13 +133,8 @@ $v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
 \end{table}
 
 
-
-
-% For example, WSN can connect up to 162 sensor nodes that work in RS485 network with a 115200~bps data rate and 10 \% reserve, or up to 126 sensor nodes with a 115200~bps data rate and 30 \% reserve. The results also show, one floor block of university building, i.e., one RS485 network, can operates dozens of sensors with sufficient reserve protecting the access control system from malfunction.   
-
-
-
-
+Např. v senzorové síti může být až 162 koncových zařízení připojených ke gatewayi, která je napojena na síť RS485 s přenosovou rychlostí 115200~bps a rezervou 10 \% nebo 126 koncových zařízení s přenosovou rychlostí 115200~bps a rezervou 30 \%.
+Tento výsledek ukazuje, že jeden blok patra univerzity, tj. jedna síť RS485 je schopna fungovat s desítkami koncovými zařízeními senzorové sítě souběžně vysílající data s dostatečnou rezervou chránící přístupový systém. 
 
 
 
