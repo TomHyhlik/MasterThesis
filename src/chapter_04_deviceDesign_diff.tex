@@ -1,4 +1,4 @@
-\chapter{Návrh WSN}
+\chapter{Návrh senzorové sítě}
 \DIFaddbegin \label{Návrh WSN}
 \DIFaddend Tato kapitola popisuje návrh řešení rozšíření přístupového sytému o senzorovou síť.
 
@@ -8,27 +8,27 @@
 \label{Implementace WSN do přístupového systému}
 Přístupový systém k rozšíření o WSN je vytvořen firmou IMA a je komerčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhraní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat a podobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
 
-Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
+Rozšíření tohoto \DIFdelbegin \DIFdel{Přístupového }\DIFdelend \DIFaddbegin \DIFadd{přístupového }\DIFaddend systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 V budovách, kde již je tento přístupový systém nainstalován je obvykle více kontrolních panelů, vždy jeden kontrolní panel pro několik dveří s CKP zařízeními propojenými sítí RS485. 
 K jednomu přístupovému systému je možné připojit několik WSN gatewayí k libovolným kontrolním panelům v budově pro dosažení požadovaného pokrytí WSN.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=1\textwidth]{ACS_IoT_extension_21}
-\caption{IMA access control system architecture with WSN extension}
+%DIF >  \caption{IMA access control system architecture with WSN extension}
+\caption{\DIFaddbeginFL \DIFaddFL{Architektura přístupového systému firmy }\DIFaddendFL IMA \DIFdelbeginFL \DIFdelFL{access control system architecture with WSN extension}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{s rozšířením o gateway senzorové sítě}\DIFaddendFL }
 \label{fig:ACS architecture IMA with geteway}
 \end{figure}
 
-
 WSN gateway tedy musí podporovat CKP protokol v sítí RS485 navržen firmou IMA.
-Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných karet (ID Credentials) ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
+Přístupový systém firmy IMA funguje tak, že CKP zařízení získává seznam všech platných \DIFdelbegin \DIFdel{karet (ID Credentials) }\DIFdelend \DIFaddbegin \DIFadd{identifikačních čísel karet }\DIFaddend ze serveru řízení přístupu a na základě tohoto seznamu pak CKP zařízení provádí odpovídající akci po přiložení karty ke čtečce. 
 Je-li ke čtečce přiložena karta, jejíž číslo není obsaženo v seznamu platných karet, CKP zařízení pouze signalizuje událost uživateli (např. červené bliknutí nebo pípnutí), ale zprávu o této události neodesílá na server řízení přístupu. Je-li ke čtečce přiložena karta, jejíž číslo je obsaženo v seznamu platných karet, CKP zařízení signalizuje událost uživateli (např. zelené bliknutí nebo pípnutí) a zprávu o této události odesílá na server řízení přístupu příkazem tzv. "průchod".
 Navržená gateway bere seznam platných karet jako seznam platných koncových zařízení senzorové sítě. Gateway pak zpracovává pakety pouze od zařízení z tohoto seznamu a ostatní ignoruje, tudíž v síti RS485 jsou přenášena pouze relevantní data.
 Data z koncových zařízení jsou odesílána na server řízení přístupu příkazem "průchod", který má fixní velikost a po přidání adresy koncového zařízení o velikosti 4 B zde už zbývá pouze 6 B pro data z koncového zařízení, což je velké omezení.
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the paket was received and the 6 remaining bytes are used for the node data.
 LoRaWAN protokol používá paket, jehož samotná hlavička je o minimální velikosti 13 B. 
 Různá LoRaWAN koncová zařízení používají různé velikosti datového obsahu (payloadu), takže není možné odesílat celý payload koncového zařízení přes síť RS485.
-Tento problém je řešen ta, že LoRaWAN pakety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
+Tento problém je řešen \DIFdelbegin \DIFdel{tak}\DIFdelend \DIFaddbegin \DIFadd{ta}\DIFaddend , že LoRaWAN pakety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
 % In summary, when the Gateway receives an encrypted LoRaWAN paket, it looks for whether the Node device address is in the list of known device addresses.
 % If this is the case, the paket is encoded in the communication protocol of the Gateway and sent to the Control Panel. If there is not enough space in communication protocol of the Gateway, the paket is decrypted and relevant data, i.e., sensor values, are selected.
 
@@ -41,10 +41,10 @@ Tento problém je řešen ta, že LoRaWAN pakety z koncových zařízení jsou d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \section{Návrh WSN gatewaye}
 % Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje pakety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
-Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování datového obsahu (payloadu) ve FW (FW) gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
+Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování datového obsahu (payloadu) ve FW \DIFdelbegin \DIFdel{(FW) }\DIFdelend gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
 %% todo, cast teto vet uz je v predchozi kapitole
-LoRaWAN protokol je zabezpečen šifrováním AES-128 na dva způsoby, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
+LoRaWAN protokol je zabezpečen šifrováním AES-128\DIFdelbegin \DIFdel{na dva způsoby}\DIFdelend , a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
 
 Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přístupu, není zde možnost předávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou zařízení. Geteway tedy má tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
 % LoRaWAN device address a typ každého zařízení v síti je uložena v non-volatile paměti gatewaye a jsou nastavována na z access control serveru.
@@ -57,7 +57,7 @@ V tomto návrhu není implementován opačný směr komunikace, tedy ze serveru 
 CKP protokol v sítí RS485 pro komunikaci s kontrolním panelem je kolizní protokol, kde všechna zařízení se řídí pravidlem LBT (Listen Before Talk), kolize jsou detekovány mechanismem kontroly integrity použitý v každém příkazu. V případě že zařízení přijme poškozený příkaz, vyžádá jeho opakování. 
 V této síti je jedno zařízení typu master, a jedno nebo více zařízení typu slave, přičemž zařízení typu master je kontrolní panel a zařízení typu slave je jakékoliv CKP zařízení, v tomto vybraném případě gateway.
 Každé zařízení má svoji adresu definovanou jedním bytem, která musí být unikátní pro jednu síť a každý příkaz v této síti obsahuje v hlavičce adresu odesílatele a adresu příjemce.
-Zařízení typu slave má dva možné statusy, offline a online, periodický odesílá příkaz s informací o jeho aktuálním statusu, má povoleno odesílat příkaz s daty z koncového zařízení senzorové sítě "průchod" pouze má-li status online a změnu statusu daného zařízení typu slave provádí zařízení typu master. 
+Zařízení typu slave má dva možné statusy, offline a online, \DIFdelbegin \DIFdel{periodický }\DIFdelend \DIFaddbegin \DIFadd{periodicky }\DIFaddend odesílá příkaz s informací o jeho aktuálním statusu, má povoleno odesílat příkaz s daty z koncového zařízení senzorové sítě "průchod" pouze má-li status online a změnu statusu daného zařízení typu slave provádí zařízení typu master. 
 Zařízení typu slave svůj status změní samo z online na offline v případě, že zařízení typu master přestane odpovídat na příkaz "průchod".
 
 Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá příkaz s informaci o jeho statusu na kontrolní panel, který po obdržení tohoto příkazu předá seznam adres koncových zařízení senzorové sítě sekvencí několika příkazů a pak ho přepne do statusu online. V této chvíli již gateway přeposílá data z koncových zařízení senzorové sítě na kontrolní panel.
@@ -65,13 +65,18 @@ Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá př�
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sestavení HW k vytvoření prototypu gatewaye k testování}
-Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, viz. obr. \ref{fig:gatewayBlockDiagram}.
+\section{Návrh a realizace gatewaye z embedded komponent}
+Pro otestování navrženého řešení \DIFdelbegin \DIFdel{rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \mbox{%DIFAUXCMD
+\cite{nucleoST}}\hspace{0pt}%DIFAUXCMD
+, transceiveru }\DIFdelend \DIFaddbegin \DIFadd{je vytvořena gateway z embedded komponent, tj. LoRa transceiveru pro komunikaci s koncovými zařízeními senzorové sítě, RS485 transceiveru pro komunikaci s kontrolním panelem v síti RS485 a mikrokontrolér jako řídící jednotku viz. blokový diagram v obrázku \ref{fig:gatewayBlockDiagram}.
+Konkrétní komponenty jsou: }\DIFaddend Dragino LoRa Shield \cite{RFM95w}\DIFdelbegin \DIFdel{a }\DIFdelend \DIFaddbegin \DIFadd{, }\DIFaddend RS485 transceiver \cite{rs485tr} \DIFdelbegin \DIFdel{, viz. obr. \ref{fig:gatewayBlockDiagram}}\DIFdelend \DIFaddbegin \DIFadd{a vývojový kit NUCLEO-L073RZ \mbox{%DIFAUXCMD
+\cite{nucleoST} }\hspace{0pt}%DIFAUXCMD
+jako řídící jednotka}\DIFaddend .
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_2}
-    \caption{Gateway block diagram, RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
+    \caption{\DIFdelbeginFL \DIFdelFL{Gateway block }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Blokový }\DIFaddendFL diagram \DIFaddbeginFL \DIFaddFL{navržené gatewaye senzorové sítě}\DIFaddendFL , RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
     \label{fig:gatewayBlockDiagram}
 \end{figure}
 
@@ -127,7 +132,7 @@ RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s k
 % \end{figure} 23
 
 
-\subsection{Zapojení}
+\subsection{Zapojení komponent}
 CKP zařízení daného přístupového systému jsou obvykle napájena napětím 12 V z kontrolního panelu. Použitý kit NUCLEO-L073RZ obsahuje stabilizátor tudíž je možné připojit gateway přímo ke kontrolnímu panelu přes vyvedené svorky GND, +12V, A a B.
 
 LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. 
@@ -136,7 +141,7 @@ LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1\textwidth]{foto01}
-    \caption{foto zapojení}
+    \caption{\DIFdelbeginFL \DIFdelFL{foto zapojení}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Foto sestavené gatewaye}\DIFaddendFL }
     \label{fig:03}
 \end{figure}
 
@@ -185,10 +190,8 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh FW gatewaye}
-Pro tento vybraný případ návrhu FW není využit RTOS (Real Time Operating System), jelikož zde není potřeba řešení více úloh souběžně. 
+Pro \DIFdelbegin \DIFdel{tento vybraný případ návrhu FW }\DIFdelend \DIFaddbegin \DIFadd{návrh FW gatewaye }\DIFaddend není \DIFdelbegin \DIFdel{využit }\DIFdelend \DIFaddbegin \DIFadd{použit }\DIFaddend RTOS (Real Time Operating System), jelikož zde není potřeba řešení více úloh souběžně. 
 K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
-
-% \subsection{Rozdělení programu}
 Vyvinutý program je rozdělen na několik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
 
 \begin{table}[!h]
@@ -240,7 +243,7 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 Do non-volatile paměti je ukládána konfigurace a adresa a typ všech koncových zařízení senzorové sítě.
 Jako non-volatile paměť je zde využita EEPROM (Electrically Erasable Programmable Read-Only Memory) o velikosti 6144 B. 
 Paměť je tedy rozdělená tak, že od adresy 0 až po adresu 6080 je prostor pro ukládání LoRaWAN zařízení a od 6080 až po adresu 6144 je prostor pro ukládání konfigurace gatewaye.
-Každé LoRaWan zařízení v síti má v paměti uložené LoRaWAN device address (4 byty), typ zařízení (1 byte) a další 3 byty jsou rezervovány. 
+Každé LoRaWan zařízení v síti má v paměti uložené LoRaWAN \DIFdelbegin \DIFdel{device address }\DIFdelend \DIFaddbegin \DIFadd{adresu zařízení }\DIFaddend (4 byty), typ zařízení (1 byte) a další 3 byty jsou rezervovány. 
 Jedno koncové zařízení v paměti tedy zabírá  8 B, takže gateway má kapacitu paměti pro 760 koncových zařízení.
 Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry ukládány do non-volatile paměti gatewaye} má celkovou velikost 37 B, na konfiguraci je vyhrazeno 64 B, tudíž je zde rezerva 27 B.
 
@@ -266,12 +269,12 @@ Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry uklád�
 \end{table}
 
 % \subsection{Běh programu}
-Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurová na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou dokola nepřetržitě zpracovávány cyklické buffery a fronty tvořeny linked listy. 
+Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je \DIFdelbegin \DIFdel{nakonfigurová }\DIFdelend \DIFaddbegin \DIFadd{nakonfigurován }\DIFaddend na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou \DIFdelbegin \DIFdel{dokola nepřetržitě }\DIFdelend zpracovávány cyklické buffery a fronty tvořeny linked listy. 
 
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
-Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít.IWDG je resetováván timerem tudiž tvoří pojistku že resetuje procesor v případě že by se program zhroutil.
+Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít. IWDG je resetováván timerem \DIFdelbegin \DIFdel{tudiž }\DIFdelend \DIFaddbegin \DIFadd{tudíž }\DIFaddend tvoří pojistku \DIFaddbegin \DIFadd{tak, }\DIFaddend že resetuje procesor v případě\DIFaddbegin \DIFadd{, }\DIFaddend že by se program zhroutil.
 
-Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
+Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v \DIFdelbegin \DIFdel{blokujícím }\DIFdelend \DIFaddbegin \DIFadd{blokujcím }\DIFaddend módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
 Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, vysílání je zde blokováno po dobu 20 ms od posledního přijatého bytu.
 
 Komunikace s LoRa transceiverem RFM95W přes rozhraní SPI1 je implementována v blokujícím módu zápisem a čtením registrů. 
@@ -310,11 +313,10 @@ Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je a
 
 
 
-
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Log Gatewaye}
-Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat a log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
+Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat \DIFdelbegin \DIFdel{a }\DIFdelend log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
 \begin{lstlisting}[style=log]
@@ -357,22 +359,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
 \begin{lstlisting}[style=log]
 
     _________________Entering configuration setup________________
-    
+
     System configuration:
-    
+
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-    
+
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-    
+
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-    
+
     
     Config menu:
     1 -> Config LoRa channel
@@ -383,6 +385,7 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
     6 -> Restore to default configuration
     7 -> Exit without save
     8 -> Save and exit
+
 \end{lstlisting}
 
 
@@ -576,7 +579,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-     
+
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);

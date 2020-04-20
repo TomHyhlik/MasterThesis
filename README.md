@@ -14,42 +14,30 @@ https://ebookcentral.proquest.com/
 
 
 
+
 ## todo
 
-
-Zkuste se jeste poprat s timt souslovim "tento vybrany priklad", mam z toho pocit, ze to je akove strojene. Lze to nahradit napr. pro Výběr bezdrátové technologie pro senzorovou síť podle definovanych kriterii...
-
-
-
 Ke kapitole 4:
+podivejte se, zda nepredbihate sam sebe...napr. navrh 4.1 "Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojenímWSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení." To je sice pravda, je to tak realizovano. Otazkou je, zda ciste konstatovani je to prave v kapitole navrh. Tam by spis mely byt uvahy. Lze to zmekcit napr. nejvhodnejsim reseni je ... implementovat GW jako standardni CKP zarizeni z duvodu...
 
-V titulku mate WSN, citelnejsi to je bez zkratky. Navic, je to prvni vyskyt a nema to definovane.
+"fronty tvořeny linked listy." to chce lepe vysvetlit
+
+tab. 4.6: Baud rate 115200 pan Benes nechtel zverejnovat...chapu, ze popisujete komunikaci ne po RS485, ale preci, radeji bych mlzil. Vite, jak na to?...napr. smazat kapitolu 4.5.1 a ty linky na ni upravit (smazat)
+
+4.10
+Obrázek 4.4: neni jasne, zda je to schema PCB, ktere jste delal, nebo porizene desky, to chce upresnit.
+Stejne tak chybiu popisek k obr. 4.5
+
+kapitola 5
+z kontextu neni jasny limit "ja nejhorší scénářpovažuje nepřekonatelný limit."
+
+uvedte prosim jiny priklad nez pro rychlost 115200. "Např. v senzorové síti může být až 162 koncových zařízení připojených kegatewayi, která je napojena na síť RS485 s přenosovou rychlostí 115200 bps arezervou 10 % nebo 126 koncových zařízení s přenosovou rychlostí 115200 bps arezervou 30 %. "
+
+nenasel jsem informaci o zpusobu update FW
 
 " přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
 
-"Rozšíření tohoto Přístupového systému" ...preklep
-
-" všech platných karet (ID Credentials) "...vsech platnych identifikačnich cisel karet ..
-
- ve FW (FW) gatewaye. ...preklep
-
-LoRaWAN  device  address...neni definovano
-
-estavení HW k vytvoření prototypu gatewayek testování...krkolomny titulek,...co navrh a realizace gateway z embedded komponent?
-
-zkuste lepsi uvod k 4.3, rovnou pisete, z ceho sjte to sestavil, mozna je lepsi nejdrive popsat blokovy diagram, kde vysvetlite, jake funkce od kazdeho bloku chcete a pak uvedete konkretni priklad.
-
-obr. 4.2 je matouci, ze pouzivate obr. k RFM9w, ale ten je soucasti  Dragino LoRa Shield, ktera je ukazana na dalsim obrazku. Na 4.2. by mel byt ten shield ,ne?
-
-nadpisu zapojeni neco chybi..zapojeni ceho? blokove schema zapojeni? ...
-
-obr. 4.3 - fotky na bilem podklade jsou vzdy lepsi
-
-4.5 "Pro tento vybraný případ" ...uz jsem psal
-
-prazdny radek mezi odstavci se mi zda zbytecny
-
-
+udelat fotku gatewaye
 
 
 

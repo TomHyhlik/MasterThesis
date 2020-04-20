@@ -1,4 +1,4 @@
-\chapter{Návrh WSN}
+\chapter{Návrh senzorové sítě}
 Tato kapitola popisuje návrh řešení rozšíření přístupového sytému o senzorovou síť.
 
 
@@ -27,7 +27,7 @@ Data z koncových zařízení jsou odesílána na server řízení přístupu p�
 %Since the CKP protocol allows to transmit fixed-size command with only 10 bytes of space, the first 4 bytes are LoRaWAN device address of the node from which the paket was received and the 6 remaining bytes are used for the node data.
 LoRaWAN protokol používá paket, jehož samotná hlavička je o minimální velikosti 13 B. 
 Různá LoRaWAN koncová zařízení používají různé velikosti datového obsahu (payloadu), takže není možné odesílat celý payload koncového zařízení přes síť RS485.
-Tento problém je řešen ta, že LoRaWAN pakety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
+Tento problém je řešen tak, že LoRaWAN pakety z koncových zařízení jsou dešifrovány přímo v gatewayi a konečné hodnoty senzorů jsou vypočítány z payloadu zařízení na základě dokumentace poskytnuté výrobcem \cite{RHF1S001 pdf}. Vybrané hodnoty jsou odeslány na server řízení přístupu skrze kontrolní panel. 
 % In summary, when the Gateway receives an encrypted LoRaWAN paket, it looks for whether the Node device address is in the list of known device addresses.
 % If this is the case, the paket is encoded in the communication protocol of the Gateway and sent to the Control Panel. If there is not enough space in communication protocol of the Gateway, the paket is decrypted and relevant data, i.e., sensor values, are selected.
 
@@ -64,7 +64,7 @@ Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá př�
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sestavení HW k vytvoření prototypu gatewaye k testování}
+\section{Návrh a realizace gatewaye z embedded komponent}
 Pro otestování navrženého řešení rozšíření přístupového systému o senzorovou síť je sestavena gateway z vývojového kitu NUCLEO-L073RZ \cite{nucleoST}, transceiveru Dragino LoRa Shield \cite{RFM95w} a RS485 transceiver \cite{rs485tr}, viz. obr. \ref{fig:gatewayBlockDiagram}.
 
 \begin{figure}[!h]
@@ -126,7 +126,7 @@ RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s k
 % \end{figure} 23
 
 
-\subsection{Zapojení}
+\subsection{Zapojení komponent}
 CKP zařízení daného přístupového systému jsou obvykle napájena napětím 12 V z kontrolního panelu. Použitý kit NUCLEO-L073RZ obsahuje stabilizátor tudíž je možné připojit gateway přímo ke kontrolnímu panelu přes vyvedené svorky GND, +12V, A a B.
 
 LoRa shield \cite{draginoWiki} je nasazen přímo na vývojový kit Nukleo. Kit neobsahuje ISCP konektor, který je součástí pinoutu Arduino UNO a LoRa shield má SPI piny MISO a MOSI přivedeny právě na tento konektor. Musí být tedy propojeny externě viz obrázek \ref{fig:03}. 
@@ -186,8 +186,6 @@ Kód byl vyvíjen v textovém editoru Visual Studio Code \cite{vscode}, kompilov
 \section{Návrh FW gatewaye}
 Pro tento vybraný případ návrhu FW není využit RTOS (Real Time Operating System), jelikož zde není potřeba řešení více úloh souběžně. 
 K vývoji jsou použity drivery distribuovány výrobcem mikrokontroléru, CMSIS (Cortex Microcontroller Software Interface Standard) a HAL (Hardware Abstraction Layer).
-
-% \subsection{Rozdělení programu}
 Vyvinutý program je rozdělen na několik nezávislých podprogramů viz tabulka \ref{table:sw_div}. 
 
 \begin{table}[!h]

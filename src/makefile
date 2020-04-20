@@ -23,7 +23,7 @@ rmDiff:
 	$(all)
 
 build:
-	rm main.lof
+	# rm main.lof
 	$(CC) main.tex
 
 
@@ -36,7 +36,7 @@ runMac:
 	/usr/bin/open -a "/Applications/Google Chrome.app" '$(OUTPUT)'
 
 
-run: runMac
+run: runLinux
 
 open:
 	open chapter_*_new.tex

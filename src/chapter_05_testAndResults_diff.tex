@@ -3,21 +3,23 @@
 \DIFadd{Tato kapitola zahrnuje testování navržené gatewaye senzorové sítě viz. kapitola \ref{Návrh WSN}, napojené přes síť RS485 na infrastrukturu přístupového systému firmy IMA v univerzítní budově univerzity ČVUT za reálného provozu s připojenými koncovými zařízeními senzorové sítě}\DIFaddend , \DIFdelbegin \DIFdel{výsledky }\DIFdelend \DIFaddbegin \DIFadd{které souběžně odesílají data. Ze zachyceného provozu dat v síti RS485 je odhadnut maximální počet připojených koncových zařízení souběžně odesílající data v senzorové síti při zachování správné funkce přístupového systému.
 }
 
-\DIFadd{Testování je provedeno v jednom bloku patra univerzity, kde je do jednoho kontrolního panelu připojeno dvanáct CKP zařízení přes síť RS485. Každé z nich ovládá jedny dveře, tedy jednu čtečku }\DIFaddend a \DIFdelbegin \DIFdel{diskuse}%DIFDELCMD < \MBLOCKRIGHTBRACE
+\DIFadd{Testování je provedeno v jednom bloku patra univerzity, kde je do jednoho kontrolního panelu připojeno dvanáct CKP zařízení přes síť RS485. Každé z nich ovládá jedny dveře, tedy jednu čtečku }\DIFaddend a \DIFdelbegin \DIFdel{diskuse}%DIFDELCMD < }
 %DIFDELCMD < %%%
 \DIFdelend \DIFaddbegin \DIFadd{dveřní zámek.
 Do této sítě RS485 je navíc připojena navržená gateway jako třinácté CKP zařízení.
 K této navržené gatewayi senzorové sítě jsou připojena dvě koncová zařízení typu RHF1S001, dostupné na trhu, vyrbené firmou RisingHF, obsahující senzory teploty a vlhkosti. Pro tento test jsou nakonfigurovány k odesílání dat ze senzorů s intervalem 5 minut.
-}\DIFaddend 
-
-\DIFaddbegin \DIFadd{Gateway a CKP zařízení jsou zapojena dle blokového schematu v obrázku \ref{fig:ACS architecture IMA with geteway}.
-Konkrétní rozmístění stávajcích dvanácti CKP zařízení, gatewaye a dvou koncových zařízení senzorové sítě v testovaných prostorách budovy je zobrazeno v obrázku \ref{fig:CorridorFloorPlan}.
 }
 
-\DIFaddend \begin{figure*}[!ht]
+\DIFadd{Gateway a CKP zařízení jsou zapojena dle blokového schematu v obrázku \ref{fig:ACS architecture IMA with geteway}.
+Konkrétní rozmístění stávajcích dvanácti CKP zařízení, gatewaye a dvou koncových zařízení senzorové sítě v testovaných prostorách budovy je zobrazeno v obrázku \ref{fig:CorridorFloorPlan}.
+}\DIFaddend 
+
+\begin{figure*}[!ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{5patro}
-    \caption{\DIFdelbeginFL \DIFdelFL{Location of sensor nodes and }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Rozmístění koncových zařízení sítě a zařízení }\DIFaddendFL CKP \DIFdelbeginFL \DIFdelFL{devices on the university floor}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{v testovaných prostorách budovy}\DIFaddendFL }
+    \DIFdelbeginFL %DIFDELCMD < \includegraphics[width=0.9\textwidth]{5patro}
+%DIFDELCMD <     %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics[width=1\textwidth]{5patro}
+    \DIFaddendFL \caption{\DIFdelbeginFL \DIFdelFL{Location of sensor nodes and }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Rozmístění koncových zařízení sítě a zařízení }\DIFaddendFL CKP \DIFdelbeginFL \DIFdelFL{devices on the university floor}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{v testovaných prostorách budovy}\DIFaddendFL }
     \label{fig:CorridorFloorPlan}
 \end{figure*}
 
