@@ -15,10 +15,42 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-    v kapitole testing projet nazvy tabulek
 
 
-Pozdeji jsem psal at napisete co tento konkretni pripad konkretne je ;-). Tedy do infrastruktury pristupove site. jeste se zamyslete, jak v teto fazi to musi byt konkretni, zda to plati pro obecnou infrastrukturu, nebo uz na vybranou, ktera se lisi xy.
+Ten uvod do 3. kapitoly - preklepy.
+
+Zkuste se jeste poprat s timt souslovim "tento vybrany priklad", mam z toho pocit, ze to je akove strojene. Lze to nahradit napr. pro Výběr bezdrátové technologie pro senzorovou síť podle definovanych kriterii...
+
+
+
+Ke kapitole 4:
+
+V titulku mate WSN, citelnejsi to je bez zkratky. Navic, je to prvni vyskyt a nema to definovane.
+
+" přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
+
+"Rozšíření tohoto Přístupového systému" ...preklep
+
+" všech platných karet (ID Credentials) "...vsech platnych identifikačnich cisel karet ..
+
+ ve FW (FW) gatewaye. ...preklep
+
+LoRaWAN  device  address...neni definovano
+
+estavení HW k vytvoření prototypu gatewayek testování...krkolomny titulek,...co navrh a realizace gateway z embedded komponent?
+
+zkuste lepsi uvod k 4.3, rovnou pisete, z ceho sjte to sestavil, mozna je lepsi nejdrive popsat blokovy diagram, kde vysvetlite, jake funkce od kazdeho bloku chcete a pak uvedete konkretni priklad.
+
+obr. 4.2 je matouci, ze pouzivate obr. k RFM9w, ale ten je soucasti  Dragino LoRa Shield, ktera je ukazana na dalsim obrazku. Na 4.2. by mel byt ten shield ,ne?
+
+nadpisu zapojeni neco chybi..zapojeni ceho? blokove schema zapojeni? ...
+
+obr. 4.3 - fotky na bilem podklade jsou vzdy lepsi
+
+4.5 "Pro tento vybraný případ" ...uz jsem psal
+
+prazdny radek mezi odstavci se mi zda zbytecny
+
 
 
 
