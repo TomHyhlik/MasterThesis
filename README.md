@@ -17,8 +17,6 @@ https://ebookcentral.proquest.com/
 ## todo
 
 
-Ten uvod do 3. kapitoly - preklepy.
-
 Zkuste se jeste poprat s timt souslovim "tento vybrany priklad", mam z toho pocit, ze to je akove strojene. Lze to nahradit napr. pro Výběr bezdrátové technologie pro senzorovou síť podle definovanych kriterii...
 
 
