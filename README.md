@@ -47,5 +47,10 @@ udelat fotku gatewaye
 
 
 
+lukas vojtech je doc. ing. phd.
+
+zrusit 0.1 ve zkratkach
+
+
 # email
 
