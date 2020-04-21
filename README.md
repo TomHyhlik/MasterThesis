@@ -18,6 +18,12 @@ https://ebookcentral.proquest.com/
 ## todo
 
 Ke kapitole 4:
+
+LoRaWAN  device  address
+cesky nazev je lepsi, aj muzete uvest taky, treba kurzivou/v zavorce, apod.
+
+obr. je vse vypovidajici, proto bych misto toho transceiveru, dal rovnou shield a v textu uvedl, ze jste transceiver pouzil v shieldu. Je to totiz pravda.
+
 podivejte se, zda nepredbihate sam sebe...napr. navrh 4.1 "Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojenímWSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení." To je sice pravda, je to tak realizovano. Otazkou je, zda ciste konstatovani je to prave v kapitole navrh. Tam by spis mely byt uvahy. Lze to zmekcit napr. nejvhodnejsim reseni je ... implementovat GW jako standardni CKP zarizeni z duvodu...
 
 "fronty tvořeny linked listy." to chce lepe vysvetlit
