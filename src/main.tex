@@ -15,6 +15,11 @@
 \usepackage{graphicx}
 \graphicspath{{./images/}}
 
+
+\usepackage{pdfpages}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% this shit is here to break long url into more lines
 \usepackage{url}
 \makeatletter
@@ -154,7 +159,7 @@
 	author = {Tomáš Hyhlík},
 	supervisor = {Ing. Bc. Marek Neruda, Ph.D},
 	supervisor-address = {},
-	supervisor-specialist = {Ing. Bc. Lukáš Vojtěch, Ph.D},
+	supervisor-specialist = {doc. Ing. Lukáš Vojtěch, Ph.D},
 	fieldofstudy-english = {Electronics and Communications},
 	subfieldofstudy-english = {Electronics},
 	fieldofstudy-czech = {Elektronika a komunikace},
@@ -270,6 +275,9 @@
 \titlespacing*{\paragraph} 			{0pt}	{0ex}{-4ex}
 \titlespacing*{\aubparagraph} 		{0pt}	{0ex}{-4ex}
 
+
+\setcounter{secnumdepth}{0} %% no section numbering
+
 % \section{List of Abbreviations}
 \section{Seznam zkratek}
 \begin{abbreviations}
@@ -305,7 +313,6 @@
 	\item[RTOS]		Real Time Operating System 
 	% \item[I2C]   	Inter-integrated Circuit
 	% \item[IPv6] 	Internet Protocol version 6
-
 	% \item[M2M]		machine to machine
 	% \item[RPMA]		Random Phase Multiple Access
 	\item[SDK]	 	Software development kit
@@ -316,6 +323,9 @@
 	\item[WSN]		Wireless Sensor Network
 
 \end{abbreviations}
+
+\setcounter{secnumdepth}{1} %% start section numbering
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{chapter_01_introduction_new.tex}
@@ -330,7 +340,7 @@
 \part{Practical part}
 
 \input{chapter_04_deviceDesign_diff.tex}
-\input{chapter_05_testAndResults_new.tex}
+\input{chapter_05_testAndResults_diff.tex}
 \input{chapter_06_deviceImprove_new.tex}
 \input{chapter_07_conclusions_new.tex}
 
@@ -338,7 +348,11 @@
 \bibliographystyle{amsalpha}
 \input{references.tex}
 
-%\appendix
+
+\appendix
+
+\includepdf[pages={1,2,3,4}]{paper_Implementation_of_LPWSN_into_access_control_system.pdf}
+
 
 
 \end{document}ß

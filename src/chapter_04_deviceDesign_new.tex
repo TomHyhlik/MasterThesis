@@ -8,9 +8,9 @@ Tato kapitola popisuje návrh řešení rozšíření přístupového sytému o 
 \label{Implementace WSN do přístupového systému}
 Přístupový systém k rozšíření o WSN je vytvořen firmou IMA a je komerčně distribuován. Jeho architektura se liší od všeobecné architektury zobrazené v blokovém schematu \ref{fig:Access control system architecture} přidáním zařízení CKP, tvořícího rozhraní mezi kontrolním panelem a čtečkou s dveřním zámkem. Přístupový systém má několik typů CKP zařízení podporujících různé typy čteček, dveřních zámků, závor, vrat a podobně, ale všechna tato CKP zařízení podporují CKP protokol v síti RS485 pro komunikaci s kontrolním panelem.
 
-Rozšíření tohoto přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 V budovách, kde již je tento přístupový systém nainstalován je obvykle více kontrolních panelů, vždy jeden kontrolní panel pro několik dveří s CKP zařízeními propojenými sítí RS485. 
-K jednomu přístupovému systému je možné připojit několik WSN gatewayí k libovolným kontrolním panelům v budově pro dosažení požadovaného pokrytí WSN.
+Nejvhodnější řešení rozšíření tohoto přístupového systému o senzorovou síť je připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení z důvodu jednoduché instalace. Jednu nebo i více gatewayí je pak možné připojit do vybraných sítí RS485 přístupového systému v budově pro dosažení požadovaného pokrytí senzorové sítě.
+Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 
 \begin{figure}[!h]
 \centering
@@ -42,7 +42,7 @@ Tento problém je řešen ta, že LoRaWAN pakety z koncových zařízení jsou d
 % \section{Návrh WSN gatewaye}
 % Jak již bylo zmíňeno v předchozí sekci, gateway dešifruje pakety z koncových zařízení a na základě typu koncového zařízení vypočítává z datového obsahu (payloadu) hodnoty senzorů z nichž vybrané odesílá na server řízení přístupu přes kontolní panel a to z důvodu datového omezení protokolu v síti RS485, do které je gateway připojena.
 Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování datového obsahu (payloadu) ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
-Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN device address.
+Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN adresa zařízení (device address).
 %% todo, cast teto vet uz je v predchozi kapitole
 LoRaWAN protokol je zabezpečen šifrováním AES-128, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
 
@@ -265,7 +265,7 @@ Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry uklád�
 \end{table}
 
 % \subsection{Běh programu}
-Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurován na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou zpracovávány cyklické buffery a fronty tvořeny linked listy. 
+Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurován na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou zpracovávány cyklické buffery přijatých dat přes USB a RS485 a fronty přijatých LoRaWAN paketů a příkazů k odeslání na kontrolní panel přes síť RS485. 
 
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
 Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít. IWDG je resetováván timerem tudíž tvoří pojistku tak, že resetuje procesor v případě, že by se program zhroutil.
@@ -279,40 +279,41 @@ LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kaná
 Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání neni blokováno během přijímání, jelikož se jedná o full-duplex.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Komunikace přes sériovou linku USB}
-\label{Komunikace přes sériovou linku}
-Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
-K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
-sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Komunikace přes sériovou linku USB}
+% \label{Komunikace přes sériovou linku}
+% Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
+% K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
+% sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
-\begin{table}[!h]
-    \centering
-    \begin{ctucolortab}
-    \begin{tabular}{ |c|c| }
-     \hline
+% \begin{table}[!h]
+%     \centering
+%     \begin{ctucolortab}
+%     \begin{tabular}{ |c|c| }
+%      \hline
 
-    Parametr                & Hodnota           \\ \hline \hline
-     Baud rate              & 115200           \\ \hline
-     Data bits              & 8                 \\ \hline
-     Parity                 & none              \\ \hline
-     Stop bits              & 1                 \\ \hline
-     Flow control           & none               \\ \hline
+%     Parametr                & Hodnota           \\ \hline \hline
+%      Baud rate              & 115200           \\ \hline
+%      Data bits              & 8                 \\ \hline
+%      Parity                 & none              \\ \hline
+%      Stop bits              & 1                 \\ \hline
+%      Flow control           & none               \\ \hline
 
-    \end{tabular}
-    \end{ctucolortab}
-    \caption{Parametry sériové linky PC terminálu pro komunikaci s gatewayí}
-    \label{table:usb_term}
-\end{table}
+%     \end{tabular}
+%     \end{ctucolortab}
+%     \caption{Parametry sériové linky PC terminálu pro komunikaci s gatewayí}
+%     \label{table:usb_term}
+% \end{table}
 
-Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
+% Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
 
 
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Log Gatewaye}
-Po připojení ke gatewayi přes sériovou linku dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} je možné kontinuálně snímat log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
+Po připojení ke gatewayi přes sériovou linku % dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} 
+je možné kontinuálně snímat log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
 Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
 \begin{lstlisting}[style=log]
@@ -345,7 +346,8 @@ Nejprve jsou vypsány data týkající se LoRaWAN protokolu, zašifrovaný i de�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Konfigurace gatewaye}
 \label{Konfigurace gatewaye}
-Konfigurace gatewaye se provádí obousměrnou komunikací po sériové lince s připojením dle instrukcí v sekci \nameref{Komunikace přes sériovou linku}.
+Konfigurace gatewaye se provádí obousměrnou komunikací po sériové lince. 
+% s připojením dle instrukcí v sekci \nameref{Komunikace přes sériovou linku}.
 Po spuštění je gateway v normálním pracovním režimu, přeposílá tedy pakety ze senzorové sítě přes RS485 síť na kontrolní panel a informace loguje přes sériovou linku.
 Po vstoupení do stavu konfigurace je pozastavena činnost gatewaye, komunikace s koncovými zařízeními LoRaWAN sítě a komunikace s kontrolním panelem v síti RS485 nejsou aktivní.
 Do režimu konfigurace je vstoupeno odesláním "config", následuje vypsání současného stavu konfigurace a následně uživatel postupuje zadáním čísla pro výběr možnosti z menu či konkrétního parametru dle vyzvání. Z konfigurace je možné vystoupit kdykoliv bez uložení změn příkazem "quit". 
@@ -458,7 +460,6 @@ Položka v menu pod názvem "Config LoRaWAN protocol" zahrnuje nastavení šifro
 
 \subsubsection{Print all LoRaWAN devices}
 Vypíše všechna LoRaWAN zařízení uložená v paměti. Níže je příklad.
-
 
 \begin{lstlisting}[style=log]    
     number.......................0:

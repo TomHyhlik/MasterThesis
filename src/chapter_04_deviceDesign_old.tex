@@ -277,34 +277,33 @@ LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kaná
 Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání neni blokováno během přijímání, jelikož se jedná o full-duplex.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Komunikace přes sériovou linku USB}
-\label{Komunikace přes sériovou linku}
-Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
-K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
-sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Komunikace přes sériovou linku USB}
+% \label{Komunikace přes sériovou linku}
+% Gateway má implementovanou komunikaci přes sériovou linku, umožňující konfiguraci a log. 
+% K přípojení lze použít PC s libovolnou aplikací umožňující odesílání a přijímání dat zakódovaných ASCII (American Standard Code for Information Interchange) po
+% sériové lince s nastavením parametrů dle tabulky \ref{table:usb_term}.
 
-\begin{table}[!h]
-    \centering
-    \begin{ctucolortab}
-    \begin{tabular}{ |c|c| }
-     \hline
+% \begin{table}[!h]
+%     \centering
+%     \begin{ctucolortab}
+%     \begin{tabular}{ |c|c| }
+%      \hline
 
-    Parametr                & Hodnota           \\ \hline \hline
-     Baud rate              & 115200           \\ \hline
-     Data bits              & 8                 \\ \hline
-     Parity                 & none              \\ \hline
-     Stop bits              & 1                 \\ \hline
-     Flow control           & none               \\ \hline
+%     Parametr                & Hodnota           \\ \hline \hline
+%      Baud rate              & 115200           \\ \hline
+%      Data bits              & 8                 \\ \hline
+%      Parity                 & none              \\ \hline
+%      Stop bits              & 1                 \\ \hline
+%      Flow control           & none               \\ \hline
 
-    \end{tabular}
-    \end{ctucolortab}
-    \caption{Parametry sériové linky PC terminálu pro komunikaci s gatewayí}
-    \label{table:usb_term}
-\end{table}
+%     \end{tabular}
+%     \end{ctucolortab}
+%     \caption{Parametry sériové linky PC terminálu pro komunikaci s gatewayí}
+%     \label{table:usb_term}
+% \end{table}
 
-Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
-
+% Při komunikaci jsou data oddělována bytem CR (carriage return) 0x0D, ale je akceptována i sekvence CR LF (Line Feed), tedy 0x0D 0x0A v hexadecimálním tvaru. 
 
 
 
