@@ -67,19 +67,17 @@ Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá př�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh a realizace gatewaye z embedded komponent}
 Pro otestování navrženého řešení je vytvořena gateway z embedded komponent, tj. LoRa transceiveru pro komunikaci s koncovými zařízeními senzorové sítě, RS485 transceiveru pro komunikaci s kontrolním panelem v síti RS485 a mikrokontrolér jako řídící jednotku viz. blokový diagram v obrázku \ref{fig:gatewayBlockDiagram}.
-Konkrétní komponenty jsou: Dragino LoRa Shield \cite{RFM95w}, RS485 transceiver \cite{rs485tr} a vývojový kit NUCLEO-L073RZ \cite{nucleoST} jako řídící jednotka.
+Konkrétní komponenty jsou: Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr} a vývojový kit NUCLEO-L073RZ \cite{nucleoST} jako řídící jednotka.
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_2}
-    \caption{Blokový diagram navržené gatewaye senzorové sítě, RFM95w \cite{RFM95w}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
+    \includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_3}
+    \caption{Blokový diagram navržené gatewaye senzorové sítě, Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
     \label{fig:gatewayBlockDiagram}
 \end{figure}
 
 Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD \cite{nucleoST}). 
 K vytvoření prototypu byl použit, protože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje FW.
-LoRa transceiver RFM95w je PCB (Printed Circuit Board) s čipem SX1276. Pro tento prototyp je použit integrovaný v Dragino LoRa Shield \cite{draginoWiki}, který má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ.
-RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
 \begin{table}[!h]
     \centering
@@ -101,6 +99,10 @@ RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s k
     \end{ctucolortab}
     \label{tab:mcuFeatures}
 \end{table}
+
+Dragino LoRa Shield \cite{draginoWiki} má kompatibilní pinout s Arduino UNO, tedy i s použitým vývojovým kitem NUCLEO-L073RZ a obsahuje LoRa transceiver RFM95w \cite{RFM95w}, tedy PCB (Printed Circuit Board) s čipem SX1276. 
+
+RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
 % Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}.
 % \begin{figure}[!h]

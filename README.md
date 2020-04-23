@@ -17,9 +17,6 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
-obrazek dragino shieldu do blok schematu
-obr. je vse vypovidajici, proto bych misto toho transceiveru, dal rovnou shield a v textu uvedl, ze jste transceiver pouzil v shieldu. Je to totiz pravda.
-
 
 nenasel jsem informaci o zpusobu update FW
 
