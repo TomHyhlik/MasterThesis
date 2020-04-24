@@ -1,5 +1,5 @@
 \chapter{Výběr bezdrátové technologie pro senzorovou síť}
-Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ senzorové sítě a na závěr vysvětluje která technologie byla nakonec \DIFdelbegin \DIFdel{výbrána }\DIFdelend \DIFaddbegin \DIFadd{vybrána }\DIFaddend a z jakých důvodů.
+Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ senzorové sítě a na závěr vysvětluje která technologie byla nakonec vybrána a z jakých důvodů.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7,7 +7,7 @@ Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento v
 % Mezi hlavní požadavky na navrženou senzorovou síť implementovanou do infrastruktury přístupového systému patří jednoduchost napojení.
 % Pro tento vybraný případ se konkrétně jedná o infrastrukturu již zavedeného přístupového systému v budovách několika podniků.
 Navržená senzorová síť má být připojena do infrastruktury přístupového systému, který je již zaveden v několika budovách. Jejím účelem je bezdrátové měření veličin např. teplota, vlhkost, CO\textsubscript{2}, pomocí koncových zařízení sítě, která vydrží několik let napájena z baterie při periodě měření několik minut rozmístěných v budově a jejím okolí.
-Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na \DIFdelbegin \DIFdel{siti }\DIFdelend \DIFaddbegin \DIFadd{síti }\DIFaddend třetích stran. 
+Pro jednoduchost implementace vybraná bezdrátová technologie tedy musí používat pouze bezlicenční pásmo ISM a musí umožňovat implementaci celé sítě bez závislosti na síti třetích stran. 
 Dosah by tedy měl být pro pokrytí celé budovy a jejího okolí, ale je zde i možnost napojení více gatewayí rozmístěných po budově k dosažení požadovaného dosahu.
 Níže jsou vypsány hlavní kritéria pro výběr bezdrátové technologie pro tuto senzorovou síť.
 
@@ -118,10 +118,7 @@ ZigBee a BLE mají příliš krátký dosah, což by bylo možné vyřešit rozm
 Wireless M-bus a LoRa mají jako nevýhodu vysokou cenu transceiveru pro gateway. 
 LoRa má možnost použití v jednokanálovém módu, kde gateway může použít transceiver určen pro koncová zařízení, který je víc jak desetkrát levnější a vyžaduje nižší výkon CPU (Central Processing Unit) než transceiver pro gateway, tudíž gateway v jednokanálovém módu je mnohem jednodušší a levnější řešení.
 \\
-\DIFdelbegin %DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdel{Pro tento vybraný případ senzorové sítě byla tedy }\DIFdelend \DIFaddbegin \DIFadd{Vzhledem k definovaným kritériím tedy byla }\DIFaddend vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž to není plně LoRaWAN kompatibilní.
+Vzhledem k definovaným kritériím tedy byla vybrána techologie LoRa se standardizovaným síťovým protokolem LoRaWAN v jednokanálovém módu, jako je to používáno ve vývojových projektech \cite{Analysis of Propagation Link for Remote Weather}, tudíž to není plně LoRaWAN kompatibilní.
 V jednokanálovém módu jsou všechna zařízení v síti nakonfigurována na jeden konkrétní kanál a SF.
 LoRaWAN koncová zařízení třetích stran jsou plně kompatibilní s jakoukoliv LoRaWAN gatewayí pro daný region, tudíž mohou být implementovány do navrženého systému v tomto projektu, ale musí být překonfigurována ke komunikaci na zvoleném kanále a přenosové rychlosti. 
 LoRaWAN síť má hvězdicovou topologii při dostatečném dosahu pro pokrytí budovy a jejím okolí, navíc dosah lze ladit parametrem SF. Pro tento vybraný případ senzorové sítě je to vhodné, jelikož pravděpodobně všechna zařízení v síti budou senzory napájeny z baterie, a není předpokládáno, že by byly připojeny zařízení umožňující směrování paketů z důvodu spotřeby energie. 

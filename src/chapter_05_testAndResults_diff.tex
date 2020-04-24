@@ -20,9 +20,7 @@ Testování probíhalo od 21. září do 31. října, tedy v době přítomnosti
 Po tuto dobu testování byly zaznamenávány přenášené pakety síti RS485, kontrolní panel přijal 1~876~978 paketů (14~074~522 B) a odeslal 1~101~556 paketů (8~295~219 B), dohromady tedy 2~978~534 paketů (22~369~741 B).
 Z naměřených hodnot byla provedena metoda frekvenční analýzy. Z přenesených paketů byly nejdelší 3 o velikostí 40 bytů.
 S ohledem na celkové množství paketů je to zanedbatelné množství, tj. 1,3E-04 \%.
-Avšak vzhledem k povaze systému, tedy systému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit %DIF <  velikosti paketu.
-\DIFaddbegin \DIFadd{velikosti paketu.
-}\DIFaddend 
+Avšak vzhledem k povaze systému, tedy systému s primární funkcí řízení přístupu do omezených oblastí, se za nejhorší scénář považuje nepřekonatelný limit velikosti paketu.
 
 Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájící přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
 Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístupového systému před dysfunkcí nebo poruchou, například před dlouhým čekáním na otevření dveří.
@@ -88,7 +86,7 @@ $v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
  B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
 $l_{MAX}$ & maximální délka paketu \\
  R        & rezerva rychlosti přenosu dat [\%]\\
- P        & \DIFdelbegin \DIFdel{počt }\DIFdelend \DIFaddbegin \DIFadd{počet }\DIFaddend paketů k přenesení dat z koncového zařízení \\
+ P        & počet paketů k přenesení dat z koncového zařízení \\
 \end{tabular}
 
 
@@ -135,7 +133,7 @@ $v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
 \end{table}
 
 
-Např. v senzorové síti může být až \DIFdelbegin \DIFdel{162 }\DIFdelend \DIFaddbegin \DIFadd{54 }\DIFaddend koncových zařízení připojených ke gatewayi, která je napojena na síť RS485 s přenosovou rychlostí \DIFdelbegin \DIFdel{115200}\DIFdelend \DIFaddbegin \DIFadd{38400}\DIFaddend ~bps a rezervou 10 \% nebo \DIFdelbegin \DIFdel{126 }\DIFdelend \DIFaddbegin \DIFadd{42 }\DIFaddend koncových zařízení s přenosovou rychlostí \DIFdelbegin \DIFdel{115200}\DIFdelend \DIFaddbegin \DIFadd{38400}\DIFaddend ~bps a rezervou 30 \%.
+Např. v senzorové síti může být až 54 koncových zařízení připojených ke gatewayi, která je napojena na síť RS485 s přenosovou rychlostí 38400~bps a rezervou 10 \% nebo 42 koncových zařízení s přenosovou rychlostí 38400~bps a rezervou 30 \%.
 Tento výsledek ukazuje, že jeden blok patra univerzity, tj. jedna síť RS485 je schopna fungovat s desítkami koncovými zařízeními senzorové sítě souběžně vysílající data s dostatečnou rezervou chránící přístupový systém. 
 
 
