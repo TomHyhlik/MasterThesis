@@ -18,12 +18,11 @@ https://ebookcentral.proquest.com/
 ## todo
 
 
-nenasel jsem informaci o zpusobu update FW
-
 " přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
 
-udelat fotku gatewaye
+
 
 
 # email
+
 

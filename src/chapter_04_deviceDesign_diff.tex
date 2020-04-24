@@ -10,9 +10,8 @@ Přístupový systém k rozšíření o WSN je vytvořen firmou IMA a je komerč
 
 \DIFdelbegin \DIFdel{Rozšíření tohoto Přístupového systému o WSN je vytvořeno připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení. Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
 }\DIFdelend V budovách, kde již je tento přístupový systém nainstalován je obvykle více kontrolních panelů, vždy jeden kontrolní panel pro několik dveří s CKP zařízeními propojenými sítí RS485. 
-\DIFdelbegin \DIFdel{K jednomu přístupovému }\DIFdelend \DIFaddbegin \DIFadd{Nejvhodnější řešení rozšíření tohoto přístupového }\DIFaddend systému \DIFdelbegin \DIFdel{je }\DIFdelend \DIFaddbegin \DIFadd{o senzorovou síť je připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení z důvodu jednoduché instalace. Jednu nebo i více gatewayí je pak }\DIFaddend možné připojit \DIFdelbegin \DIFdel{několik WSN gatewayí k libovolným kontrolním panelům }\DIFdelend \DIFaddbegin \DIFadd{do vybraných sítí RS485 přístupového systému }\DIFaddend v budově pro dosažení požadovaného pokrytí \DIFdelbegin \DIFdel{WSN}\DIFdelend \DIFaddbegin \DIFadd{senzorové sítě}\DIFaddend .
-\DIFaddbegin \DIFadd{Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}.
-}\DIFaddend 
+\DIFdelbegin \DIFdel{K jednomu přístupovému }\DIFdelend \DIFaddbegin \DIFadd{Nejvhodnější řešení rozšíření tohoto přístupového }\DIFaddend systému \DIFdelbegin \DIFdel{je }\DIFdelend \DIFaddbegin \DIFadd{o senzorovou síť je připojením WSN gatewaye ke kontrolnímu panelu přes RS485 síť stejně jako CKP zařízení z důvodu jednoduché instalace. Jednu nebo i více gatewayí je pak }\DIFaddend možné připojit \DIFdelbegin \DIFdel{několik WSN gatewayí k libovolným kontrolním panelům }\DIFdelend \DIFaddbegin \DIFadd{do vybraných sítí RS485 přístupového systému }\DIFaddend v budově pro dosažení požadovaného pokrytí \DIFdelbegin \DIFdel{WSN}\DIFdelend \DIFaddbegin \DIFadd{senzorové sítě.
+Názorná blokové schéma přístupového systému firmy IMA s implementací WSN gatewaye je zobrazeno v obrázku \ref{fig:ACS architecture IMA with geteway}}\DIFaddend .
 
 \begin{figure}[!h]
 \centering
@@ -75,12 +74,9 @@ Konkrétní komponenty jsou: }\DIFaddend Dragino LoRa Shield \DIFdelbegin \DIFde
 \cite{RFM95w} }\hspace{0pt}%DIFAUXCMD
 a }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{draginoWiki}}\hspace{0pt}%DIFAUXCMD
-, }\DIFaddend RS485 transceiver \cite{rs485tr} \DIFdelbegin \DIFdel{, viz.
-obr. \ref{fig:gatewayBlockDiagram}.
-}\DIFdelend \DIFaddbegin \DIFadd{a vývojový kit NUCLEO-L073RZ \mbox{%DIFAUXCMD
+, }\DIFaddend RS485 transceiver \cite{rs485tr} \DIFdelbegin \DIFdel{, viz. obr. \ref{fig:gatewayBlockDiagram}}\DIFdelend \DIFaddbegin \DIFadd{a vývojový kit NUCLEO-L073RZ \mbox{%DIFAUXCMD
 \cite{nucleoST} }\hspace{0pt}%DIFAUXCMD
-jako řídící jednotka.
-}\DIFaddend 
+jako řídící jednotka}\DIFaddend .
 
 \begin{figure}[!h]
     \centering
@@ -232,7 +228,7 @@ Vyvinutý program je rozdělen na několik nezávislých podprogramů viz tabulk
 
     LoRa            &  Knihovna zahrnující komunikaci s transceiverem RFM95W po rozhraní SPI, nainicializovaném v režimu komunikace LoRa    \\ \hline
     LoRaWAN\_packet  & Knihovna zahrnující LoRaWAN protokol, tedy dekódování a dešifrování přijatého LoraWAN paketu i vytvoření paketu pro odeslání. Tato knihovna je závislá na knihovnách aes a cmac.  \\ \hline
-    LoRa\_sensors    & Knihovna zahrnující dekó dování payloadu podporovaných koncových zařízení a zapsání výsledných hodnot do bufferu, který je pak odeslán na kontrolní panel přes síť RS485       \\ \hline
+    LoRa\_sensors    & Knihovna zahrnující \DIFdelbeginFL \DIFdelFL{dekó dování }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{dekódování }\DIFaddendFL payloadu podporovaných koncových zařízení a zapsání výsledných hodnot do bufferu, který je pak odeslán na kontrolní panel přes síť RS485       \\ \hline
     rs485\_protocol  & Podprogram zahrnující síťový protokol v síti RS485         \\ \hline
     usb             &  Podprogram zahrnující konfiguraci systému přes USB        \\ \hline
     eeprom          &  Knihovna zahrnující práci s non-volatile paměti procesoru EEPROM     \\ \hline
@@ -341,13 +337,23 @@ Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v 
 
 
 
+%DIF > %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Update FW gatewaye}
+\DIFaddbegin \DIFadd{K nahrání FW do gatewaye je využit ST-link na vývojovém kitu NUCLEO-L073RZ. 
+Po připojení gatewaye k PC přes USB se v PC gateway zobrazí jako externí flash paměť, do které je soubor FW nakopírován. Proces je tedy stejný, jako kdyby byl soubor FW zkopírován na externí flash disk připojen k PC.
+%DIF >  Po dobu kopírování souboru FW na vývojový kit bliká na kitu  červená-zelená.
+%DIF >  Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{Konfigurace gatewaye}.  
+}\DIFaddend 
+
+
+
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Log Gatewaye}
 Po připojení ke gatewayi přes sériovou linku \DIFdelbegin \DIFdel{dle instrukcí v sekci }%DIFDELCMD < \nameref{Komunikace přes sériovou linku} %%%
 \DIFdelend %DIF >  dle instrukcí v sekci \nameref{Komunikace přes sériovou linku} 
 je možné kontinuálně snímat \DIFdelbegin \DIFdel{a }\DIFdelend log gatewaye obsahující informace o proběhlých událostech. Je-li gateway v normálním pracovním režimu, loguje informace automaticky přes sériovou linku a komunikace je zde pouze jednosměrná, tedy gateway vysílá a PC přijímá.
-Níže je příklad výpisu logu v případě, kdy gateway přjala LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
+Níže je příklad výpisu logu v případě, kdy gateway \DIFdelbegin \DIFdel{přjala }\DIFdelend \DIFaddbegin \DIFadd{přijala }\DIFaddend LoRaWAN paket z koncového zařízení senzorové sítě, zpracovala ho a výslednou informaci odeslala na kontrolní panel přes RS485 síť.
 
 \begin{lstlisting}[style=log]
     ________________________________________________
@@ -392,22 +398,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
 \begin{lstlisting}[style=log]
 
     _________________Entering configuration setup________________
-    
+
     System configuration:
-    
+
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-    
+
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-    
+
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-    
+
     
     Config menu:
     1 -> Config LoRa channel
@@ -418,6 +424,7 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
     6 -> Restore to default configuration
     7 -> Exit without save
     8 -> Save and exit
+
 \end{lstlisting}
 
 
@@ -610,7 +617,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-     
+
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
@@ -634,7 +641,7 @@ Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu
 Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.
 
 \subsubsection{Příklad}
-Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do decimalni podoby, výsledné číslo k zadání do uživatelského rozhraní serveru řízení přístupu je tedy 8016149418.
+Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsledné číslo v hexadecimální podobě je 01DDCCBBAA. Následně se překládá do \DIFdelbegin \DIFdel{decimalni }\DIFdelend \DIFaddbegin \DIFadd{decimální }\DIFaddend podoby, výsledné číslo k zadání do uživatelského rozhraní serveru řízení přístupu je tedy 8016149418.
 
 
 
@@ -687,15 +694,17 @@ Pro případ, kde typ zařízení je 01 a DevAddr AABBCCDD (little endian) výsl
 %             .2 usb.h \DTcomment{source file to the usb.h}.
 %     }
 % \end{figure}
+\DIFdelbegin %DIFDELCMD < 
 
+%DIFDELCMD < %%%
+%DIF < %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DIF <  \section{Nahrání programu do MCU}
+%DIF <  Výstupem kompilace je soubor s koncovkou .binary, který je nahrán do MCU. K tomuto nahrání není potřeba žádný speciální SW nebo HW.
+%DIF <  Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
+%DIF <  Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
+%DIF <  Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{sec:konfigurace}.  
+\DIFdelend 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \section{Nahrání programu do MCU}
-% Výstupem kompilace je soubor s koncovkou .binary, který je nahrán do MCU. K tomuto nahrání není potřeba žádný speciální SW nebo HW.
-% Stačí kit připojit k PC přes USB, v PC se kit zobrazí jako flash disk. Zkompilovaný program s koncovkou .binary stačí překopírovat na toto zařízení. 
-% Po dobu kopírování souboru bliká na kitu LED1 červená/zelená. Jakmile kopírování skončí, program na kitu je spuštěn, případně je možné kit resetovat černým tlačítkem reset.
-% Pro uvedení Gatewaye do provozu je nutné se připojit k zařízení přes USB a nastavit všechny parametry viz sekce \ref{sec:konfigurace}.  
 
 
 
