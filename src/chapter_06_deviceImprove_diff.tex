@@ -3,7 +3,30 @@
 }\DIFaddend 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Možnosti odstranění omezení navržené gatewaye - závislost na znalosti typu koncových zařízení senzorové sítě}
+\DIFaddbegin \DIFadd{Jedním z největších omezení navrženého systému je, že FW gatewaye musí podporovat typy všech koncových zařízení senzorové sítě, tudíž přidání nového typu zařízení do sítě vyžaduje update FW gatewaye.
+Je zde několik možností jak toto obejít, aby gateway nebyla závislá na znalosti typu koncových zařízení senzorové sítě, ale všechny tyto možnosti zapříčiňují nežádoucí vliv a to zvýšení objemu přenášených dat v síti RS485 přístupového systému.
+Původní řešení totiž klade důraz na nízký objem přenášených dat v síti RS485.
+}\DIFaddend 
+
+\DIFaddbegin \DIFadd{Například použitý typ koncového zařízení RHF1S001 \ref{sec:RHF1S001} odesílá LoRaWAN pakety o délce 22 bytů, z toho je 9 bytů aplikační payload. Protokol umožňuje posílat pakety o velikosti až 256 bytů, z toho je nejméně 13 bytů data protokolu, tedy maximální délka aplikačního payloadu může být až 243 bytů.
+}
+
+\DIFadd{Nejefektivnější řešení by bylo rozšíření CKP protokolu sítě RS485 přístupového sytému o nový typ příkazu umožňující odeslat paket o maximální délce payloadu až 243 bytů, tedy aby jedním tímto paketem bylo možné odeslat celý aplikační payload. 
+Je zde bezpečnostní výhoda, že aplikační payload by pak mohl být dešifrován až na serveru LoRaWAN klíčem AppSKey, tudíž by data z koncových zařízení by nebyla odhalitelná v síti RS485.
+Toto řešení tedy vyžaduje update FW všech kontrolních panelů, čož je velmi náročné.
+%DIF >  tudíž realizace tohot řešení prozatím neni plánována.
+}
+
+\DIFadd{Nicméně je možné implementovat podobné řešení bez nutnosti zavádění nového typu paketu pro aplikační payload koncového zařízení senzorové sítě tak, že aplikační payload by byl rozdělen a odeslán posloupností několika paketů průchod. 
+Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval informaci o čísle paketu dané sekvence a zbylých 5 bytů by byly data paýloadu daného koncového zařízení Zařízení typu RHF1S001, které má aplikační payload o velikosti 9 bytů by byl takto odeslán dvěma pakety průchod. Jelikož každý paket průhod je potvrzován, toto řešení by rapidně zvýšilo objem přenášených dat v síti RS485.
+}
+
+
+
+
+
+\DIFaddend %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh gatewaye verze 2}
 Pro lepší mechanické uspořádání byla navržena verze 2 \DIFdelbegin \DIFdel{, kde je }\DIFdelend \DIFaddbegin \DIFadd{s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
