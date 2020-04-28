@@ -1,28 +1,31 @@
 % \chapter{The purpose of low power wireless sensor networks and its state of art}
 \chapter{Úvod}
-The demands and use cases of Internet of Things (IoT) applications including security, asset tracking, agriculture, smart metering, smart cities, and smart homes as well as the growth of IoT wireless technologies, which require long range, low power consumption, low data rate and low cost are recently increased.
 
-Short-range IoT applications like smart homes are broadly based on Zigbee or Bluetooth technologies that use the 2.4 GHz ISM band \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
-Long-range IoT applications are typically based on a special kind of wireless technology called Low Power Wide Area Network (LPWAN) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. Many LPWAN wireless communication technologies appeared during its evolution with unlicensed ISM band, e.g., LoRa and SigFox and licensed band, e.g., NarrowBand-Internet of Things (NB-IoT) and Long Term Evolution-Machine Type Communication (LTE-M).
-The LPWAN technologies aim to have range up to 10–15 km in rural areas and 2–5 km in urban areas \cite{Long-Range Communications in Unlicensed Bands} and can have one of the following topologies: star (centralized), star of stars (decentralized) and mesh (distributed) \cite{high density LPWAN}.
-Very low power consumption should allow sensor nodes a very long battery life, even greater than 10 years.
-The low cost of hardware (HW) is achieved by fully integrated transceivers and minimized number of off-chip components \cite{MURS Band for LPWAN Applications}.
+todo
 
-The industry of IoT is growing because of its enormous potential.
-Cisco study \cite{IoT cisco study} says IoT will be combined with other technologies such as artificial inteligence (AI), fog computing and blockchain. Such a combination of technologies will provide greater value of investment for companies. 
-IoT applications in smart cities require a scalable network coverage. This can be achieved by interconnection of multiple gateways as proposed in \cite{Flexible Wireless Sensor Network for smart lighting applications}, where all gateways are connected to web server accessible via the Internet. It aims to manage urban street lighting and the implementation of smart metering is also considered as a future work.
-Similar application is proposed in paper \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN} which focuses on assisted real-time automatic meter reading (AMR) in cities, but the scalable range is established by mesh network topology.
-The IoT applications in a smart buildings concept can be proposed as shown in
-\cite{Internet of Things (IoT) for building Smart Home System}, where nodes exchange data with the cloud via a Wi-Fi router or Bluetooth gateway connected to the Internet. 
-Similar application is proposed in \cite{Building a Smart Home System with WSN and Service Robot} where nodes are controlled by a master node via Zigbee network that is conncected to a PC via RS232.
-Basic smart metering systems can be proposed with a gateway connected to a PC where the data are processed as proposed in \cite{A Meter Reading System Based on WSN}, \cite{Smart Water Meter System for User-Centric Consumption Measurement} and \cite{Radio Data Infrastructure for Remote Monitoring}.
-A long-range metering system can be established by multiple gateways connected to a network server from which data are obtained by the application server \cite{Smart Electric Meter Using LoRA Protocols and Iot applications}. 
-% Such network andrchitecture also uses The Things Network (TTN) \cite{ttn} which is open LoRaWAN network available for anyone to use by connecting his own nodes and to contribute by connecting his own gateway.
-Similar network is proposed in Smart Farm application \cite{Implement Smart Farm with IoT Technology} with the difference that nodes can also be connected to the gateway via RS485 which forms a hybrid wired /wireless system.
+% The demands and use cases of Internet of Things (IoT) applications including security, asset tracking, agriculture, smart metering, smart cities, and smart homes as well as the growth of IoT wireless technologies, which require long range, low power consumption, low data rate and low cost are recently increased.
 
-This paper proposes to extend the access control system to include a low power Wireless Sensor Network (WSN) which can be used for smart metering applications, smart building applications and the building surroundings which is related to smart city applications. 
-The WSN gateway is connected by the same way as a card reader is connected in the access control system, therefore it also has to support the same protocol. This can lead to complications since the reader is ment to transmit a short packets with user ID when the user's credential is attached to it. 
-The WSN gateway is designed and tested in access control system of one university floor. The results show the infrastructure of access control system can manage up to thousands sensor nodes in dependence on used RS485 data rate. 
+% Short-range IoT applications like smart homes are broadly based on Zigbee or Bluetooth technologies that use the 2.4 GHz ISM band \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
+% Long-range IoT applications are typically based on a special kind of wireless technology called Low Power Wide Area Network (LPWAN) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. Many LPWAN wireless communication technologies appeared during its evolution with unlicensed ISM band, e.g., LoRa and SigFox and licensed band, e.g., NarrowBand-Internet of Things (NB-IoT) and Long Term Evolution-Machine Type Communication (LTE-M).
+% The LPWAN technologies aim to have range up to 10–15 km in rural areas and 2–5 km in urban areas \cite{Long-Range Communications in Unlicensed Bands} and can have one of the following topologies: star (centralized), star of stars (decentralized) and mesh (distributed) \cite{high density LPWAN}.
+% Very low power consumption should allow sensor nodes a very long battery life, even greater than 10 years.
+% The low cost of hardware (HW) is achieved by fully integrated transceivers and minimized number of off-chip components \cite{MURS Band for LPWAN Applications}.
+
+% The industry of IoT is growing because of its enormous potential.
+% Cisco study \cite{IoT cisco study} says IoT will be combined with other technologies such as artificial inteligence (AI), fog computing and blockchain. Such a combination of technologies will provide greater value of investment for companies. 
+% IoT applications in smart cities require a scalable network coverage. This can be achieved by interconnection of multiple gateways as proposed in \cite{Flexible Wireless Sensor Network for smart lighting applications}, where all gateways are connected to web server accessible via the Internet. It aims to manage urban street lighting and the implementation of smart metering is also considered as a future work.
+% Similar application is proposed in paper \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN} which focuses on assisted real-time automatic meter reading (AMR) in cities, but the scalable range is established by mesh network topology.
+% The IoT applications in a smart buildings concept can be proposed as shown in
+% \cite{Internet of Things (IoT) for building Smart Home System}, where nodes exchange data with the cloud via a Wi-Fi router or Bluetooth gateway connected to the Internet. 
+% Similar application is proposed in \cite{Building a Smart Home System with WSN and Service Robot} where nodes are controlled by a master node via Zigbee network that is conncected to a PC via RS232.
+% Basic smart metering systems can be proposed with a gateway connected to a PC where the data are processed as proposed in \cite{A Meter Reading System Based on WSN}, \cite{Smart Water Meter System for User-Centric Consumption Measurement} and \cite{Radio Data Infrastructure for Remote Monitoring}.
+% A long-range metering system can be established by multiple gateways connected to a network server from which data are obtained by the application server \cite{Smart Electric Meter Using LoRA Protocols and Iot applications}. 
+% % Such network andrchitecture also uses The Things Network (TTN) \cite{ttn} which is open LoRaWAN network available for anyone to use by connecting his own nodes and to contribute by connecting his own gateway.
+% Similar network is proposed in Smart Farm application \cite{Implement Smart Farm with IoT Technology} with the difference that nodes can also be connected to the gateway via RS485 which forms a hybrid wired /wireless system.
+
+% This paper proposes to extend the access control system to include a low power Wireless Sensor Network (WSN) which can be used for smart metering applications, smart building applications and the building surroundings which is related to smart city applications. 
+% The WSN gateway is connected by the same way as a card reader is connected in the access control system, therefore it also has to support the same protocol. This can lead to complications since the reader is ment to transmit a short packets with user ID when the user's credential is attached to it. 
+% The WSN gateway is designed and tested in access control system of one university floor. The results show the infrastructure of access control system can manage up to thousands sensor nodes in dependence on used RS485 data rate. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
