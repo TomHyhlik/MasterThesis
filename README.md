@@ -17,8 +17,24 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
-
 " přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
+
+
+kapitola 6 device improve
+
+upravit:
+Jedním z největších omezení navrženého systému je, že FW gatewaye musí
+podporovat typy všech koncových zařízení senzorové sítě, tudíž přidání nového
+typu zařízení do sítě vyžaduje update FW gatewaye.
+
+"Je::::zde:::::::několik:::::::::možností::::jak:::::toto::::::::obejít,::::aby:::::::::gateway:::::::nebyla::::::::závislá:::na:::::::::znalosti::::typu::::::::::::koncových:::::::::zařízení:::::::::::senzorové::::::sítě,:::::ale:::::::::všechny::::::tyto:::::::::::možnosti::::::::::zapříčiňují::::::::::nežádoucí::::vliv::a:::to:::::::zvýšení::::::::objemu::::::::::::přenášených::::dat::v::::síti:::::::RS485::::::::::::přístupového::::::::::"
+
+nepisete jake moznosti, jsou uvedeny asi v predeslych kapitolach, mozna odkazat, ci shrnout
+
+Nejefektivnější...efektivni
+
+paýloadu..preklep
+
 
 
 
