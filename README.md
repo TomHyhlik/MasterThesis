@@ -26,6 +26,8 @@ upravit:
 Jedním z největších omezení navrženého systému je, že FW gatewaye musí
 podporovat typy všech koncových zařízení senzorové sítě, tudíž přidání nového
 typu zařízení do sítě vyžaduje update FW gatewaye.
+Problemove slovo je VSECH. Ta mnozina neni ohranicena.
+
 
 "Je::::zde:::::::několik:::::::::možností::::jak:::::toto::::::::obejít,::::aby:::::::::gateway:::::::nebyla::::::::závislá:::na:::::::::znalosti::::typu::::::::::::koncových:::::::::zařízení:::::::::::senzorové::::::sítě,:::::ale:::::::::všechny::::::tyto:::::::::::možnosti::::::::::zapříčiňují::::::::::nežádoucí::::vliv::a:::to:::::::zvýšení::::::::objemu::::::::::::přenášených::::dat::v::::síti:::::::RS485::::::::::::přístupového::::::::::"
 
@@ -35,6 +37,7 @@ Nejefektivnější...efektivni
 
 paýloadu..preklep
 
+pokud pouzivate dale payload, uvedte to cca takto "datovy obsah (dale v praci uvedeno jako payload)".
 
 
 
