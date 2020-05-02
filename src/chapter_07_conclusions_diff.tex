@@ -3,14 +3,14 @@
 
 %DIFDELCMD < %%%
 \DIFdelend V této práci jsou diskutovány podmínky rozšíření stávajícího \DIFaddbegin \DIFadd{přístupového }\DIFaddend systému \DIFdelbegin \DIFdel{řízení přístupu }\DIFdelend pracujícího \DIFdelbegin \DIFdel{v }\DIFdelend \DIFaddbegin \DIFadd{s }\DIFaddend průmyslově \DIFdelbegin \DIFdel{standardizované síti }\DIFdelend \DIFaddbegin \DIFadd{standardizovanou sítí }\DIFaddend RS485 \DIFdelbegin \DIFdel{s }\DIFdelend \DIFaddbegin \DIFadd{o }\DIFaddend bezdrátovou senzorovou \DIFdelbegin \DIFdel{sítí }\DIFdelend \DIFaddbegin \DIFadd{síť }\DIFaddend založenou na \DIFaddbegin \DIFadd{LoRaWAN protokolu v }\DIFaddend jednokanálovém \DIFdelbegin \DIFdel{režimu LoRaWAN }\DIFdelend \DIFaddbegin \DIFadd{módu}\DIFaddend .
-\DIFaddbegin \DIFadd{Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podoruje i navržená gateway.
+\DIFaddbegin \DIFadd{Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway.
 K navržené gatewayi jsou připojeny LoRaWAN senzory třetích stran jako koncová zařízení senzorové sítě.
-Na univerzitě, kde je tento přístupový systém zaveden, je proveden test dlouhodobého provozu. Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojena dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
+Na univerzitě, kde je tento přístupový systém zaveden, je proveden test dlouhodobého provozu. Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahuje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojeny dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
 Během doby testování jsou zaznamenávány přenášené pakety v síti RS485.
-Ze zaznamenaných dat je provedena frekvenční analíza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
+Ze zaznamenaných dat je provedena frekvenční analýza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
 Např. do sítě RS485 s přenosovou rychlostí 38400 bps, s rezervou 20 \% je možné připojit navrženou gatewaye senzorové sítě a k ní připojit až 48 koncových zařízení, což je dostačující pro systémy bezdrátového měření.
+Dále je navrženo vylepšení prototypu gatewaye pro lepší mechanické vlastnosti a jsou zde diskutovány podmínky vylepšení dat z koncových zařízení přes síť RS485.
 }\DIFaddend 
-
 
 
 
