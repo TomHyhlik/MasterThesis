@@ -4,65 +4,31 @@ Se stále rostoucím využitím IoT (Internet of Things) aplikací v různých o
 nízkou spotřebu energie, velký dosah, nízkou přenosovou rychlost a nízkou cenu.
 
 IoT aplikace vyžadující krátký dosah, jako je použití v domácnostech (smart home) většinou využívají bezdrátové technologie Zigbee nebo Bluetooth, tedy technologie používající pásmo ISM (Industrial Scientific and Medical) 2.4 GHz \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
-IoT aplikace vyžadující dlouhý dosah jsou vetšinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. Mezi nejpoužívanější z této kategorie, založené na bezlicenčním pásmu ISM, jsou LoRa a SigFox, a založené na lincenčním pásmu jsou NB-IoT (NarrowBand-Internet of Things) a LTE-M (Long Term Evolution-Machine Type Communication).
+IoT aplikace vyžadující dlouhý dosah jsou vetšinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. Mezi nejpoužívanější z této kategorie, založené na bezlicenčním pásmu ISM, jsou LoRa a SigFox, a založené na \DIFdelbegin \DIFdel{lincenčním }\DIFdelend \DIFaddbegin \DIFadd{licenčním }\DIFaddend pásmu jsou NB-IoT (NarrowBand-Internet of Things) a LTE-M (Long Term Evolution-Machine Type Communication).
 LPWAN technologie mají dosah 10–15 km v oblastech mimo město a 2–5 km v městských oblastech \cite{Long-Range Communications in Unlicensed Bands}. Topologie LPWAN sítí jsou hvězdice (centralizovaná), hvězdice z hvězdic (decentralizovaná) a mesh (distribuovaná) \cite{high density LPWAN}.
 Nízká spotřeba koncových zařízení senzorových sítí jim umožňuje dlouhou životnost z baterie, i delší než 10 let.
 Nízké ceny HW (Hardware) je dosaženo úplnou integrací transceiverů s minimálním množstvím komponentů mimo čip \cite{MURS Band for LPWAN Applications}. 
-\DIFaddbegin \\
-\DIFaddend 
-
-%DIF <  The industry of IoT is growing because of its enormous potential.
-%DIF <  Cisco study \cite{IoT cisco study} says IoT will be combined with other technologies such as artificial inteligence (AI), fog computing and blockchain. Such a combination of technologies will provide greater value of investment for companies. 
-%DIF <  IoT applications in smart cities require a scalable network coverage. This can be achieved by interconnection of multiple gateways as proposed in \cite{Flexible Wireless Sensor Network for smart lighting applications}, where all gateways are connected to web server accessible via the Internet. It aims to manage urban street lighting and the implementation of smart metering is also considered as a future work.
-%DIF <  Similar application is proposed in paper \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN} which focuses on assisted real-time automatic meter reading (AMR) in cities, but the scalable range is established by mesh network topology.
-%DIF <  The IoT applications in a smart buildings concept can be proposed as shown in
-%DIF <  \cite{Internet of Things (IoT) for building Smart Home System}, where nodes exchange data with the cloud via a Wi-Fi router or Bluetooth gateway connected to the Internet. 
-%DIF <  Similar application is proposed in \cite{Building a Smart Home System with WSN and Service Robot} where nodes are controlled by a master node via Zigbee network that is conncected to a PC via RS232.
-%DIF <  Basic smart metering systems can be proposed with a gateway connected to a PC where the data are processed as proposed in \cite{A Meter Reading System Based on WSN}, \cite{Smart Water Meter System for User-Centric Consumption Measurement} and \cite{Radio Data Infrastructure for Remote Monitoring}.
-%DIF <  A long-range metering system can be established by multiple gateways connected to a network server from which data are obtained by the application server \cite{Smart Electric Meter Using LoRA Protocols and Iot applications}. 
-%DIF <  % Such network andrchitecture also uses The Things Network (TTN) \cite{ttn} which is open LoRaWAN network available for anyone to use by connecting his own nodes and to contribute by connecting his own gateway.
-\DIFaddbegin \DIFadd{Průmysl IoT roste, protože má obrovský potenciál. Cisco studie \mbox{%DIFAUXCMD
-\cite{IoT cisco study} }\hspace{0pt}%DIFAUXCMD
-uvádí, že IoT bude kombinováno s dalšími technologiemi, jako je umělá inteligence, fog computing a blockchain. Takovéto kombinace technologií vytvoří vyšší hodnotu investice pro firmy.
-IoT aplikace v oblasti smart cities požadují škálovatelné pokrytí sítě. Toho je možné dosáhnout propojením několika gatewayí, jak je navrženo v \mbox{%DIFAUXCMD
-\cite{Flexible Wireless Sensor Network for smart lighting applications}}\hspace{0pt}%DIFAUXCMD
-, kde všechny gatewaye jsou připojeny k web serveru přístupným přes internet a cílem tohoto sytému je řídit městské veřejné osvětlení a do budoucna je plánováno použití pro měření (smart metering).
-Podobná aplikace je navržena v \mbox{%DIFAUXCMD
-\cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}}\hspace{0pt}%DIFAUXCMD
-, která se zaměřuje na automatické měření ve městě, ale škálovatelný dosah je zajištěn topologií sítě mesh.
-IoT aplikace v konceptu budov (mart buildings) jsou běžně navrženy tak, že zařízení v síti jsou připojeny ke cloudu přes Bluetooth gateway nebo Wi-Fi router připojený k internetu \mbox{%DIFAUXCMD
-\cite{Internet of Things (IoT) for building Smart Home System}}\hspace{0pt}%DIFAUXCMD
-.
-Podobná aplikace je navržena  v \mbox{%DIFAUXCMD
-\cite{Building a Smart Home System with WSN and Service Robot}}\hspace{0pt}%DIFAUXCMD
-, kde v Zigbee síti jsou zařízení ovládána jedním zařízením typu master, které je připojeno k PC přes RS232.
-Základní systém měření (smart metering) je možné vytvořit pomocí zařízení se senzory připojených ke gatewayi senzorové sítě, která je připojena k PC, kde jsou data ze senzorů zaznamenávány a vyhodnocovány \mbox{%DIFAUXCMD
-\cite{A Meter Reading System Based on WSN}}\hspace{0pt}%DIFAUXCMD
-, \mbox{%DIFAUXCMD
-\cite{Smart Water Meter System for User-Centric Consumption Measurement}}\hspace{0pt}%DIFAUXCMD
-, \mbox{%DIFAUXCMD
-\cite{Radio Data Infrastructure for Remote Monitoring}}\hspace{0pt}%DIFAUXCMD
-.
-Měřící systémy vyžadující velký dosah mohou být navrženy použitím více gatewayí připojených k serveru, ze kterého jsou pak data získávána aplikačním serverem \mbox{%DIFAUXCMD
-\cite{Smart Electric Meter Using LoRA Protocols and Iot applications}}\hspace{0pt}%DIFAUXCMD
-. 
-}
-
-\DIFadd{Na tomto principu funguje např. TTN (The Things Network) \mbox{%DIFAUXCMD
-\cite{ttn}}\hspace{0pt}%DIFAUXCMD
-, což je otevřená LoRaWAN síť, do které uživatelé zdarma připojují vlastní koncová zařízení a gatewaye. Data z koncových zařízení jsou odesílány na TTN server odkud je uživatelé získávají vlastním aplikačním serverem. Uživatel tak může využívat gatewaye TTN sítě instalované jinými uživateli. Pokud potřebuje pokrytí TTN sítě v místě, kde doposud není, může v tomto místě instalovat vlastní TTN gateway a tím rozšířit pokrytí TTN sítě pro všechny uživatele.
-}\DIFaddend % Similar network is proposed in Smart Farm application \cite{Implement Smart Farm with IoT Technology} with the difference that nodes can also be connected to the gateway via RS485 which forms a hybrid wired /wireless system.
+\DIFdelbegin %DIFDELCMD < \\
+%DIFDELCMD < %%%
+\DIFdelend 
 
 
-%DIF <  This paper proposes to extend the access control system to include a low power Wireless Sensor Network (WSN) which can be used for smart metering applications, smart building applications and the building surroundings which is related to smart city applications. 
-%DIF <  The WSN gateway is connected by the same way as a card reader is connected in the access control system, therefore it also has to support the same protocol. This can lead to complications since the reader is ment to transmit a short packets with user ID when the user's credential is attached to it. 
-%DIF <  The WSN gateway is designed and tested in access control system of one university floor. The results show the infrastructure of access control system can manage up to thousands sensor nodes in dependence on used RS485 data rate. 
-\DIFaddbegin \DIFadd{Tato práce se zabývá návrhem rozšíření přístupového systému o senzorovou síť nebo-li WSN (Wireless Sensor Network) se zameřením na nízkou spotřebu energie, která by mohla být využita pro aplikace smart metering, smart buildings a v okolí budovy aplikace související se smart cities.
+Průmysl IoT roste, protože má obrovský potenciál. Cisco studie \cite{IoT cisco study} uvádí, že IoT bude kombinováno s dalšími technologiemi, jako je umělá inteligence, fog computing a blockchain. Takovéto kombinace technologií vytvoří vyšší hodnotu investice pro firmy.
+IoT aplikace v oblasti smart cities požadují škálovatelné pokrytí sítě. Toho je možné dosáhnout propojením několika gatewayí, jak je navrženo v \cite{Flexible Wireless Sensor Network for smart lighting applications}, kde všechny gatewaye jsou připojeny k web serveru přístupným přes internet a cílem tohoto sytému je řídit městské veřejné osvětlení a do budoucna je plánováno použití pro měření (smart metering).
+Podobná aplikace je navržena v \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, která se zaměřuje na automatické měření ve městě, ale škálovatelný dosah je zajištěn topologií sítě mesh.
+IoT aplikace v konceptu budov (mart buildings) jsou běžně navrženy tak, že zařízení v síti jsou připojeny ke cloudu přes Bluetooth gateway nebo Wi-Fi router připojený k internetu \cite{Internet of Things (IoT) for building Smart Home System}.
+Podobná aplikace je navržena  v \cite{Building a Smart Home System with WSN and Service Robot}, kde v Zigbee síti jsou zařízení ovládána jedním zařízením typu master, které je připojeno k PC přes RS232.
+Základní systém měření (smart metering) je možné vytvořit pomocí zařízení se senzory připojených ke gatewayi senzorové sítě, která je připojena k PC, kde jsou data ze senzorů zaznamenávány a vyhodnocovány \cite{A Meter Reading System Based on WSN}, \cite{Smart Water Meter System for User-Centric Consumption Measurement}, \cite{Radio Data Infrastructure for Remote Monitoring}.
+Měřící systémy vyžadující velký dosah mohou být navrženy použitím více gatewayí připojených k serveru, ze kterého jsou pak data získávána aplikačním serverem \cite{Smart Electric Meter Using LoRA Protocols and Iot applications}. 
+Na tomto principu funguje např. TTN (The Things Network) \cite{ttn}, což je otevřená LoRaWAN síť, do které uživatelé zdarma připojují vlastní koncová zařízení a gatewaye. Data z koncových zařízení jsou odesílány na TTN server odkud je uživatelé získávají vlastním aplikačním serverem. Uživatel tak může využívat gatewaye TTN sítě instalované jinými uživateli. Pokud potřebuje pokrytí TTN sítě v místě, kde doposud není, může v tomto místě instalovat vlastní TTN gateway a tím rozšířit pokrytí TTN sítě pro všechny uživatele.
+% Similar network is proposed in Smart Farm application \cite{Implement Smart Farm with IoT Technology} with the difference that nodes can also be connected to the gateway via RS485 which forms a hybrid wired /wireless system.
+
+
+Tato práce se zabývá návrhem rozšíření přístupového systému o senzorovou síť nebo-li WSN (Wireless Sensor Network) se zameřením na nízkou spotřebu energie, která by mohla být využita pro aplikace smart metering, smart buildings a v okolí budovy aplikace související se smart cities.
 Navržená gateway senzorové sítě je připojena do infrastruktury přístupového systému stejně jako tzv. CKP zařízení, které ovládá čtečku a dveřní zámek, tudíž gateway gateway musí podporovat stejný komunikační protokol jako CKP zařízení. 
 Toto může vézt ke komplikacím, protože CKP zařízení odesílá pouze krátké pakety, např. paket s ID karty, když je ke čtečce přiložena.
 Gateway senzorové sítě je navržena a otestována na přístupovém systému zavedeném v budově univerzity.
 Výsledky ukazují, že infrastruktura přístupového systému zvládne až tisíce koncových zařízení senzorové sítě v závislosti na použité přenosové rychlosti v síti RS485 přístupového systému.
-}\DIFaddend 
 
 
 

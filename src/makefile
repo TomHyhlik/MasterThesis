@@ -36,7 +36,7 @@ runMac:
 	/usr/bin/open -a "/Applications/Google Chrome.app" '$(OUTPUT)'
 
 
-run: runMac
+run: runLinux
 
 open:
 	open chapter_*_new.tex

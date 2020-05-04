@@ -168,11 +168,11 @@
 	subfieldofstudy-english = {Electronics},
 	fieldofstudy-czech = {Elektronika a komunikace},
 	subfieldofstudy-czech = {Elektronika},
-	keywords-czech = {Access control system, LoRa, LPWAN, WSN.},
+	keywords-czech = {přístupový systém, LoRa, LPWAN, WSN.},
 	keywords-english = {Access control system, LoRa, LPWAN, WSN.},
-	day = 12,
-	month = 10,
-	year = 2019,
+	day = 20,
+	month = 5,
+	year = 2020,
 	specification-file = {zav_prace.pdf},
 %	front-specification = true,
 %	front-list-of-figures = false,
@@ -239,20 +239,21 @@
 	% This paper proposes an extension of the existing access control system with WSN. Design of sensor nodes and gateway connected to the existing RS485 network is performed. The results of a long-term operation measurement in one university floor show the maximum number of sensor nodes simultaneously transmitting data in RS485 network is up to hundreds or thousands in dependence on used RS485 data rate and used reserve of data rate which prevent from malfunction of the access control system. The results prove the WSN can be effectively used in an existing RS485 infrastructure. 
 \end{abstract-english}
 
-% % Acknowledgements / Podekovani
-% \begin{thanks}
-% I would like to thank Supervisor Ing. Bc. Marek Neruda Ph.D and Supervisor-specialist Ing. Bc. Lukáš Vojtěch Ph.D for helping me with this project. Also I would like to thank IMA s.r.o. company, which helped me to get compatible cards to the HID Prox Point plus reader, which is used for the second system design.
-% \end{thanks}
+% Acknowledgements / Podekovani
+\begin{thanks}
+Rád bych poděkoval lidem, kteří se na této práci podíleli, to jsou z univerzity ČVUT FEL Ing. Bc. Marek Neruda Ph.D, Ing. Bc. Pavel Bezpalec Ph.D a doc. Ing. Lukáš Vojtěch Ph.D a z firmy IMA Ing. Vlastimil Beneš. 
+% za poskytnutí informací, prostředků a pomoci v rámci práce s přístupovým systémem.
+\end{thanks}
 
 
-% % Declaration / Prohlaseni
-% \begin{declaration}
-% I declare that I have developed the presented work independently and that I have
-% listed all information sources used in accordance with the Methodical Guidelines on
-% Maintaining Ethical Principles During the Preparation of Higher Education Theses.
+% Declaration / Prohlaseni
+\begin{declaration}
+I declare that I have developed the presented work independently and that I have
+listed all information sources used in accordance with the Methodical Guidelines on
+Maintaining Ethical Principles During the Preparation of Higher Education Theses.
 
-% In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
-% \end{declaration}
+In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+\end{declaration}
 
 % Only for testing purposes
 \listfiles
@@ -267,7 +268,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  BEGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
+
+
 \maketitle
+
+\includepdf[pages={1}]{zav_prace.pdf}
+
 
 % \ctutemplate{specification.as.chapter}       % ZADANI
 
@@ -334,6 +340,7 @@
 \setcounter{secnumdepth}{1} %% start section numbering
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{chapter_01_introduction_new.tex}
 
@@ -355,7 +362,6 @@
 
 
 \appendix
-
 \chapter{Odboný článek}
 
 \includepdf[pages={1,2,3,4,5,6,7,8}]{paper_Implementation_of_LPWSN_into_access_control_system.pdf}
