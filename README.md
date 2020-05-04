@@ -17,10 +17,9 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
+napiste jen "s oznacenim "CKP" (dale jen CKP)" nebo "oznacene jako CKP"
 
 
-
-" přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
 
 
 # email
