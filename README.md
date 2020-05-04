@@ -17,7 +17,7 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
-zaver, uvod
+
 
 
 " přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?

@@ -4,12 +4,27 @@ Se stále rostoucím využitím IoT (Internet of Things) aplikací v různých o
 nízkou spotřebu energie, velký dosah, nízkou přenosovou rychlost a nízkou cenu.
 
 IoT aplikace vyžadující krátký dosah, jako je použití v domácnostech (smart home) většinou využívají bezdrátové technologie Zigbee nebo Bluetooth, tedy technologie používající pásmo ISM (Industrial Scientific and Medical) 2.4 GHz \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
-IoT aplikace vyžadující dlouhý dosah jsou vetšinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. 
+IoT aplikace vyžadující dlouhý dosah jsou vetšinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. \DIFdelbegin %DIFDELCMD < 
 
-Many LPWAN wireless communication technologies appeared during its evolution with unlicensed ISM band, e.g., LoRa and SigFox and licensed band, e.g., NarrowBand-Internet of Things (NB-IoT) and Long Term Evolution-Machine Type Communication (LTE-M).
-% The LPWAN technologies aim to have range up to 10–15 km in rural areas and 2–5 km in urban areas \cite{Long-Range Communications in Unlicensed Bands} and can have one of the following topologies: star (centralized), star of stars (decentralized) and mesh (distributed) \cite{high density LPWAN}.
-% Very low power consumption should allow sensor nodes a very long battery life, even greater than 10 years.
-% The low cost of hardware (HW) is achieved by fully integrated transceivers and minimized number of off-chip components \cite{MURS Band for LPWAN Applications}.
+%DIFDELCMD < %%%
+\DIFdel{Many LPWAN wireless communication technologies appeared during its evolution with unlicensed ISM band, e.g., LoRa and SigFoxand licensed band, e.g., }\DIFdelend \DIFaddbegin \DIFadd{Mezi nejpoužívanější z této kategorie, založené na bezlicenčním pásmu ISM, jsou LoRa a SigFox, a založené na lincenčním pásmu jsou NB-IoT (}\DIFaddend NarrowBand-Internet of Things\DIFaddbegin \DIFadd{) a LTE-M }\DIFaddend (\DIFdelbegin \DIFdel{NB-IoT) and }\DIFdelend Long Term Evolution-Machine Type Communication\DIFaddbegin \DIFadd{).
+LPWAN technologie mají dosah 10–15 km v oblastech mimo město a 2–5 km v městských oblastech \mbox{%DIFAUXCMD
+\cite{Long-Range Communications in Unlicensed Bands}}\hspace{0pt}%DIFAUXCMD
+. Topologie LPWAN sítí jsou hvězdice (centralizovaná), hvězdice z hvězdic }\DIFaddend (\DIFdelbegin \DIFdel{LTE-M).
+%DIF <  The LPWAN technologies aim to have range up to 10–15 km in rural areas and 2–5 km in urban areas \cite{Long-Range Communications in Unlicensed Bands} and can have one of the following topologies: star (centralized), star of stars (decentralized) and mesh (distributed) \cite{high density LPWAN}.
+%DIF <  Very low power consumption should allow sensor nodes a very long battery life, even greater than 10 years.
+%DIF <  The low cost of hardware (HW) is achieved by fully integrated transceivers and minimized number of off-chip components \cite{MURS Band for LPWAN Applications}.
+}\DIFdelend \DIFaddbegin \DIFadd{decentralizovaná) a mesh (distribuovaná) \mbox{%DIFAUXCMD
+\cite{high density LPWAN}}\hspace{0pt}%DIFAUXCMD
+.
+Nízká spotřeba koncových zařízení senzorových sítí jim umožňuje dlouhou životnost z baterie, i delší než 10 let.
+Nízké ceny HW (Hardware) je dosaženo úplnou integrací transceiverů s minimálním množstvím komponentů mimo čip \mbox{%DIFAUXCMD
+\cite{MURS Band for LPWAN Applications}}\hspace{0pt}%DIFAUXCMD
+.
+}\DIFaddend 
+
+
+
 
 % The industry of IoT is growing because of its enormous potential.
 % Cisco study \cite{IoT cisco study} says IoT will be combined with other technologies such as artificial inteligence (AI), fog computing and blockchain. Such a combination of technologies will provide greater value of investment for companies. 
