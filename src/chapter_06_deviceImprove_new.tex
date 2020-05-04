@@ -13,11 +13,11 @@ Například použitý typ koncového zařízení RHF1S001 \ref{sec:RHF1S001} ode
 
 Efektivní řešení by bylo rozšíření CKP protokolu sítě RS485 přístupového sytému o nový typ příkazu umožňující odeslat paket o maximální délce payloadu až 243 bytů, tedy aby jedním tímto paketem bylo možné odeslat celý aplikační payload. 
 Je zde bezpečnostní výhoda, že aplikační payload by pak mohl být dešifrován až na serveru LoRaWAN klíčem AppSKey, tudíž data z koncových zařízení by nebyla odhalitelná v síti RS485.
-Toto řešení tedy vyžaduje update FW všech kontrolních panelů, čož je velmi náročné.
+Toto řešení tedy vyžaduje update FW všech kontrolních panelů, což je velmi náročné.
 % tudíž realizace tohot řešení prozatím neni plánována.
 
 Nicméně je možné implementovat podobné řešení bez nutnosti zavádění nového typu paketu pro aplikační payload koncového zařízení senzorové sítě tak, že aplikační payload by byl rozdělen a odeslán posloupností několika paketů průchod. 
-Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval informaci o čísle paketu dané sekvence a zbylých 5 bytů by byly data payloadu daného koncového zařízení Zařízení typu RHF1S001, které má aplikační payload o velikosti 9 bytů by byl takto odeslán dvěma pakety průchod. Jelikož každý paket průhod je potvrzován, toto řešení by rapidně zvýšilo objem přenášených dat v síti RS485.
+Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval informaci o čísle paketu dané sekvence a zbylých 5 bytů by byly data payloadu daného koncového zařízení Zařízení typu RHF1S001, které má aplikační payload o velikosti 9 bytů by byl takto odeslán dvěma pakety průchod. Jelikož každý paket průchod je potvrzován, toto řešení by rapidně zvýšilo objem přenášených dat v síti RS485.
 
 
 
@@ -25,7 +25,7 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 \section{Vylepšení navržené gatewaye}
 Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
-Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějšim procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve shcématu.
+Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
 LoRa transceiver je použit RFM95w \cite{RFM95w} bez shieldu.
 RS485 transceiver je použit LTC1480. 
 Do zařízení je dále přidán externí stabilizátor, napěťový filtr, přepínač volitelné impedanční zakončení sítě RS485 a napěťové ochrany pro linky A, B a napájení. 

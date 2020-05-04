@@ -17,11 +17,5 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
-napiste jen "s oznacenim "CKP" (dale jen CKP)" nebo "oznacene jako CKP"
-
-
-
-
-# email
-
+kouknout kde je payload poprve uveden
 
