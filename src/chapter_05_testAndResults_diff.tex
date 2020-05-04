@@ -25,29 +25,24 @@ Avšak vzhledem k povaze systému, tedy systému s primární funkcí řízení 
 Maximální počet koncových zařízení připojených ke gatewayi při kterém není ovlivněn stávájící přístupový systém je možné vypočítat z rychlosti přenosu dat v síti RS485. 
 Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístupového systému před dysfunkcí nebo poruchou, například před dlouhým čekáním na otevření dveří.
 
-\begin{table}[h]
-\centering
-\footnotesize
-\caption{Frekvenční analýza délky paketu}
-\begin{ctucolortab}
-    \begin{tabular}{|c|r|}
-        \hline
-Packet length &  Count \\ \hline
-\textbf{7}  &  \textbf{2~216~098}  \\
-8  &   619~127   \\
-9  &         3   \\
-11 &    58~393   \\
-13 &    58~620   \\
-16 &         1   \\
-18 &         2   \\
-\textbf{19} &    \textbf{26~286}   \\
-23 &         1   \\
-40 &         3   \\
-\hline
-\end{tabular}
-\end{ctucolortab}
-\label{tab:FreqAnalysis}
-\end{table}
+\begin{longtable} {|c|r|}
+% \footnotesize
+\caption{Frekvenční analýza délky paketu} 
+\label{tab:FreqAnalysis} \\
+            \hline
+    Délka paketu &  Počet \\ \hline
+    \textbf{7}  &  \textbf{2~216~098}  \\
+    8  &   619~127   \\
+    9  &         3   \\
+    11 &    58~393   \\
+    13 &    58~620   \\
+    16 &         1   \\
+    18 &         2   \\
+    \textbf{19} &    \textbf{26~286}   \\
+    23 &         1   \\
+    40 &         3   \\
+    \hline
+\end{longtable}
 
 \begin{figure*}[ht]
     \centering
@@ -101,36 +96,33 @@ $l_{MAX}$ & 40 \\
  P        & 2 \\
 \end{tabular}
 
-\begin{table}[h]
-\centering
-\footnotesize
-\caption{Maxímální počet připojených koncových zařízení v senzorové síti souběžně odesílající data skrze síť RS485 s určitou rezervou} 
-\begin{ctucolortab}
-\begin{tabular} {|p{2.5cm}|llll|}
+
+\newpage
+
+\begin{longtable} {|l|llll|}
+% \footnotesize
+\caption{Maxímální počet připojených koncových zařízení v senzorové síti souběžně odesílající data skrze síť RS485 s určitou    
+    rezervou}      \label{tab:max-sensor-nodes} \\
     \hline
 
-\textbf{RS485 rychlost přenosu dat} &       \multicolumn{4}{c|}{\textbf{Rezerva R}}	  	    \\
+    \textbf{RS485 rychlost přenosu dat} &       \multicolumn{4}{c|}{\textbf{Rezerva R}}	  	    \\
 
-$v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
+    $v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
 
-  1200~~~ &    1	&    1	&    1	&    1 \\
-  2400~~~ &    3	&    3	&    3	&    2 \\
-  4800~~~ &    7	&    6	&    6	&    5 \\
-  9600~~~ &   15	&   13	&   12	&   10 \\
- 19200~~~ &   30	&   27	&   24	&   21 \\
- 38400~~~ &   60	&   54	&   48	&   42 \\
- 57600~~~ &   90	&   81	&   72	&   63 \\
-115200~~~ &  180	&  162	&  144	&  126 \\
-230400~~~ &  360	&  324	&  288	&  252 \\
-460800~~~ &  720	&  648	&  576	&  504 \\
-921600~~~ & 1440	& 1296	& 1152	& 1008 \\
-\hline
+    1200~~~ &    1	&    1	&    1	&    1 \\
+    2400~~~ &    3	&    3	&    3	&    2 \\
+    4800~~~ &    7	&    6	&    6	&    5 \\
+    9600~~~ &   15	&   13	&   12	&   10 \\
+    19200~~~ &   30	&   27	&   24	&   21 \\
+    38400~~~ &   60	&   54	&   48	&   42 \\
+    57600~~~ &   90	&   81	&   72	&   63 \\
+    115200~~~ &  180	&  162	&  144	&  126 \\
+    230400~~~ &  360	&  324	&  288	&  252 \\
+    460800~~~ &  720	&  648	&  576	&  504 \\
+    921600~~~ & 1440	& 1296	& 1152	& 1008 \\
+    \hline
 
-\end{tabular}
-\end{ctucolortab}
-
-\label{tab:max-sensor-nodes}
-\end{table}
+\end{longtable}
 
 
 Např. v senzorové síti může být až 54 koncových zařízení připojených ke gatewayi, která je napojena na síť RS485 s přenosovou rychlostí 38400~bps a rezervou 10 \% nebo 42 koncových zařízení s přenosovou rychlostí 38400~bps a rezervou 30 \%.

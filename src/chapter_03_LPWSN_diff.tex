@@ -85,18 +85,15 @@ Dostupné transceivery na trhu se pohybují okolo \$5–20 od více různých v�
 % V tabulce \ref{table:shrnutiTechnologii} jsou shrnuty vlastnosti zmíněných technologií.   
 
 \newpage
+
 \section{Vybraná přenosová technologie}
-Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technologií.   
+% Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technologií.   
 
-% \begin{tabular}{|p{1.5cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
-
-\begin{table}[!h]
-  \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
-  \centering
-  \begin{ctucolortab}    
-  \begin{tabular}{|p{1.5cm}||p{1.3cm}|p{1.5cm}|p{1.4cm}|p{1.5cm}|p{2.8cm}|}
-      \hline
-                           & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
+\begin{longtable}{|p{1.5cm}||p{1.3cm}|p{1.5cm}|p{1.4cm}|p{1.5cm}|p{2.8cm}|}
+    \caption{Souhrn porovnání parametrů kandidátní bezdrátových technologií}
+    \label{table:shrnutiTechnologii} \\ 
+    \hline
+ & \textbf{IQRF}         & \textbf{Wireless M-bus} & \textbf{LoRa}                 & \textbf{ZigBee}                          & \textbf{BLE}                                              \\ \hline \hline
     Topologie               & mesh, star            & star                  & star                            & mesh, star                               & Point-to-Point, Broadcast, Mesh                           \\ \hline
     Max. velikost paketu & 64 B                  & 256 B                 & 256 B                           & 133 B                                    & 20 B (Bluetooth 4.0), 251 B (Bluetooth 4.2)               \\ \hline
     Přenosová rychlost              & 19.2 kb/s             & 32.768 – 100 kb/s     & 0.3-50kb/s                      & 250 kb/s                                 & až 1 Mb/s                                              \\ \hline
@@ -104,11 +101,8 @@ Tabulka \ref{table:shrnutiTechnologii} shrnuje vlastnosti zmíněných technolog
     Dosah                  & 500 m (line of sight) & 500 m (line of sight) & 15-22 km suburban, 3-8 km urban & 300 m (line of sight), 75-100 m (indoor) & 100 m (class 1), 10 m (class 2), less then 10 m (class 3) \\ \hline
     Zabezp.               & AES128               & AES128               & AES128                         & AES128                                  & AES128                                                   \\ \hline
     Max. vysílací výkon & až 8 mW            & 0.16–20 mW            & 24 mW                           & 1-100 mW                                 & 100 mW (class 1), 5 mW (class 2), 1 mW (class 3)          \\ \hline
-  \end{tabular}
-  \end{ctucolortab}
-  \label{table:shrnutiTechnologii}
-\end{table}
 
+\end{longtable}
 
 % Mezi hlavní kritéria pro vybranou bezdrátovou technologii patří nízká spotřeba energie koncových zařízení, nízká cena, jednoduchost implementace a možnost připojení koncových zařízení třetích stran.
 % Všechny zmíněné kandidátní technologie jsou navrženy pro zařízení napájena z baterie a umožňují dlouhodobou životnost koncových zařízení napájených z baterie.

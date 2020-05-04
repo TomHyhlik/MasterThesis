@@ -1,28 +1,19 @@
 \chapter{Závěr}
-\DIFdelbegin %DIFDELCMD < 
-
-%DIFDELCMD < %%%
-\DIFdelend V této práci jsou diskutovány podmínky rozšíření stávajícího \DIFaddbegin \DIFadd{přístupového }\DIFaddend systému \DIFdelbegin \DIFdel{řízení přístupu }\DIFdelend pracujícího \DIFdelbegin \DIFdel{v }\DIFdelend \DIFaddbegin \DIFadd{s }\DIFaddend průmyslově \DIFdelbegin \DIFdel{standardizované síti }\DIFdelend \DIFaddbegin \DIFadd{standardizovanou sítí }\DIFaddend RS485 \DIFdelbegin \DIFdel{s }\DIFdelend \DIFaddbegin \DIFadd{o }\DIFaddend bezdrátovou senzorovou \DIFdelbegin \DIFdel{sítí }\DIFdelend \DIFaddbegin \DIFadd{síť }\DIFaddend založenou na \DIFaddbegin \DIFadd{LoRaWAN protokolu v }\DIFaddend jednokanálovém \DIFdelbegin \DIFdel{režimu LoRaWAN }\DIFdelend \DIFaddbegin \DIFadd{módu}\DIFaddend .
-\DIFaddbegin \DIFadd{Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway.
+V této práci jsou diskutovány podmínky rozšíření stávajícího přístupového systému pracujícího s průmyslově standardizovanou sítí RS485 o bezdrátovou senzorovou síť založenou na LoRaWAN protokolu v jednokanálovém módu.
+Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway.
 K navržené gatewayi jsou připojeny LoRaWAN senzory třetích stran jako koncová zařízení senzorové sítě.
 Na univerzitě, kde je tento přístupový systém zaveden, je proveden test dlouhodobého provozu. Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahuje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojeny dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
 Během doby testování jsou zaznamenávány přenášené pakety v síti RS485.
 Ze zaznamenaných dat je provedena frekvenční analýza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
 Např. do sítě RS485 s přenosovou rychlostí 38400 bps, s rezervou 20 \% je možné připojit navrženou gatewaye senzorové sítě a k ní připojit až 48 koncových zařízení, což je dostačující pro systémy bezdrátového měření.
 Dále je navrženo vylepšení prototypu gatewaye pro lepší mechanické vlastnosti a jsou zde diskutovány podmínky vylepšení dat z koncových zařízení přes síť RS485.
-}\DIFaddend 
 
 
 
-%DIF <  In this paper, the conditions of extending an existing access control system running in an industry standardized RS485 network with a wireless sensor network based on LoRaWAN single-channel mode is discussed. 
-%DIF <  Design of wireless sensor network is performed, i.e., the sensor nodes and one single-channel gateway based on LoRaWAN protocol are designed. The gateway represents a type of CKP device connected to the RS485 network, therefore is supports the existing protocol in the RS485 network. A long-term operation measurement is performed in one university floor infrastructure consisting of twelve CKP devices (pairs of card reader and door lock) and one gateway. Frequency analysis of packet lengths is performed and the biggest value of packet length is considered as well as the reserve of the RS485 data rate in order to protect the access control system from malfunction. 
-%DIF <  Maximum number of wireless sensor nodes simultaneously transmitting data RS485 network is calculated in dependence on RS485 data rate and the reserve of data rate, e.g., 81 sensor nodes that work in RS485 network with a 57600~bps data rate and 10 \% reserve. This number of sensor nodes significantly exceeds the actual needs of the sensor nodes on one floor block of university building. Therefore we can state that WSN is suitable for smart metering applications.
-%DIF >  a je zvažována největší hodnota délky paketu, stejně jako rezerva rychlosti přenosu dat v síti RS485 za účelem ochrany správné funkcionality systému řízení přístupu.
-%DIF >  Frequency analysis of packet lengths is performed and the biggest value of packet length is considered as well as the reserve of the RS485 data rate in order to protect the access control system from malfunction. 
-\DIFaddbegin 
+% a je zvažována největší hodnota délky paketu, stejně jako rezerva rychlosti přenosu dat v síti RS485 za účelem ochrany správné funkcionality systému řízení přístupu.
+% Frequency analysis of packet lengths is performed and the biggest value of packet length is considered as well as the reserve of the RS485 data rate in order to protect the access control system from malfunction. 
 
-%DIF >  Z nměřených dat je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, např 81 koncových zařízení připojených ke gatewayi senzorové sítě, napojené do sítě RS485 s přenosovou rychlostí 57600~bps a 10 \% rezervou. 
-%DIF >  This number of sensor nodes significantly exceeds the actual needs of the sensor nodes on one floor block of university building. Therefore we can state that WSN is suitable for smart metering applications.
-\DIFaddend 
+% Z nměřených dat je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, např 81 koncových zařízení připojených ke gatewayi senzorové sítě, napojené do sítě RS485 s přenosovou rychlostí 57600~bps a 10 \% rezervou. 
+% This number of sensor nodes significantly exceeds the actual needs of the sensor nodes on one floor block of university building. Therefore we can state that WSN is suitable for smart metering applications.
 
 

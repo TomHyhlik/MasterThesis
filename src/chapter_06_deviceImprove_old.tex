@@ -4,14 +4,15 @@ V této kapitole jsou navrženy způsoby vylepšení navrženého systému.
 
 % \section{Možnosti odstranění omezení navržené gatewaye - závislost na znalosti typu koncových zařízení senzorové sítě}
 \section{Vylepšení infrastruktury systému}
-Jedním z největších omezení navrženého systému je, že FW gatewaye musí podporovat typy všech koncových zařízení senzorové sítě, tudíž přidání nového typu zařízení do sítě vyžaduje update FW gatewaye.
-Je zde několik možností jak toto obejít, aby gateway nebyla závislá na znalosti typu koncových zařízení senzorové sítě, ale všechny tyto možnosti zapříčiňují nežádoucí vliv a to zvýšení objemu přenášených dat v síti RS485 přístupového systému.
-Původní řešení totiž klade důraz na nízký objem přenášených dat v síti RS485.
+Jedním z největších omezení navrženého systému je, že FW gatewaye musí podporovat typy koncových zařízení senzorové sítě, aby na základě typu koncového zařízení byl správně zpracován jeho payload.
+Přidání nového typu zařízení do sítě vyžaduje update FW gatewaye.
+Aby gateway nebyla závislá na znalosti typu koncových zařízení senzorové sítě, je potřeba přenášet celý aplikační payload koncových zařízení přes síť RS485, což má nežádoucí důsledek a to zvýšení objemu přenášených dat v síti RS485 přístupového systému.
+Původní navržené řešení viz. kapitola \ref{Návrh WSN} totiž klade důraz na nízký objem přenášených dat v síti RS485.
 
 Například použitý typ koncového zařízení RHF1S001 \ref{sec:RHF1S001} odesílá LoRaWAN pakety o délce 22 bytů, z toho je 9 bytů aplikační payload. Protokol umožňuje posílat pakety o velikosti až 256 bytů, z toho je nejméně 13 bytů data protokolu, tedy maximální délka aplikačního payloadu může být až 243 bytů.
 
 Efektivní řešení by bylo rozšíření CKP protokolu sítě RS485 přístupového sytému o nový typ příkazu umožňující odeslat paket o maximální délce payloadu až 243 bytů, tedy aby jedním tímto paketem bylo možné odeslat celý aplikační payload. 
-Je zde bezpečnostní výhoda, že aplikační payload by pak mohl být dešifrován až na serveru LoRaWAN klíčem AppSKey, tudíž by data z koncových zařízení by nebyla odhalitelná v síti RS485.
+Je zde bezpečnostní výhoda, že aplikační payload by pak mohl být dešifrován až na serveru LoRaWAN klíčem AppSKey, tudíž data z koncových zařízení by nebyla odhalitelná v síti RS485.
 Toto řešení tedy vyžaduje update FW všech kontrolních panelů, čož je velmi náročné.
 % tudíž realizace tohot řešení prozatím neni plánována.
 
