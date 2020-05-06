@@ -7,7 +7,7 @@ FILES_NEW =  $(wildcard chapter_*_new.tex)
 CHAPTERS = $(patsubst %_new.tex,%, $(FILES_NEW))
 
 
-all:  genDiff build run
+all: rmDiff genDiff build run
 
 # generate diffeneces between *_old and *_new tex files
 genDiff:
@@ -36,7 +36,7 @@ runMac:
 	/usr/bin/open -a "/Applications/Google Chrome.app" '$(OUTPUT)'
 
 
-run: runMac
+run: runLinux
 
 open:
 	open chapter_*_new.tex

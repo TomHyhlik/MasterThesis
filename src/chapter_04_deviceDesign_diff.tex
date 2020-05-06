@@ -44,7 +44,7 @@ Tento problém je řešen ta, že LoRaWAN pakety z koncových zařízení jsou d
 Pro každý podporovaný typ koncového zařízení musí být implementováno zpracování payloadu ve FW gatewaye. Pozdější přidání typů koncových zařízení tedy vyžaduje update FW gatewaye.
 Gateway tedy má uloženou informaci o typu koncového zařízení společně s jeho LoRaWAN adresa zařízení (device address).
 %% todo, cast teto vet uz je v predchozi kapitole
-LoRaWAN protokol je zabezpečen šifrováním AES-128, a to zabezpečení aplikační pro nečitelnst přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, applikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key).
+LoRaWAN protokol je zabezpečen šifrováním AES-128, a to zabezpečení aplikační pro nečitelnost přenášených dat a síťové pro zabránění útočníkům opakovat již přenesené pakety nebo odesílat falešné pakety. Jsou zde tedy dva AES-128 šifrovací klíče, aplikační klič AppSKey (Application Session Key) a síťový klíč NwKSKey (Network Session Key) \cite{lorawan_specification}.
 
 Jelikož adresy koncových zařízení jsou předávány gatewayi stejně jako platné karty čtečce z aplikace na serveru řízení přístupu, není zde možnost předávat dva 16 B dlouhé šifrovací klíče pro každé koncové zařízení společně s adresou zařízení. Geteway tedy má tyto dva klíče pro všechna zařízení stejné, uložené v non-volatile paměti, konfigurovatelné pouze přímo na gatewayi.
 % LoRaWAN device address a typ každého zařízení v síti je uložena v non-volatile paměti gatewaye a jsou nastavována na z access control serveru.
@@ -220,7 +220,7 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
     ByteArray               & Knihovna zahrnující pomocné funkce pro práci s polem bytů       \\ \hline
     LinkedList\_ByteArray   & Knihovna implementující linked list s neomezenou velikostí o datové struktuře pole bytů s ukládáním do části paměti heap    \\ \hline
     aes                     & Knihovna implementující šifrování AES-128 \cite{lib_tiny-AES128-C}                \\ \hline
-    cmac                    & Knihovna pro výpočet CMAC, převzatý pouze potřebný kód z knihovný \cite{lib_openpana}       \\ \hline
+    cmac                    & Knihovna pro výpočet CMAC, převzatý pouze potřebný kód z knihovny \cite{lib_openpana}       \\ \hline
 
 \end{longtable}
 
@@ -249,7 +249,7 @@ Ukládaná konfigurace obsahuje parametry v tabulce \ref{table:Parametry uklád�
 \end{longtable}
 
 % \subsection{Běh programu}
-Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurován na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigururace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou zpracovávány cyklické buffery přijatých dat přes USB a RS485 a fronty přijatých LoRaWAN paketů a příkazů k odeslání na kontrolní panel přes síť RS485. 
+Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový signál, GPIO, rozhraní, timery a IWDG (Independent Watchdog). Systémový hodinový signál je nakonfigurován na maximální hodnotu, což je 32 MHz. Po inicializaci mikrokontroléru je z non-volatile paměti EEPROM vyčtena a vypsána v logu aktuální konfigurace gatewaye a následuje inicializace LoRa transceiveru RFM95w dle načtené konfigurace a nakonec je vstoupeno do hlavní smyčky běhu programu, kde jsou zpracovávány cyklické buffery přijatých dat přes USB a RS485 a fronty přijatých LoRaWAN paketů a příkazů k odeslání na kontrolní panel přes síť RS485. 
 
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
 Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít. IWDG je resetováván timerem tudíž tvoří pojistku tak, že resetuje procesor v případě, že by se program zhroutil.
@@ -257,10 +257,10 @@ Resetování procesoru po daném intervalu defaultně není použito, ale je imp
 Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujcím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
 Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, vysílání je zde blokováno po dobu 20 ms od posledního přijatého bytu.
 
-Komunikace s LoRa transceiverem RFM95W přes rozhraní SPI1 je implementována v blokujícím módu zápisem a čtením registrů. 
-LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu, kde pakety z této fronty jsou postupně dekódovány a diešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu.
+Komunikace s LoRa transceiverem RFM95W přes rozhraní SPI1 je implementována v blokujcím módu zápisem a čtením registrů. 
+LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu, kde pakety z této fronty jsou postupně dekódovány a dešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu.
 
-Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání neni blokováno během přijímání, jelikož se jedná o full-duplex.
+Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání není blokováno během přijímání, jelikož se jedná o full-duplex.
 
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -350,22 +350,22 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
 \begin{lstlisting}[style=log]
 
     _________________Entering configuration setup________________
-    
+
     System configuration:
-    
+
     *** LoRa channel: 
     channel: 0 (868.1 Mhz)
     SF7
-    
+
     *** RS485 channel: 
     my address: 10
     master address: FF
     timeout: 3 s
-    
+
     *** LoRaWAN keys: 
     NwSKey:  FD 90 0D 8C 70 9F 19 24 18 EC FD D4 28 0C AC 47
     AppSKey:  68 9F D0 AC 7A 0F 95 58 B1 19 A0 16 17 F4 16 33
-    
+
     
     Config menu:
     1 -> Config LoRa channel
@@ -376,6 +376,7 @@ Níže je zobrazen příklad výpisu po vstupu do konfigurace obsahující infor
     6 -> Restore to default configuration
     7 -> Exit without save
     8 -> Save and exit
+
 \end{lstlisting}
 
 
@@ -556,7 +557,7 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
         int8_t rssi;
         int8_t snr;
     } IMA_tempPress_data_t;
-     
+
     /* print the data from the structure */
     printf("temperature: %d.%d C, ", IMA_tempPress_data.temperature / 100, IMA_tempPress_data.temperature % 100);
     printf("pressure: %d.%d Pa\r\n", IMA_tempPress_data.pressure/10, IMA_tempPress_data.pressure % 10);
@@ -572,9 +573,10 @@ Senzor vytvořený ve firmě IMA, měřící teplotu a tlak.
 \end{lstlisting}
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Přidávání koncových zařízení ze serveru řízení přístupu}
-Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhraní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID 8 B.
+Přidávání koncových zařízení senzorové sítě se provádí z uživatelského rozhraní serveru řízení přístupu stejně jako přidávání platných RFID karet, s délkou UID (Unique Identifier) 8 B.
 Adresa koncového zařízení (LoRaWAN device address) je dlouhá 4 B, jeden byte je navíc použit pro typ koncového zařízení, zbylé 3 byty jsou nuly.
 Jelikož typ zařízení je uložen v gatewayi i na serveru řízení přístupu. Při odesílání příkazu "průchod" se tedy už typ zařízení neposílá z důvodu omezené velikosti tohoto příkazu.
 Na serveru řízení přístupu se UID nastavuje jako dekadické číslo.

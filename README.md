@@ -17,12 +17,5 @@ https://ebookcentral.proquest.com/
 
 ## todo
 
-
-
-
-" přidáním zařízení CKP," popiste CKP, co to je za zkratku, ci se to tak jmenujem?
-
-
-# email
-
+kouknout kde je payload poprve uveden
 
