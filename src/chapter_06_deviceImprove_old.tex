@@ -26,9 +26,63 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
 Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
+
+
+todo
+\begin{longtable}{|l|p{3.5cm}|}
+    \caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
+    \label{tab:mcuFeatures} \\
+    \hline
+
+    Parametr          & Informace            \\ \hline \hline
+
+    Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
+    Internal flash memory & 192 KB \\ \hline
+    Internal SRAM memory & 20 kB \\ \hline
+    Internal EEPROM memory & 6 kB \\ \hline
+    CPU frequency & up to 32 MHz \\ \hline
+    Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+
+\end{longtable}
+
+
+
 LoRa transceiver je použit RFM95w \cite{RFM95w} bez shieldu.
 RS485 transceiver je použit LTC1480. 
 Do zařízení je dále přidán externí stabilizátor, napěťový filtr, přepínač volitelné impedanční zakončení sítě RS485 a napěťové ochrany pro linky A, B a napájení. 
+
+
+
+todo
+\begin{longtable}{ |c|c|c| }
+
+    \caption{Pinout připojení periférií k mikrokontroléru}
+    \label{table:Pinout připojení periférií k mikrokontroléru} \\
+\hline
+
+Periférie          & Název pinu & GPIO mikrokontroléru           \\ \hline \hline
+
+            & CS    &  PB6             \\
+            & CLK   &  PA5        \\
+LoRa transceiver    & MISO  &  PA6     \\
+            & MOSI  &  PA7        \\
+            & RST   & PC7          \\
+            & DIO0  & PA10         \\
+            \hline
+
+            & RX  &   PC1            \\
+RS485 transceiver   & TX  &   PC0       \\
+            & RTS  &  PB1      \\     \hline
+
+USB konektor        & RX    & PA3    \\
+            & TX    & PA2   \\          \hline
+
+
+\end{longtable}
+
+
+
+
 
 \begin{figure}[!h]
     \centering
@@ -57,4 +111,3 @@ Použitý procesor neobsahuje paměť EEPROM, tudíž pro ukládání konfigurac
 
 
 
-todo add table of mcu and table of pinout
