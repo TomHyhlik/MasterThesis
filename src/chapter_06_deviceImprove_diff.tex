@@ -25,13 +25,11 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 \section{Vylepšení navržené gatewaye}
 Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
-Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
+Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, jehož parametry jsou v tabulce \ref{tab:mcuFeatures_stm43l432kc}. 
 
-
-todo
 \begin{longtable}{|l|p{3.5cm}|}
-    \caption{Vlastnosti mikrokontroléru STM32L432KC \cite{nucleoST}}
-    \label{tab:mcuFeatures} \\
+    \caption{Vlastnosti mikrokontroléru STM32L432KC \cite{nucleo-l432KC_ST}}
+    \label{tab:mcuFeatures_stm43l432kc} \\
     \hline
 
     Parametr          & Informace            \\ \hline \hline
@@ -40,23 +38,22 @@ todo
     Interní paměť flash       & 256 KB \\ \hline
     Interní paměť RAM         & 64 kB \\ \hline
     Frekvence CPU               & up to 80 MHz \\ \hline
-    Rozhranní                  & 2x SPI, 2x I2C, 3x UART, 1x CAN \\ \hline
+    Rozhranní                  & 2x SPI, 2x I2C, 3x UART, 1x CAN, 1x SWP \\ \hline
 
 \end{longtable}
 
-
-
+Použitý procesor STM32L432KC neobsahuje paměť EEPROM, tudíž jako non-volatile paměť pro ukládání konfigurace je použita paměť flash.
+Použitý vývojový kit NUCLEO-L432KC má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
 LoRa transceiver je použit RFM95w \cite{RFM95w} bez shieldu.
 RS485 transceiver je použit LTC1480. 
-Do zařízení je dále přidán externí stabilizátor, napěťový filtr, přepínač volitelné impedanční zakončení sítě RS485 a napěťové ochrany pro linky A, B a napájení. 
+Do zařízení je dále přidán externí stabilizátor, napěťový filtr, impedanční zakončení sítě RS485 přes přepínač a napěťové ochrany pro linky A, B a napájení. 
+Připojení periférií k GPIO mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru v2}.
 
-
-
-todo
+\newpage
 \begin{longtable}{ |c|c|c| }
 
     \caption{Pinout připojení periférií k mikrokontroléru}
-    \label{table:Pinout připojení periférií k mikrokontroléru} \\
+    \label{table:Pinout připojení periférií k mikrokontroléru v2} \\
 \hline
 
 Periférie          & Název pinu & GPIO mikrokontroléru           \\ \hline \hline
@@ -75,12 +72,7 @@ RS485 transceiver   & TX  &   PC0       \\
 
 USB konektor        & RX    & PA3    \\
             & TX    & PA2   \\          \hline
-
-
 \end{longtable}
-
-
-
 
 
 \begin{figure}[!h]
@@ -96,9 +88,6 @@ USB konektor        & RX    & PA3    \\
     \caption{Návrh gatewaye verze 2 - plošný spoj}
     \label{fig:minigateway_plosnak}
 \end{figure}
-
-Použitý procesor neobsahuje paměť EEPROM, tudíž pro ukládání konfigurace gatewaye a zařízení senzorové sítě je použita paměť flash.
-
 
 
 \begin{figure}[!h]

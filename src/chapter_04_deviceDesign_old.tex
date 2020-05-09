@@ -67,30 +67,30 @@ Je-li CKP zařízení spuštěno, má status offline a periodicky odesílá př�
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Návrh a realizace gatewaye z embedded komponent}
 Pro otestování navrženého řešení je vytvořena gateway z embedded komponent, tj. LoRa transceiveru pro komunikaci s koncovými zařízeními senzorové sítě, RS485 transceiveru pro komunikaci s kontrolním panelem v síti RS485 a mikrokontrolér jako řídící jednotku viz. blokový diagram v obrázku \ref{fig:gatewayBlockDiagram}.
-Konkrétní komponenty jsou: Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr} a vývojový kit NUCLEO-L073RZ \cite{nucleoST} jako řídící jednotka.
+Konkrétní komponenty jsou: Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr} a vývojový kit NUCLEO-L073RZ \cite{nucleo-l073RZ_ST} jako řídící jednotka.
 
 \begin{figure}[!h]
     \centering
     \includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_3}
-    \caption{Blokový diagram navržené gatewaye senzorové sítě, Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleoST}}
+    \caption{Blokový diagram navržené gatewaye senzorové sítě, Dragino LoRa Shield \cite{draginoWiki}, RS485 transceiver \cite{rs485tr}, NUCLEO-L073RZ \cite{nucleo-l073RZ_ST}}
     \label{fig:gatewayBlockDiagram}
 \end{figure}
 
-Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD \cite{nucleoST}). 
+Vývojový kit NUCLEO-L073RZ s integrovaným mikrokontrolérem STM32L073RZ je vhodný pro vývoj kvůli jeho parametrům viz tabulka \ref{tab:mcuFeatures}, pinoutu kompatibilním s Arduino UNO, dokumentaci a ceně (\$13 USD \cite{nucleo-l073RZ_ST}). 
 K vytvoření prototypu byl použit, protože splňuje všechny požadované parametry, je levný, dostatečně výkonný a jednoduchý pro vývoj. Kit obsahuje programátor ST-link pro nahrávání a debugování programu, tudíž není potřeba externí programátor během vývoje FW.
 
 \begin{longtable}{|l|p{3.5cm}|}
-    \caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
+    \caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleo-l073RZ_ST}}
     \label{tab:mcuFeatures} \\
     \hline
 
     Parametr          & Informace            \\ \hline \hline
 
-    Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
-    Internal flash memory & 192 KB \\ \hline
-    Internal SRAM memory & 20 kB \\ \hline
-    Internal EEPROM memory & 6 kB \\ \hline
-    CPU frequency & up to 32 MHz \\ \hline
+    Architektura mikrokontroléru & ARM Cortex-M0+ 32-bit RISC \\ \hline
+    Interní paměť flash & 192 KB \\ \hline
+    Interní paměť SRAM & 20 kB \\ \hline
+    Interní paměť EEPROM & 6 kB \\ \hline
+    Frekvence CPU & up to 32 MHz \\ \hline
     Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
 
 \end{longtable}
@@ -99,11 +99,11 @@ Dragino LoRa Shield \cite{draginoWiki} má kompatibilní pinout s Arduino UNO, t
 
 RS485 transceiver konvertuje rozhraní RS485/UART pro umožnění komunikace s kontrolním panelem přes síť RS485.
 
-% Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleoST} \cite{nucleoMbed}.
+% Pořizovací cena kitu přímo na stránce výrobce www.st.com je \$13 \cite{nucleo-l073RZ_ST} \cite{nucleoMbed}.
 % \begin{figure}[!h]
 %     \centering
 %     \includegraphics[width=0.4\textwidth]{Nucleo64}
-%     \caption{Vývojový kit NUCLEO-L073RZ \cite{nucleoST}}
+%     \caption{Vývojový kit NUCLEO-L073RZ \cite{nucleo-l073RZ_ST}}
 %     \label{fig:02}
 % \end{figure}
 
