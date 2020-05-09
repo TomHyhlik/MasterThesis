@@ -25,23 +25,22 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 \section{Vylepšení navržené gatewaye}
 Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
-Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
+Je zde použit jiný vývojový kit NUCLEO-L432KC s výkonnějším procesorem STM32L432KC, který má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu, 
 
 
 todo
 \begin{longtable}{|l|p{3.5cm}|}
-    \caption{Vlastnosti mikrokontroléru STM32L073RZ \cite{nucleoST}}
+    \caption{Vlastnosti mikrokontroléru STM32L432KC todo ref \cite{nucleoST}}
     \label{tab:mcuFeatures} \\
     \hline
 
     Parametr          & Informace            \\ \hline \hline
 
-    Microcontroller architecture & ARM Cortex-M0+ 32-bit RISC \\ \hline
-    Internal flash memory & 192 KB \\ \hline
-    Internal SRAM memory & 20 kB \\ \hline
-    Internal EEPROM memory & 6 kB \\ \hline
-    CPU frequency & up to 32 MHz \\ \hline
-    Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+    Architektura mikrokontroléru & ARM Cortex-M4 32-bit RISC \\ \hline
+    Interní paměť flash       & 256 KB \\ \hline
+    Interní paměť RAM         & 64 kB \\ \hline
+    Frekvence CPU               & up to 80 MHz \\ \hline
+    Rozhranní                  & 2x SPI, 2x I2C, 3x UART, 1x CAN, 1x SWP \\ \hline
 
 \end{longtable}
 
