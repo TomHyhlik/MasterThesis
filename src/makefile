@@ -7,7 +7,7 @@ FILES_NEW =  $(wildcard chapter_*_new.tex)
 CHAPTERS = $(patsubst %_new.tex,%, $(FILES_NEW))
 
 
-all: rmDiff genDiff build run
+all: build run
 
 # generate diffeneces between *_old and *_new tex files
 genDiff:

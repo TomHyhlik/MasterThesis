@@ -28,10 +28,11 @@ IQRF je technologie podporována IQRF aliancí \cite{iqrf_alliance}, která je j
 Technologie IQRF bývá použita k realizaci sítí o topologii typu mesh nebo hvězdice.
 Jedna síť má jednoho koordinátora, který slouží jako gateway a může obsahovat až 240 zařízení (včetně koordinátora). Pro požadavek vyššího počtu zařízení je efektivnější zřetězit více sítí, s jednotlivými koordinátory a různými RF kanály pro vyšší propustnost.
 % https://iqrf.org/support/networkingfaq
-Dosah na přímou viditelnost je až 500 m a velikost datového obsahu (dále v práci uvedeno jako payload) jednoho paketu může být až 64 B.
+Dosah na přímou viditelnost je až 500 m a velikost datového obsahu (dále v práci uvedeno jako payload) jednoho paketu může být až 64 B \cite{iqrf_rf}.
 % Z hlediska kriérií pro tento vybraný případ je u této technologie nevýhodou nízký počet zařízení třetích stran dostupných na trhu. 
 Většinou je tato technologie použita pro realizaci uživatelsé sítě, kde gateway je použita jedna z dostupných od IQRF aliance a koncová zařízení sítě jsou vytvořena vývojáři s použitím transceiverů od IQRF aliance
 \cite{paper_iqrf}.
+
 
 
 \subsection{Wireless M-Bus}
@@ -39,7 +40,7 @@ Wireless M-Bus (Meter-Bus) je standard specifikovaný v evropské normě EN 1375
 Po několika letech v průmyslu bezdrátových měřících systémů se tato technologie rozšířila do oblasti průmyslu senzorových sítí.
 Komunikace koncových zařízení je rozdělena do několika módů v závislosti na orientaci komunikace a objemu vysílaných dat \cite{wirelessMBus01}, \cite{wirelessMBus02}. 
 Wireless M-Bus síť má hvězdicovou topologii o dosahu 500 m v pásmu 868 MHz.
-Komunikaci vždy zahajuje koncové zařízení, které koncentrátor obsluhuje.
+Komunikaci vždy zahajuje koncové zařízení, které koncentrátor obsluhuje \cite{wirelessMBus03}, \cite{wirelessMBus04}.
 Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 
 
@@ -47,7 +48,7 @@ Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 LoRa (Long Range) je modulace navržena firmou Semtech.
 LoRaWAN je otevřený standardizovaný síťový protokol a systémová architektura navržen LoRa Aliancí definovný v LoRaWAN specifikaci \cite{lorawan_specification} vytvářející MAC (media acess control) vrstvu nad fyzickou vrstvou LoRa se zabezpečením přenášených dat. 
 %The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
-Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje.
+Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje \cite{LoRa Network Architecture: LoRaWAN}.
 Pro nízkou spotřebu protokol umožňuje ladit SF (Spreading Factor) odpovídající přenosové rychlosti, pro regulaci dosahu, který je až 15-22 km mimo městskou část a 3-8 km ve městské části \cite{lorawan_specification}.
 V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární. Na trhu je mnoho koncových zařízení i gatewayí s jejichž vzájemnou kompatibilitou není problém. Gateway přeposílá přijaté pakety s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
 Semtech je jediným výrobcem integrovaných obvodů podporujících LoRa modulaci. Na trhu je dostupných mnoho transceiverů, které používají tento integrovaný obvod, některé dokonce obsahují implementovaný LoRaWAN protokol.
