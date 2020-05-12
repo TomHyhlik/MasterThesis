@@ -1,5 +1,6 @@
 \chapter{Výběr bezdrátové technologie pro senzorovou síť}
-Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ senzorové sítě a na závěr vysvětluje která technologie byla nakonec vybrána a z jakých důvodů.
+\DIFaddbegin \label{Výběr bezdrátové technologie pro senzorovou síť}
+\DIFaddend Tato kapitola porovnává dostupné bezdrátové technologie vhodné pro tento vybraný případ senzorové sítě a na závěr vysvětluje která technologie byla nakonec vybrána a z jakých důvodů.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +49,7 @@ Transceivery vyrábí více různých firem za cenu okolo \$25-30 za kus.
 LoRa (Long Range) je modulace navržena firmou Semtech.
 LoRaWAN je otevřený standardizovaný síťový protokol a systémová architektura navržen LoRa Aliancí definovný v LoRaWAN specifikaci \cite{lorawan_specification} vytvářející MAC (media acess control) vrstvu nad fyzickou vrstvou LoRa se zabezpečením přenášených dat. 
 %The LoRaWAN nodes communicate directly with the LoRaWAN gateway \cite{Internet of Things (IoT) using LoRa technology}.
-Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje.
+Síť má hvězdicovou topologii, kde komunikaci zahajuje koncové zařízení a koncentrátor ho obsluhuje \cite{LoRa Network Architecture: LoRaWAN}.
 Pro nízkou spotřebu protokol umožňuje ladit SF (Spreading Factor) odpovídající přenosové rychlosti, pro regulaci dosahu, který je až 15-22 km mimo městskou část a 3-8 km ve městské části \cite{lorawan_specification}.
 V některých oblastech některé firmy poskytují pokrytí LoRaWAN sítí a proto je tato technologie velmi populární. Na trhu je mnoho koncových zařízení i gatewayí s jejichž vzájemnou kompatibilitou není problém. Gateway přeposílá přijaté pakety s daty z koncových zařízení na server, kde je payload zpracován na základě dokumentace od výrobce daného koncového zařízení.
 Semtech je jediným výrobcem integrovaných obvodů podporujících LoRa modulaci. Na trhu je dostupných mnoho transceiverů, které používají tento integrovaný obvod, některé dokonce obsahují implementovaný LoRaWAN protokol.

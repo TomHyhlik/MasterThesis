@@ -16,6 +16,4 @@ https://ebookcentral.proquest.com/
 
 
 ## todo
-
-kouknout kde je payload poprve uveden
-
+    references

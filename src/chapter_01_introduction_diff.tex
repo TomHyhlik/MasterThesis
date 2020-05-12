@@ -3,8 +3,10 @@
 Se stále rostoucím využitím IoT (Internet of Things) aplikací v různých oblastech, např. zemědělství, smart metering, smart cities, smart homes, roste i počet dostupných bezdrátových technologií se zaměřením na 
 nízkou spotřebu energie, velký dosah, nízkou přenosovou rychlost a nízkou cenu.
 
-IoT aplikace vyžadující krátký dosah, jako je použití v domácnostech (smart home) většinou využívají bezdrátové technologie Zigbee nebo Bluetooth, tedy technologie používající pásmo ISM (Industrial Scientific and Medical) 2.4 GHz \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
-IoT aplikace vyžadující dlouhý dosah jsou vetšinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. Mezi nejpoužívanější z této kategorie, založené na bezlicenčním pásmu ISM, jsou LoRa a SigFox, a založené na licenčním pásmu jsou NB-IoT (NarrowBand-Internet of Things) a LTE-M (Long Term Evolution-Machine Type Communication).
+IoT aplikace na krátký dosah %, jako je použití v domácnostech (smart home) 
+většinou využívají bezdrátové technologie Zigbee nebo Bluetooth, tedy technologie používající pásmo ISM (Industrial Scientific and Medical) 2.4 GHz \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, \cite{Internet of Things (IoT) for building Smart Home System}.
+IoT aplikace vyžadující dlouhý dosah jsou většinou založené na druhu technologií LPWAN (Low Power Wide Area Network) \cite{A comparative study of LPWAN technologies for large-scale IoTdeployment}. 
+Mezi nejpoužívanější technologie LPWAN v pásmu ISM patří LoRa a SigFox a mimo pásmo ISM to jsou NB-IoT (NarrowBand-Internet of Things) a LTE-M (Long Term Evolution-Machine Type Communication).
 LPWAN technologie mají dosah 10–15 km v oblastech mimo město a 2–5 km v městských oblastech \cite{Long-Range Communications in Unlicensed Bands}. Topologie LPWAN sítí jsou hvězdice (centralizovaná), hvězdice z hvězdic (decentralizovaná) a mesh (distribuovaná) \cite{high density LPWAN}.
 Nízká spotřeba koncových zařízení senzorových sítí jim umožňuje dlouhou životnost z baterie, i delší než 10 let.
 Nízké ceny HW (Hardware) je dosaženo úplnou integrací transceiverů s minimálním množstvím komponentů mimo čip \cite{MURS Band for LPWAN Applications}. 
@@ -13,7 +15,7 @@ Nízké ceny HW (Hardware) je dosaženo úplnou integrací transceiverů s minim
 Průmysl IoT roste, protože má obrovský potenciál. Cisco studie \cite{IoT cisco study} uvádí, že IoT bude kombinováno s dalšími technologiemi, jako je umělá inteligence, fog computing a blockchain. Takovéto kombinace technologií vytvoří vyšší hodnotu investice pro firmy.
 IoT aplikace v oblasti smart cities požadují škálovatelné pokrytí sítě. Toho je možné dosáhnout propojením několika gatewayí, jak je navrženo v \cite{Flexible Wireless Sensor Network for smart lighting applications}, kde všechny gatewaye jsou připojeny k web serveru přístupným přes internet a cílem tohoto sytému je řídit městské veřejné osvětlení a do budoucna je plánováno použití pro měření (smart metering).
 Podobná aplikace je navržena v \cite{Design and Implementation of an IoT Assisted Real Time ZigBee Mesh WSN}, která se zaměřuje na automatické měření ve městě, ale škálovatelný dosah je zajištěn topologií sítě mesh.
-IoT aplikace v konceptu budov (mart buildings) jsou běžně navrženy tak, že zařízení v síti jsou připojeny ke cloudu přes Bluetooth gateway nebo Wi-Fi router připojený k internetu \cite{Internet of Things (IoT) for building Smart Home System}.
+IoT aplikace v konceptu budov (smart buildings) jsou běžně navrženy tak, že zařízení v síti jsou připojeny ke cloudu přes Bluetooth gateway nebo Wi-Fi router připojený k internetu \cite{Internet of Things (IoT) for building Smart Home System}.
 Podobná aplikace je navržena  v \cite{Building a Smart Home System with WSN and Service Robot}, kde v Zigbee síti jsou zařízení ovládána jedním zařízením typu master, které je připojeno k PC přes RS232.
 Základní systém měření (smart metering) je možné vytvořit pomocí zařízení se senzory připojených ke gatewayi senzorové sítě, která je připojena k PC, kde jsou data ze senzorů zaznamenávány a vyhodnocovány \cite{A Meter Reading System Based on WSN}, \cite{Smart Water Meter System for User-Centric Consumption Measurement}, \cite{Radio Data Infrastructure for Remote Monitoring}.
 Měřící systémy vyžadující velký dosah mohou být navrženy použitím více gatewayí připojených k serveru, ze kterého jsou pak data získávána aplikačním serverem \cite{Smart Electric Meter Using LoRA Protocols and Iot applications}. 
@@ -21,8 +23,8 @@ Na tomto principu funguje např. TTN (The Things Network) \cite{ttn}, což je ot
 % Similar network is proposed in Smart Farm application \cite{Implement Smart Farm with IoT Technology} with the difference that nodes can also be connected to the gateway via RS485 which forms a hybrid wired /wireless system.
 
 
-Tato práce se zabývá návrhem rozšíření přístupového systému o WSN (Wireless Sensor Network) se zaměřením na nízkou spotřebu energie, která by mohla být využita pro aplikace smart metering, smart buildings a v okolí budovy aplikace související se smart cities.
-Navržená gateway senzorové sítě je připojena do infrastruktury přístupového systému stejně jako zařízení s označením "CKP" (dale jen CKP), které ovládá čtečku a dveřní zámek, tudíž gateway musí podporovat stejný komunikační protokol jako CKP zařízení. 
+Tato práce se zabývá návrhem rozšíření přístupového systému o WSN (Wireless Sensor Network) se zaměřením na nízkou spotřebu energie, která by mohla být využita pro aplikace smart metering a smart buildings v budově a jejím okolí.
+Navržená gateway senzorové sítě je připojena do infrastruktury přístupového systému stejně jako zařízení s označením "CKP" (dále jen CKP), které ovládá čtečku a dveřní zámek, tudíž gateway musí podporovat stejný komunikační protokol jako CKP zařízení. 
 Toto může vézt ke komplikacím, protože CKP zařízení odesílá pouze krátké pakety, např. paket s ID karty, když je ke čtečce přiložena.
 Gateway senzorové sítě je navržena a otestována na přístupovém systému zavedeném v budově univerzity.
 Výsledky ukazují, že infrastruktura přístupového systému zvládne až tisíce koncových zařízení senzorové sítě v závislosti na použité přenosové rychlosti v síti RS485 přístupového systému.

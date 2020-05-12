@@ -1,6 +1,7 @@
 % \chapter{Measurement Results and Discussion}
 \chapter{Testování navrženého řešení}
-Tato kapitola zahrnuje testování navržené gatewaye senzorové sítě viz. kapitola \ref{Návrh WSN}, napojené přes síť RS485 na infrastrukturu přístupového systému firmy IMA v univerzitní budově univerzity ČVUT za reálného provozu s připojenými koncovými zařízeními senzorové sítě, které souběžně odesílají data. Ze zachyceného provozu dat v síti RS485 je odhadnut maximální počet připojených koncových zařízení souběžně odesílající data v senzorové síti při zachování správné funkce přístupového systému.
+\DIFaddbegin \label{Testování navrženého řešení}
+\DIFaddend Tato kapitola zahrnuje testování navržené gatewaye senzorové sítě viz. kapitola \DIFdelbegin \DIFdel{\ref{Návrh WSN}}\DIFdelend \DIFaddbegin \DIFadd{\ref{Návrh senzorové sítě}}\DIFaddend , napojené přes síť RS485 na infrastrukturu přístupového systému firmy IMA v univerzitní budově univerzity ČVUT za reálného provozu s připojenými koncovými zařízeními senzorové sítě, které souběžně odesílají data. Ze zachyceného provozu dat v síti RS485 je odhadnut maximální počet připojených koncových zařízení souběžně odesílající data v senzorové síti při zachování správné funkce přístupového systému.
 
 Testování je provedeno v jednom bloku patra univerzity, kde je do jednoho kontrolního panelu připojeno dvanáct CKP zařízení přes síť RS485. Každé z nich ovládá jedny dveře, tedy jednu čtečku a dveřní zámek.
 Do této sítě RS485 je navíc připojena navržená gateway jako třinácté CKP zařízení.
@@ -44,7 +45,8 @@ Tato rezerva rychlosti přenosu dat je uvažována za účelem ochrany přístup
     \hline
 \end{longtable}
 
-\begin{figure*}[ht]
+\newpage
+\begin{figure*}[h]
     \centering
     \includegraphics[width=1\textwidth]{03-dr-measured}
     \caption{Měřená rychlost přenosu dat [bps] v síti RS485 během doby testování}
@@ -97,7 +99,6 @@ $l_{MAX}$ & 40 \\
 \end{tabular}
 
 
-\newpage
 
 \begin{longtable} {|l|llll|}
 % \footnotesize

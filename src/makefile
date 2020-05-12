@@ -7,7 +7,7 @@ FILES_NEW =  $(wildcard chapter_*_new.tex)
 CHAPTERS = $(patsubst %_new.tex,%, $(FILES_NEW))
 
 
-all: build run
+all: genDiff build run
 
 # generate diffeneces between *_old and *_new tex files
 genDiff:
@@ -41,6 +41,8 @@ run: runMac
 open:
 	open chapter_*_new.tex
 
+publish:
+	cp $(OUTPUT) ~/Gdrive/share/
 
 clean:
 	rm -f $(OUTPUT)
