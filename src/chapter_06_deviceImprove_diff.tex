@@ -24,7 +24,7 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Vylepšení navržené gatewaye}
-Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
+Pro lepší mechanické \DIFdelbegin \DIFdel{uspořádání }\DIFdelend \DIFaddbegin \DIFadd{vlastnosti a menší rozměry }\DIFaddend byla navržena verze 2 s navrženým plošným spojem (PCB).
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
 Je zde použit jiný vývojový kit NUCLEO-L432KC \cite{nucleo-l432KC_ST} s výkonnějším procesorem STM32L432KC, jehož parametry jsou v tabulce \ref{tab:mcuFeatures_stm43l432kc}. 
 
@@ -91,12 +91,17 @@ USB konektor        & RX    & PA3    \\
 \end{figure}
 
 
-\begin{figure}[!h]
+\DIFaddbegin \DIFadd{Dle návrhu byla gateway realizována viz foto \ref{fig:minigateway_fotoV2}.
+}
+
+\DIFaddend \begin{figure}[!h]
     \centering
     \includegraphics[width=0.6\textwidth]{photo_minigatewayV2}
-    \caption{Návrh gatewaye verze 2 - foto}
-    \label{fig:minigateway_plosnak}
-\end{figure}
+    \caption{\DIFdelbeginFL \DIFdelFL{Návrh }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Foto }\DIFaddendFL gatewaye verze 2\DIFdelbeginFL \DIFdelFL{- foto}\DIFdelendFL }
+    \DIFdelbeginFL %DIFDELCMD < \label{fig:minigateway_plosnak}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \label{fig:minigateway_fotoV2}
+\DIFaddendFL \end{figure}
 
 
 
