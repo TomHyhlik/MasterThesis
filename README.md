@@ -21,8 +21,6 @@ https://drive.google.com/file/d/1b3Ac9sP_QeDrE565d5zjF2C0r6W1vMEE/view?usp=shari
 
 
 
-Ta realizace nebude navrh :-), tj. popisek Obr. 6.3. Do textu bychto uvedl, ze jste to podle navrhu i zrealizoval / nebvo jste to delali v tymu? Nechali vyrobit firmou? Jaky je Vas prinos v teto verzi? To z toho neni jasne a oponent se na to urcite zepta.
-
 
 ## email 
 
