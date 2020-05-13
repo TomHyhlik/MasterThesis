@@ -1,41 +1,40 @@
 \chapter{Závěr}
-\DIFdelbegin \DIFdel{V této práci jsoudiskutovány podmínky rozšíření stávajícího }\DIFdelend %DIF > 
-\DIFaddbegin \DIFadd{Kapitola \ref{Architektury přístupových systémů} popisuje architekturu }\DIFaddend přístupového systému\DIFdelbegin \DIFdel{pracujícího s průmyslově standardizovanou sítí RS485 o bezdrátovou senzorovou síť založenou na LoRaWAN protokolu v jednokanálovém módu}\DIFdelend .
+%
+\DIFaddbegin \DIFadd{Tato práce se zabývá rozšířením stávajcího přístupového systému o senzorovou síť.
 %DIF > 
-\DIFaddbegin \DIFadd{Kapitola \ref{Výběr bezdrátové technologie pro senzorovou síť} stanovuje kritéria pro výběr bezdrátové technologie pro realizaci senzorové sítě, které jsou, nízká cena HW, jednoduché připojení  koncových zařízení třetích stran, velký počet dostupných koncových zařízení třetích stran na trhu, jednoduchá implementace, nízká spotřeba energie koncových zařízení.
-}\DIFaddend Dále \DIFaddbegin \DIFadd{tato kapitola popisuje dostupné bezdrátové technologie, jejichž vlastnosti se blíží stanoveným kritériím a parametry těchto technologií shrnuje do tabulky. 
-K realizaci senzorové sítě }\DIFaddend je \DIFdelbegin \DIFdel{takováto senzorová }\DIFdelend \DIFaddbegin \DIFadd{vybrána jednokanálová LoRa se síťovým protokolem LoRaWAN, jelikož nejlépe vyhovuje zmíněným kritériím.
-%DIF > 
-Kapitola \ref{Návrh senzorové sítě} popisuje návrh rozšíření přístupového systému firmy IMA o senzorovou }\DIFaddend síť \DIFdelbegin \DIFdel{navržena a realizována }\DIFdelend vytvořením \DIFdelbegin \DIFdel{prototypu jednokanálové LoRaWAN gatewaye připojené }\DIFdelend \DIFaddbegin \DIFadd{gatewaye senzorové sítě a připojením této gatewaye }\DIFaddend do sítě RS485 \DIFdelbegin \DIFdel{infrastruktury }\DIFdelend přístupového systému \DIFdelbegin \DIFdel{, kde jsou připojeny tzv. }\DIFdelend \DIFaddbegin \DIFadd{ve které jsou }\DIFaddend CKP zařízení \DIFdelbegin \DIFdel{ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway .
-K navržené gatewayi jsou připojeny LoRaWAN senzory třetích stran jako koncová zařízení }\DIFdelend \DIFaddbegin \DIFadd{(páry čteček a dveřních zámků) a kontrolní panel. Navržená gateway }\DIFaddend senzorové \DIFdelbegin \DIFdel{sítě.
-Na }\DIFdelend \DIFaddbegin \DIFadd{sítě tedy podporuje stejný protokol jako CKP zařízení.
+}\DIFaddend Kapitola \ref{Architektury přístupových systémů} popisuje architekturu přístupového systému.
+%
+Kapitola \ref{Výběr bezdrátové technologie pro senzorovou síť} stanovuje kritéria pro výběr bezdrátové technologie pro realizaci senzorové sítě, které jsou, nízká cena HW, jednoduché připojení  koncových zařízení třetích stran, velký počet dostupných koncových zařízení třetích stran na trhu, jednoduchá implementace \DIFdelbegin \DIFdel{, }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend nízká spotřeba energie koncových zařízení.
+Dále tato kapitola popisuje dostupné bezdrátové technologie, jejichž vlastnosti se blíží stanoveným kritériím a parametry těchto technologií shrnuje do tabulky. 
+K realizaci senzorové sítě je vybrána jednokanálová LoRa se síťovým protokolem LoRaWAN\DIFdelbegin \DIFdel{, jelikož nejlépe vyhovuje zmíněným kritériím}\DIFdelend .
+%
+Kapitola \ref{Návrh senzorové sítě} popisuje návrh rozšíření přístupového systému firmy IMA o senzorovou síť vytvořením gatewaye senzorové sítě a připojením této gatewaye do sítě RS485 přístupového systému ve které jsou CKP zařízení (páry čteček a dveřních zámků) a kontrolní panel. Navržená gateway senzorové sítě tedy podporuje stejný protokol jako CKP zařízení.
 Z důvodu datového omezení CKP protokolu jsou LoRaWAN pakety koncových zařízení dekódovány a dešifrovány v gatewayi, na základě typu daného koncového zařízení jsou z jeho payloadu vypočteny hodnoty senzorů a z nich pouze vybrané jsou odeslány na kontrolní panel přes síť RS485.
-%DIF > 
-Kapitola \ref{Testování navrženého řešení} popisuje testování dlouhodobého provozu navrženého řešení na }\DIFaddend univerzitě, kde je tento přístupový systém zaveden\DIFdelbegin \DIFdel{, je proveden test dlouhodobého provozu}\DIFdelend . 
+%
+Kapitola \ref{Testování navrženého řešení} popisuje testování dlouhodobého provozu navrženého řešení na univerzitě, kde je tento přístupový systém zaveden. 
 Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahuje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojeny dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
 Během doby testování jsou zaznamenávány přenášené pakety v síti RS485.
 Ze zaznamenaných dat je provedena frekvenční analýza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
 Např. do sítě RS485 s přenosovou rychlostí 38400 bps, s rezervou 20 \% je možné připojit navrženou gatewaye senzorové sítě a k ní připojit až 48 koncových zařízení, což je dostačující pro systémy bezdrátového měření.
-%DIF > 
-\DIFaddbegin \DIFadd{V Kapitole }\label{Návrh vylepšení systému} \DIFadd{jsou diskutovány podmínky zbavení gatewaye nutnosti znalosti typu koncových zařízení pro správné zpracování jejich payloadu. 
+%
+V \DIFdelbegin \DIFdel{Kapitole }%DIFDELCMD < \label{Návrh vylepšení systému} %%%
+\DIFdelend \DIFaddbegin \DIFadd{kapitole \ref{Návrh vylepšení systému} }\DIFaddend jsou diskutovány podmínky zbavení gatewaye nutnosti znalosti typu koncových zařízení pro správné zpracování jejich payloadu. 
 Jako možné řešení je přenášet celý payload koncových zařízení přes síť RS485 a to pomocí sekvence paketů "průchod" a nebo nově vytvořeným paketem s proměnnou délkou, což tedy vyžaduje rozšíření CKP protokolu. Navíc by payload koncového zařízení mohl zůstat zašifrován při přenášení přes síť RS485 a dešifrování by bylo prováděno až na serveru.
 Značná nevýhoda obou možností je zvýšení objemu přenášených dat v síti RS485 během přenášení dat z koncového zařízení přes síť RS485 a z toho plyne i nižší maximální počet koncových zařízení v senzorové síti.
-}\DIFaddend Dále je \DIFaddbegin \DIFadd{zde }\DIFaddend navrženo vylepšení prototypu gatewaye pro lepší mechanické vlastnosti\DIFdelbegin \DIFdel{a jsou zde diskutovány podmínky vylepšení dat z koncových zařízení přes síť RS485.
-}\DIFdelend \DIFaddbegin \DIFadd{.
-}
+Dále je zde navrženo vylepšení prototypu gatewaye \DIFaddbegin \DIFadd{vytvořením PCB }\DIFaddend pro lepší mechanické vlastnosti \DIFaddbegin \DIFadd{a menší rozměry}\DIFaddend .
 
 
 
 
 
-%DIF >  V této práci jsou diskutovány podmínky rozšíření stávajícího přístupového systému pracujícího s průmyslově standardizovanou sítí RS485 o bezdrátovou senzorovou síť založenou na LoRaWAN protokolu v jednokanálovém módu.
-%DIF >  Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway.
-%DIF >  K navržené gatewayi jsou připojeny LoRaWAN senzory třetích stran jako koncová zařízení senzorové sítě.
-%DIF >  Na univerzitě, kde je tento přístupový systém zaveden, je proveden test dlouhodobého provozu. Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahuje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojeny dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
-%DIF >  Během doby testování jsou zaznamenávány přenášené pakety v síti RS485.
-%DIF >  Ze zaznamenaných dat je provedena frekvenční analýza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
-%DIF >  Např. do sítě RS485 s přenosovou rychlostí 38400 bps, s rezervou 20 \% je možné připojit navrženou gatewaye senzorové sítě a k ní připojit až 48 koncových zařízení, což je dostačující pro systémy bezdrátového měření.
-\DIFaddend 
+
+% V této práci jsou diskutovány podmínky rozšíření stávajícího přístupového systému pracujícího s průmyslově standardizovanou sítí RS485 o bezdrátovou senzorovou síť založenou na LoRaWAN protokolu v jednokanálovém módu.
+% Dále je takováto senzorová síť navržena a realizována vytvořením prototypu jednokanálové LoRaWAN gatewaye připojené do sítě RS485 infrastruktury přístupového systému, kde jsou připojeny tzv. CKP zařízení ovládající dveřní zámky a čtečky, komunikující vlastním proprietárním CKP protokolem, který podporuje i navržená gateway.
+% K navržené gatewayi jsou připojeny LoRaWAN senzory třetích stran jako koncová zařízení senzorové sítě.
+% Na univerzitě, kde je tento přístupový systém zaveden, je proveden test dlouhodobého provozu. Při tomto testu je navržená gateway připojena do jedné sítě RS485, která již obsahuje 12 CKP zařízení (páry čteček a dveřních zámků) a ke gatewayi jsou připojeny dva LoRaWAN senzory jako koncová zařízení senzorové sítě.
+% Během doby testování jsou zaznamenávány přenášené pakety v síti RS485.
+% Ze zaznamenaných dat je provedena frekvenční analýza délek paketů, a je vypočítán maximální počet koncových zařízení senzorové sítě souběžně odesílajících data, v závislosti na rychlosti přenosu dat v síti RS485 a rezervě přenosové rychlosti, pro zachování správné funkce přístupového systému.
+% Např. do sítě RS485 s přenosovou rychlostí 38400 bps, s rezervou 20 \% je možné připojit navrženou gatewaye senzorové sítě a k ní připojit až 48 koncových zařízení, což je dostačující pro systémy bezdrátového měření.
 
 
 
