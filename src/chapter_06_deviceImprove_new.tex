@@ -24,7 +24,10 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Vylepšení navržené gatewaye}
-Pro lepší mechanické vlastnosti a menší rozměry byla navržena verze 2 s navrženým plošným spojem (PCB).
+U původního realizovaného prototypu gatewaye jsou komponenty propojovány drátkama, tudíž mohlo dojít k rozpojení při manipulaci se zařízením. 
+V tomto provedení prototypu by bylo náročné vyrobit několik jednotek až desítek kusů pro případné zákazníky.
+Jako další nevýhody původního prototypu jsou, že zařízení je zbytečně velké, nemá napěťové ochrany, a v RS485 transceiveru byl na pevno napájen odpor impedancniho zakonceni site RS485.
+Z těchto důvodů je navržena a realizována verze 2 s plošným spojem (PCB) navrženým v Eagle.
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
 Je zde použit jiný vývojový kit NUCLEO-L432KC \cite{nucleo-l432KC_ST} s výkonnějším procesorem STM32L432KC, jehož parametry jsou v tabulce \ref{tab:mcuFeatures_stm43l432kc}. 
 
