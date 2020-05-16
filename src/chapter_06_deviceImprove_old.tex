@@ -24,7 +24,9 @@ Např. z dostupných 6 bytů v jednom paketu průchod by jeden byte obsahoval in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Vylepšení navržené gatewaye}
-Pro lepší mechanické uspořádání byla navržena verze 2 s navrženým plošným spojem (PCB).
+U původního realizovaného prototypu gatewaye jsou komponenty propojovány drátkama, tudíž mohlo dojít k rozpojení při manipulaci se zařízením a v tomto provedení by bylo náročné vyrobit několik jednotek až desítek kusů pro případné zákazníky.
+Jako další nevýhody původního prototypu jsou, že zařízení je zbytečně velké, nemá napěťové ochrany, a v RS485 transceiveru byl na pevno napájen odpor impedančního zakončení sítě RS485.
+Z těchto důvodů je navržena a realizována verze 2 s plošným spojem (PCB) navrženým v Eagleu.
 Schéma zapojení je v obrázku \ref{fig:minigateway_schema} a plošný spoj je v obrázku \ref{fig:minigateway_plosnak}.
 Je zde použit jiný vývojový kit NUCLEO-L432KC \cite{nucleo-l432KC_ST} s výkonnějším procesorem STM32L432KC, jehož parametry jsou v tabulce \ref{tab:mcuFeatures_stm43l432kc}. 
 
@@ -47,7 +49,7 @@ Použitý procesor STM32L432KC neobsahuje paměť EEPROM, tudíž jako non-volat
 Použitý vývojový kit NUCLEO-L432KC má pinout stejný jako Arduino Nano, tedy je pod tímto názvem ve schématu.
 LoRa transceiver je použit RFM95w \cite{RFM95w} bez shieldu.
 RS485 transceiver je použit LTC1480. 
-Do zařízení je dále přidán externí stabilizátor, napěťový filtr, impedanční zakončení sítě RS485 přes přepínač a napěťové ochrany pro linky A, B a napájení. 
+Do zařízení je dále přidán externí stabilizátor, napěťový filtr, svorkovnice, impedanční zakončení sítě RS485 přes přepínač a napěťové ochrany pro linky A, B a napájení. 
 Připojení periférií k GPIO mikrokontroléru je znázorněno v tabulce \ref{table:Pinout připojení periférií k mikrokontroléru v2}.
 
 \newpage
@@ -91,11 +93,13 @@ USB konektor        & RX    & PA3    \\
 \end{figure}
 
 
+Dle návrhu byla gateway realizována viz foto \ref{fig:minigateway_fotoV2}.
+
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.6\textwidth]{photo_minigatewayV2}
-    \caption{Návrh gatewaye verze 2 - foto}
-    \label{fig:minigateway_plosnak}
+    \caption{Foto gatewaye verze 2}
+    \label{fig:minigateway_fotoV2}
 \end{figure}
 
 
