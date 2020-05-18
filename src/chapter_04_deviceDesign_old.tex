@@ -91,7 +91,7 @@ K vytvoření prototypu byl použit, protože splňuje všechny požadované par
     Interní paměť SRAM & 20 kB \\ \hline
     Interní paměť EEPROM & 6 kB \\ \hline
     Frekvence CPU & up to 32 MHz \\ \hline
-    Interfaces & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
+    Rozhraní & 2X SPI, 3x I2C, 4x UART, LIN \\ \hline
 
 \end{longtable}
 
@@ -218,7 +218,7 @@ Pro vytvoření knihovny zahrnující LoRaWAN protokol jsou použity open source
 
     buffer\_ring            & Knihovna implementující cyklický buffer o velikosti 256 B   \\ \hline
     ByteArray               & Knihovna zahrnující pomocné funkce pro práci s polem bytů       \\ \hline
-    LinkedList\_ByteArray   & Knihovna implementující linked list s neomezenou velikostí o datové struktuře pole bytů s ukládáním do části paměti heap    \\ \hline
+    LinkedList\_ByteArray   & Knihovna implementující linked list s neomezenou velikostí o datové struktuře pole bytů    \\ \hline
     aes                     & Knihovna implementující šifrování AES-128 \cite{lib_tiny-AES128-C}                \\ \hline
     cmac                    & Knihovna pro výpočet CMAC, převzatý pouze potřebný kód z knihovny \cite{lib_openpana}       \\ \hline
 
@@ -254,11 +254,11 @@ Po spuštění programu je nejprve inicializován mikrokontrolér, hodinový sig
 Jsou zde použity 2 timery, TIM2 pro restartování procesoru a TIM3 pro resetování IWDG.
 Resetování procesoru po daném intervalu defaultně není použito, ale je implementováno a v případě potřeby je možné využít. IWDG je resetováván timerem tudíž tvoří pojistku tak, že resetuje procesor v případě, že by se program zhroutil.
 
-Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujcím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
+Komunikace s transceiverem RS485 přes LPUART1 je je implementována pro vysílání v blokujícím módu a přijímání přes interrupt, kde přijatý byte je zapsán do cyklického bufferu o velikosti, který je zpracováván v hlavní smyčce běhu programu. 
 Jelikož komunikace v síti RS485 je half-duplex a platí zde pravidlo LBT, vysílání je zde blokováno po dobu 20 ms od posledního přijatého bytu.
 
-Komunikace s LoRa transceiverem RFM95W přes rozhraní SPI1 je implementována v blokujcím módu zápisem a čtením registrů. 
-LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu, kde pakety z této fronty jsou postupně dekódovány a dešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené linked listem, zpracovávané v hlavní smyčce běhu programu.
+Komunikace s LoRa transceiverem RFM95W přes rozhraní SPI1 je implementována v blokujícím módu zápisem a čtením registrů. 
+LoRa transceiver je nakonfigurován na kontinuální příjem na zvoleném kanále a SF, přijatý LoRa paket signalizuje zvednutím logické úrovně pinu DIO0. Toto je řešeno interrupt pinem, po jehož přerušení je vyčten přijatý LoRa paket z FIFO (First In First Out) paměti transceiveru a přidán do fronty tvořené listem, zpracovávané v hlavní smyčce běhu programu, kde pakety z této fronty jsou postupně dekódovány a dešifrovány, na základě typu zařízení jsou vypočteny hodnoty senzorů z payloadu a zakódovány do bufferu o délce 6 B, který je připojen do fronty tvořené listem, zpracovávané v hlavní smyčce běhu programu.
 
 Komunikace přes USB přes USART2 je implementována obdobně jako komunikace v síti RS485 kde přijatá data jsou zapsána do cyklického bufferu, který je zpracováván v hlavní smyčce běhu programu, ale vysílání není blokováno během přijímání, jelikož se jedná o full-duplex.
 
