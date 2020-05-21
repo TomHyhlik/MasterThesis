@@ -21,6 +21,3 @@ https://drive.google.com/file/d/1b3Ac9sP_QeDrE565d5zjF2C0r6W1vMEE/view?usp=shari
 lepe uvezt kapitolu 6 Návrh vylepšení systému
 
 
-## email 
-
-
