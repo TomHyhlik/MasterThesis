@@ -20,30 +20,29 @@
 
 \title{Bezdrátová senzorová síť pro přístupový systém}
 \date{25.6.2020}
-\author{Bc. Tomáš Hyhlík}
+\author{Tomáš Hyhlík}
 \institute{Diplomová práce}
 \begin{document}
   \maketitle
 
   
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\begin{frame}{Integrace WSN do architektury přístupového systému}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Integrace WSN do architektury přístupového systému}
 
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=1\textwidth]{ACS_IoT_extension_21}
-			% \caption{Architektura přístupového systému firmy IMA s rozšířením o gateway senzorové sítě}
-			\label{fig:ACS architecture IMA with geteway}
-		\end{figure}
-			
-	\end{frame}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1\textwidth]{ACS_IoT_extension_21}
+		% \caption{Architektura přístupového systému firmy IMA s rozšířením o gateway senzorové sítě}
+		\label{fig:ACS architecture IMA with geteway}
+	\end{figure}
+		
+\end{frame}
 
 
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame}{Výběr bezdrátové technologie}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Výběr bezdrátové technologie}
 	Požadavky:
 	\begin{itemize}
 		\item Nízká cena HW
@@ -53,12 +52,11 @@
 		\item Nízká spotřeba energie koncových zařízení
 	  \end{itemize}
 
-  \end{frame}
+\end{frame}
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {WSN gateway - HW}
-	  
+\begin{frame} {WSN gateway - HW}
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{LoRaWAN_gw_RS485_blockDiagram_3}
@@ -66,13 +64,11 @@
 		\label{fig:gatewayBlockDiagram}
 	\end{figure}
 
-  \end{frame}
+\end{frame}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {WSN gateway - SW}
-
-	{\fontsize{9}{10}\selectfont 
-
+\begin{frame} {WSN gateway - SW}
+	% {\fontsize{9}{5}\selectfont 
 		Rozdělení na nezávislé :
 		\begin{itemize}
 			\item LoRa
@@ -91,24 +87,24 @@
 			\item aes (tiny-aes) \cite{lib_tiny-AES128-C} 
 			\item cmac (openpana) \cite{lib_openpana}
 		\end{itemize}
-	}
-  \end{frame}
+	% }
+\end{frame}
 
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {Testování dlouhodobého provozu}
+\begin{frame} {Testování dlouhodobého provozu}
 
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{5patro}
 	\end{figure}
 
-  \end{frame}
+\end{frame}
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {Výpočet ...todo}
+\begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
 
 	{\fontsize{9}{9}\selectfont 
 	\begin{equation}
@@ -127,19 +123,17 @@
 	\end{tabular}
 	}
 
-  \end{frame}
+\end{frame}
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {}
+\begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
 	\begin{longtable} {|l|llll|}
 		% % \footnotesize
 		% \caption{Maximální počet připojených koncových zařízení v senzorové síti souběžně odesílající data skrze síť RS485 s určitou    
 		% 	rezervou}      \label{tab:max-sensor-nodes} \\
-		% 	\hline
-		
+			\hline
 			\textbf{RS485 rychlost přenosu dat} &       \multicolumn{4}{c|}{\textbf{Rezerva R}}	  	    \\
-		
 			$v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
 		
 			1200~~~ &    1	&    1	&    1	&    1 \\
@@ -156,11 +150,49 @@
 			\hline
 		
 		\end{longtable}
-		
-		
+\end{frame}
 
 
-  \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Vylepšení prototypu navržené gatewaye}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{minigateway_schema}
+		\caption{Návrh gatewaye verze 2 - schéma}
+		\label{fig:minigateway_schema}
+	\end{figure}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Vylepšení prototypu navržené gatewaye}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=0.6\textwidth]{photo_minigatewayV2}
+		\caption{Foto gatewaye verze 2}
+		\label{fig:minigateway_fotoV2}
+	\end{figure}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{}
+	Děkuji za pozornost
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Otázky vedoucího}
+	\begin{itemize}
+		\item 	Co znamená pojem orientace komunikace? Str. 11
+		\item 	Zhodnoťte správnost odhadu max. počtu připojených koncových zařízení z testování provozu v síti RS 485. Kapitola 5.
+	\end{itemize}
+\end{frame}
+
+
 
 
 
