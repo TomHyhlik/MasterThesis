@@ -41,12 +41,6 @@
 
 
 
-
-
-
-
-
-
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame}{Výběr bezdrátové technologie}
 
@@ -75,46 +69,95 @@
   \end{frame}
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {WSN gateway - SW bloky}
-
-	{\fontsize{10}{6}\selectfont 
-
-	\begin{longtable}{ |l|p{7cm}| }
-		% \caption{Rozdělení programu na nezávislé podprogramy}
-		% \label{table:sw_div} \\
-		\hline
-		% Název podprogramu  & Popis           \\ \hline \hline
-		LoRa            &  Knihovna zahrnující komunikaci s transceiverem RFM95W po rozhraní SPI, nainicializovaném v režimu komunikace LoRa    \\ \hline
-		LoRaWAN\_packet  & Knihovna zahrnující LoRaWAN protokol, tedy dekódování a dešifrování přijatého LoraWAN paketu i vytvoření paketu pro odeslání. Tato knihovna je závislá na knihovnách aes a cmac.  \\ \hline
-		LoRa\_sensors    & Knihovna zahrnující dekódování payloadu podporovaných koncových zařízení a zapsání výsledných hodnot do bufferu, který je pak odeslán na kontrolní panel přes síť RS485       \\ \hline
-		rs485\_protocol  & Podprogram zahrnující síťový protokol v síti RS485         \\ \hline
-		usb             &  Podprogram zahrnující konfiguraci systému přes USB        \\ \hline
-		eeprom          &  Knihovna zahrnující práci s non-volatile paměti procesoru EEPROM     \\ \hline
-
-	\end{longtable}
-	}
-
-\end{frame}
-
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \begin{frame} {WSN gateway - SW}
 
-	{\fontsize{5}{6}\selectfont 
-	
-	
-	
-	
+	{\fontsize{9}{10}\selectfont 
+
+		Rozdělení na nezávislé :
+		\begin{itemize}
+			\item LoRa
+			\item LoRaWAN\_packet
+			\item LoRa\_sensors
+			\item rs485\_protocol
+			\item usb
+			\item eeprom
+		\end{itemize}
+
+		Dodatečné pomocné podprogramy
+		\begin{itemize}
+			\item buffer\_ring
+			\item ByteArray
+			\item LinkedList\_ByteArray
+			\item aes (tiny-aes) \cite{lib_tiny-AES128-C} 
+			\item cmac (openpana) \cite{lib_openpana}
+		\end{itemize}
 	}
-
-
   \end{frame}
 
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \begin{frame} {WSN gateway - SW}
+  \begin{frame} {Testování dlouhodobého provozu}
 
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{5patro}
+	\end{figure}
+
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame} {Výpočet ...todo}
+
+	{\fontsize{9}{9}\selectfont 
+	\begin{equation}
+		S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
+		\label{equ:max-count-of-sensors}
+		\end{equation}
+		
+		kde:
+		
+		\begin{tabular}{l @{  } l}
+		$v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
+		B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
+		$l_{MAX}$ & maximální délka paketu \\
+		R        & rezerva rychlosti přenosu dat [\%]\\
+		P        & počet paketů k přenesení dat z koncového zařízení \\
+	\end{tabular}
+	}
+
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame} {}
+	\begin{longtable} {|l|llll|}
+		% % \footnotesize
+		% \caption{Maximální počet připojených koncových zařízení v senzorové síti souběžně odesílající data skrze síť RS485 s určitou    
+		% 	rezervou}      \label{tab:max-sensor-nodes} \\
+		% 	\hline
+		
+			\textbf{RS485 rychlost přenosu dat} &       \multicolumn{4}{c|}{\textbf{Rezerva R}}	  	    \\
+		
+			$v_{485}$ {[bps]}  &	0 \%	&	10 \%	&	20 \%	&	30 \%  \\ \hline
+		
+			1200~~~ &    1	&    1	&    1	&    1 \\
+			2400~~~ &    3	&    3	&    3	&    2 \\
+			4800~~~ &    7	&    6	&    6	&    5 \\
+			9600~~~ &   15	&   13	&   12	&   10 \\
+			19200~~~ &   30	&   27	&   24	&   21 \\
+			38400~~~ &   60	&   54	&   48	&   42 \\
+			57600~~~ &   90	&   81	&   72	&   63 \\
+			115200~~~ &  180	&  162	&  144	&  126 \\
+			230400~~~ &  360	&  324	&  288	&  252 \\
+			460800~~~ &  720	&  648	&  576	&  504 \\
+			921600~~~ & 1440	& 1296	& 1152	& 1008 \\
+			\hline
+		
+		\end{longtable}
+		
+		
 
 
   \end{frame}
