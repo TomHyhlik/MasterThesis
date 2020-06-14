@@ -1,15 +1,71 @@
 \begin{thebibliography}{1}
 
-\bibitem{normalita}
-G.~Glass, G.~Peckham, and J.~Sanders.
-\newblock Consequences of failure to meet assumptions underlying fixed effects
-  analyses of variance and covariance.
-\newblock {\em Rev. Educ. Res.}, 42:237--288, 1972.
 
-\bibitem{algorithm}
-R.~Kataoka, D.~Warren, D.~Zajac, R.~Mayo, and R.~Lutz.
-\newblock The relationship between spectral characteristics and percieved
-  hypernasality in children.
-\newblock {\em J. Acoust. Soc. Am.}, 109:2181--2189, 2001.
+
+
+
+%___________________
+\bibitem[1]{draginoWiki}
+Lora Shield.
+\textit{
+Dragino
+}
+[online]. [cit. 2020-05-14]. Dostupné z: 
+\url{
+http://wiki.dragino.com/index.php?title=Lora_Shield
+}
+
+%___________________
+\bibitem[2]{rs485tr}
+SparkFun Transceiver Breakout - RS-485.
+\textit{
+Sparkfun
+}
+[online]. [cit. 2020-05-14]. Dostupné z: 
+\url{
+https://www.sparkfun.com/products/10124
+}
+
+% -------------------------
+\bibitem[3]{nucleo-l073RZ_ST}
+NUCLEO-L073RZ.
+\textit{
+ST Microelectronics.
+}
+[online]. [cit. 2020-05-14]. Dostupné z: 
+\url{
+https://www.st.com/en/evaluation-tools/nucleo-l073rz.html
+}
+
+
+
+
+%___________________        used libraries
+
+\bibitem[4]{lib_tiny-AES128-C}
+Bitdust / tiny-AES128-C: Small portable AES128 in C. \textit{Github}
+[online]. [cit. 2020-05-14]. Dostupné z: 
+\url{
+https://github.com/bitdust/tiny-AES128-C
+}
+
+%___________________
+\bibitem[5]{lib_openpana}
+OpenPANA / openpana: OpenPANA it'll be soon a full functional free solution which implements the PANA protocol. By now, it's a multithreading implementation, supported by a framework, which allows multiple users to authenticate. 
+\textit{ Github }
+[online]. [cit. 2020-05-14]. Dostupné z: 
+\url{
+https://github.com/OpenPANA/openpana
+}
+
+
+
+
+
+
+
+
+
+
 
 \end{thebibliography}
