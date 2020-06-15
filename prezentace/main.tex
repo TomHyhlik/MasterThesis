@@ -42,15 +42,15 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Výběr bezdrátové technologie}
+\begin{frame}{Výběr bezdrátové technologie pro senzorovou síť}
 	Požadavky:
 	\begin{itemize}
 		\item Nízká cena HW
-		\item Jednoduché přípojení koncových zařízení třetích stran (Third party)
+		\item Jednoduché připojení koncových zařízení třetích stran (Third party)
 		\item Velký počet dostupných koncových zařízení třetích stran na trhu 
-		\item Jednoduchá implementace
+		\item Jednoduchá implementace sítě
 		\item Nízká spotřeba energie koncových zařízení
-	  \end{itemize}
+	\end{itemize}
 
 \end{frame}
 
@@ -69,9 +69,9 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {WSN gateway - SW}
+\begin{frame} {WSN gateway - vývoj SW}
 	% {\fontsize{9}{5}\selectfont 
-		Rozdělení FW na nezávislé moduly:
+		Rozdělení SW na nezávislé moduly:
 		\begin{itemize}
 			\item LoRa
 			\item LoRaWAN\_packet
@@ -95,8 +95,17 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {Testování dlouhodobého provozu}
-	todo: popsat test
+\begin{frame} {Testování navržené gatewaye v běžném provozu}
+	% todo: popsat test
+
+	Připojená zařízení v testované síti RS485
+	\begin{itemize}
+		\item 1 kontrolní panel
+		\item 12 CKP zařízení (páry čteček a dveřních zámků)
+		\item 1 gateway senzorové sítě + 2 senzory
+	\end{itemize}
+
+
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{5patro}
@@ -105,30 +114,28 @@
 \end{frame}
 
 
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
-
-	{\fontsize{9}{9}\selectfont 
-	\begin{equation}
-		S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
-		\label{equ:max-count-of-sensors}
-		\end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
+% 	{\fontsize{9}{9}\selectfont 
+% 	\begin{equation}
+% 		S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
+% 		\label{equ:max-count-of-sensors}
+% 		\end{equation}
 		
-		kde:
+% 		kde:
 		
-		\begin{tabular}{l @{  } l}
-		$v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
-		B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
-		$l_{MAX}$ & maximální délka paketu \\
-		R        & rezerva rychlosti přenosu dat [\%]\\
-		P        & počet paketů k přenesení dat z koncového zařízení \\
-	\end{tabular}
-	}
+% 		\begin{tabular}{l @{  } l}
+% 		$v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
+% 		B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
+% 		$l_{MAX}$ & maximální délka paketu \\
+% 		R        & rezerva rychlosti přenosu dat [\%]\\
+% 		P        & počet paketů k přenesení dat z koncového zařízení \\
+% 	\end{tabular}
+% 	}
+% \end{frame}
 
-\end{frame}
 
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
 	\begin{longtable} {|l|llll|}
 		% % \footnotesize
@@ -156,7 +163,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Vylepšení prototypu navržené gatewaye}
+\begin{frame}{Vylepšení prototypu navržené gatewaye - schéma}
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{minigateway_schema}
@@ -168,7 +175,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Vylepšení prototypu navržené gatewaye}
+\begin{frame}{Vylepšení prototypu navržené gatewaye - foto}
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=0.6\textwidth]{photo_minigatewayV2}
@@ -187,14 +194,39 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Otázky vedoucího a oponenta}
-	todo
-	\begin{itemize}
-		\item 	Co znamená pojem orientace komunikace? Str. 11
-		\item 	Zhodnoťte správnost odhadu max. počtu připojených koncových zařízení z testování provozu v síti RS 485. Kapitola 5.
-		\item Jak je chráňeno rozhraní RS485 u vyvinuté gatewaye před přepětím
-	\end{itemize}
+\begin{frame}{Otázky vedoucího}
+		\textbf{Co znamená pojem orientace komunikace? Str. 11}
+		\\
+		\hspace{10pt}
+		Nekorektnost. Místo orientace komunikace má být směr posílání dat.
+		\vspace{15pt}		
+
+		\textbf{Zhodnoťte správnost odhadu max. počtu připo
+		jených koncových zařízení z testování provozu v síti RS 485. Kapitola 5.}
+		\\
+		\hspace{10pt}
+		Nekorektnost. Nejedná se o odhad, ale o výpočet.
+		\vspace{15pt}		
+
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Otázky oponenta}
+		\textbf{Jak je chráňeno rozhraní RS485 u vyvinuté gatewaye před přepětím}
+		\\
+		\hspace{10pt}
+		Transil typu SM15T15CA s průrazným napětím 15 V, spojující linky A a B ke GND.
+		
+\end{frame}
+
+
+
+	% \begin{itemize}
+	% 	\item 	Co znamená pojem orientace komunikace? Str. 11
+	% 	\item 	Zhodnoťte správnost odhadu max. počtu připojených koncových zařízení z testování provozu v síti RS 485. Kapitola 5.
+	% 	\item Jak je chráňeno rozhraní RS485 u vyvinuté gatewaye před přepětím
+	% \end{itemize}
+
 
 
 

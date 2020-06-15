@@ -1,2 +1,2 @@
-\beamer@sectionintoc {1}{D\IeC {\v e}kuji za pozornost}{11}{0}{1}
+\beamer@sectionintoc {1}{D\IeC {\v e}kuji za pozornost}{10}{0}{1}
 \beamer@sectionintoc {2}{References}{13}{0}{2}
