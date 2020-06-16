@@ -16,24 +16,26 @@
 \headcommand {\beamer@framepages {8}{8}}
 \headcommand {\slideentry {0}{0}{9}{9/9}{}{0}}
 \headcommand {\beamer@framepages {9}{9}}
-\headcommand {\beamer@sectionpages {1}{9}}
-\headcommand {\beamer@subsectionpages {1}{9}}
-\headcommand {\sectionentry {1}{D\IeC {\v e}kuji za pozornost}{10}{D\IeC {\v e}kuji za pozornost}{0}}
-\headcommand {\slideentry {1}{0}{0}{10/10}{}{0}}
+\headcommand {\slideentry {0}{0}{10}{10/10}{}{0}}
 \headcommand {\beamer@framepages {10}{10}}
-\headcommand {\slideentry {1}{0}{1}{11/11}{}{0}}
+\headcommand {\beamer@sectionpages {1}{10}}
+\headcommand {\beamer@subsectionpages {1}{10}}
+\headcommand {\sectionentry {1}{D\IeC {\v e}kuji za pozornost}{11}{D\IeC {\v e}kuji za pozornost}{0}}
+\headcommand {\slideentry {1}{0}{0}{11/11}{}{0}}
 \headcommand {\beamer@framepages {11}{11}}
-\headcommand {\slideentry {1}{0}{2}{12/12}{}{0}}
+\headcommand {\slideentry {1}{0}{1}{12/12}{}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\beamer@sectionpages {1}{12}}
-\headcommand {\beamer@subsectionpages {1}{12}}
-\headcommand {\sectionentry {2}{References}{13}{References}{0}}
-\headcommand {\slideentry {2}{0}{0}{13/13}{}{0}}
+\headcommand {\slideentry {1}{0}{2}{13/13}{}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\slideentry {2}{0}{0}{13/14}{}{0}}
-\headcommand {\beamer@framepages {13}{14}}
-\headcommand {\beamer@partpages {1}{14}}
-\headcommand {\beamer@subsectionpages {1}{14}}
-\headcommand {\beamer@sectionpages {1}{14}}
-\headcommand {\beamer@documentpages {14}}
-\headcommand {\gdef \inserttotalframenumber {13}}
+\headcommand {\beamer@sectionpages {1}{13}}
+\headcommand {\beamer@subsectionpages {1}{13}}
+\headcommand {\sectionentry {2}{References}{14}{References}{0}}
+\headcommand {\slideentry {2}{0}{0}{14/14}{}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {2}{0}{0}{14/15}{}{0}}
+\headcommand {\beamer@framepages {14}{15}}
+\headcommand {\beamer@partpages {1}{15}}
+\headcommand {\beamer@subsectionpages {1}{15}}
+\headcommand {\beamer@sectionpages {1}{15}}
+\headcommand {\beamer@documentpages {15}}
+\headcommand {\gdef \inserttotalframenumber {14}}
