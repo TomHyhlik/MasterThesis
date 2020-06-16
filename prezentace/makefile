@@ -1,6 +1,6 @@
 TARGET = main
 all:
 	pdflatex $(TARGET).tex
-	open $(TARGET).pdf
+	xdg-open $(TARGET).pdf
 
 
