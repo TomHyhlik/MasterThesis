@@ -7,6 +7,7 @@
 \usepackage{pdfpages}	
 
 
+
 \newcommand{\SubItem}[1]{
     {\setlength\itemindent{15pt} \item[]#1}
 }
@@ -32,20 +33,13 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 	\maketitle
   
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Integrace WSN do architektury přístupového systému}
+\begin{frame}{Úvod}
 
 	\begin{itemize}
-		\item Projek ve firme IMA s.r.o.
-		\item Spolufinancovano z dotace od SGS a.s.
-
-		\item Vytvoren clanek pro odborny casopis:
-		\SubItem 	- Advances in Electrical and Electronic Engineering
-		\SubItem 	- http://advances.utc.sk/index.php/AEEE
-		\SubItem 	- Indexován v databázi WoS a Scopus.
-
+		\item Společný projekt ČVUT a firmy IMA s.r.o. 
+		\item Zadání
+		\item Proč se tímto zabývat?
 	\end{itemize}
 
 \end{frame}
@@ -140,7 +134,7 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
+\begin{frame} {Naměřená data}
 
 	od 21. září do 31. října
 
@@ -149,36 +143,11 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 		\includegraphics[width=1\textwidth]{03-dr-measured}
 	\end{figure}
 
-
-
-
-
-	
 \end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
-
-	\vspace{-12pt}
-
-	\begin{equation}
-		S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
-		% \label{equ:max-count-of-sensors}
-		\end{equation}
-		
-	\fontsize{10}{12}\selectfont 
-
-	% 	kde:
-		
-	% 	\begin{tabular}{l @{  } l}
-	% 	$v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
-	% 	B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
-	% 	$l_{MAX}$ & maximální délka paketu \\
-	% 	R        & rezerva rychlosti přenosu dat [\%]\\
-	% 	P        & počet paketů k přenesení dat z koncového zařízení \\
-	% \end{tabular}
-
 
 	\begin{longtable} {|l|llll|}
 		% % \footnotesize
@@ -228,6 +197,37 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Odborný článek}
+	
+	Nyní v oponentním řízení
+
+	Pro časopis:
+	\begin{itemize}
+		\item 	- Advances in Electrical and Electronic Engineering
+		\item 	- http://advances.utc.sk/index.php/AEEE
+		\item 	- Indexován v databázi WoS a Scopus.
+	\end{itemize}
+
+	% Autoři
+	% \begin{itemize}
+	% 	\item Bezpalec: analýza dat
+	% 	\item Beneš: zajištění přístupu do infrastruktury
+	% 	\item Hyhlik: state of the art, GW s WSN
+	% 	\item Neruda: koncepce článku, korektura a odborný dohled
+	% 	\item Vojtech: resitel grantu, zajisteni infrastruktury, koncepce clanku
+	% \end{itemize}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\centering
+\includegraphics[width=0.6\textwidth]{Screenshot_odbornyClanek}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
 	\section{Děkuji za pozornost}
 \end{frame}
@@ -260,7 +260,6 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 \end{frame}
 
 
-
 	% \begin{itemize}
 	% 	\item 	Co znamená pojem orientace komunikace? Str. 11
 	% 	\item 	Zhodnoťte správnost odhadu max. počtu připojených koncových zařízení z testování provozu v síti RS 485. Kapitola 5.
@@ -269,10 +268,40 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{frame}{}
+	\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Výpočet koncových zařízení senzorové sítě}
 
+	% \vspace{-12pt}
+
+	\begin{equation}
+		S_{MAX} = \frac{\frac{\frac{v_{485}}{B}}{l_{MAX}} - R}{P}
+		% \label{equ:max-count-of-sensors}
+		\end{equation}
+		
+	\fontsize{10}{12}\selectfont 
+
+		kde:
+		
+		\begin{tabular}{l @{  } l}
+		$v_{485}$ & rychlost přenosu dat v síti RS485 [bps]\\
+		B        & počet bitů v bytu (pro přepočítání rychlosti přenosu dat na byty) \\
+		$l_{MAX}$ & maximální délka paketu \\
+		R        & rezerva rychlosti přenosu dat [\%]\\
+		P        & počet paketů k přenesení dat z koncového zařízení \\
+	\end{tabular}
+
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame[allowframebreaks]{  
 
 	\section{References}
@@ -281,7 +310,6 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 	\bibliography{Biblio-Database}
 
 }
-
 
 
 
