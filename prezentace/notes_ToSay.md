@@ -2,10 +2,12 @@
 
 ## 1
 - Jedna se o spolecny projekt ČVUT a firmy IMA s.r.o.
+
 - Zadání tohoto projektu je:
 Rozšířit přístupový systém firmy IMA, který je zde na ČVUT o senzorovou síť.
 Navržené řešení realizovat a otestovat.
-Jde tedy o rozšíření stavajici infrastruktury CVUT.
+Jde tedy o rozšíření stávajici infrastruktury ČVUT.
+
 - Proč se tímto zabývat? 
 V budovách, kde je tento přístupový systém firmy IMA zaveden, tedy včetně ČVUT, to zjednoduší a sníží náklady na realizace IoT aplikací, právě tím, že se využije velká část již zavedené infrastruktury.
 Jako příkladné IoT aplikace přo které by se to mohlo využít je bezdrátové měření nebo aplikace inteligentních budov a to v dané budově i jejím okolí.
