@@ -51,7 +51,7 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Integrace WSN do architektury přístupového systému}
+\begin{frame}{Integrace WSN do infrastruktury přístupového systému}
 
 	\begin{figure}[h]
 		\centering
@@ -66,7 +66,7 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Výběr bezdrátové technologie pro senzorovou síť}
-	Požadavky:
+	Hlavní kritéria:
 	\begin{itemize}
 		\item Nízká cena HW
 		\item Jednoduché připojení koncových zařízení třetích stran (Third party)
@@ -75,7 +75,27 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 		\item Nízká spotřeba energie koncových zařízení
 	\end{itemize}
 
+	Vybráno: Jednokanálová LoRA
+
 \end{frame}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Omezení infrastruktury přístupového systému}
+
+	Omezený objem dat protokolu CKP
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=1\textwidth]{ACS_IoT_extension_21}
+		% \caption{Architektura přístupového systému firmy IMA s rozšířením o gateway senzorové sítě}
+		\label{fig:ACS architecture IMA with geteway}
+	\end{figure}
+		
+\end{frame}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,8 +139,8 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame} {Testování navržené gatewaye}
-	Za běžném provozu
-	V budově FEL, blok A4, 5. patro
+	Za běžném provozu v budově FEL, blok A4, 5. patro \\
+	Po dobu: od 21. září do 31. října 2019
 
 	Připojená zařízení v testované síti RS485
 	\begin{itemize}
@@ -137,21 +157,14 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 \end{frame}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {Naměřená data}
-
-	od 21. září do 31. října
-
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[width=1\textwidth]{03-dr-measured}
-	\end{figure}
-
-\end{frame}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame} {Výpočet maximálního počtu koncových zařízení senzorové sítě}
+\begin{frame} {Maximální počet koncových zařízení senzorové sítě}
+
+	- Vypočítán ze záznamu přenesených dat v síti RS485 
+
+	\fontsize{11}{11}\selectfont
+
 
 	\begin{longtable} {|l|llll|}
 		% % \footnotesize
@@ -271,10 +284,9 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 	% \end{itemize}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\begin{frame}{}
-	\end{frame}
+\begin{frame}{}
+\end{frame}
 
 
 
@@ -303,6 +315,42 @@ Vedoucí: Ing. Bc. Marek Neruda, Ph.D}
 \end{frame}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame} {Naměřená data}
+
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{03-dr-measured}
+		\caption{Měřená rychlost přenosu dat [bps] v síti RS485 během doby testování}
+	\end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame} {Frekvenční analýza délky paketu}
+
+	\begin{longtable} {|c|r|}
+		% \footnotesize
+		% \caption{Frekvenční analýza délky paketu} 
+		% \label{tab:FreqAnalysis} \\
+					\hline
+			Délka paketu &  Počet \\ \hline
+			\textbf{7}  &  \textbf{2~216~098}  \\
+			8  &   619~127   \\
+			9  &         3   \\
+			11 &    58~393   \\
+			13 &    58~620   \\
+			16 &         1   \\
+			18 &         2   \\
+			\textbf{19} &    \textbf{26~286}   \\
+			23 &         1   \\
+			40 &         3   \\
+			\hline
+		\end{longtable}
+
+\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
