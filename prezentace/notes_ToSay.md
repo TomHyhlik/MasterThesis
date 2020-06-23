@@ -2,22 +2,28 @@
 
 ## 1
 - Jedna se o spolecny projekt ČVUT a firmy IMA s.r.o.
-
+- Je to práce na přístupovém systému tady na ČVUT, který je od firmy IMA
 - Jehoz cilem je:
 Rozšířit přístupový systém firmy IMA, který je zde na ČVUT o senzorovou síť.
 Navržené řešení realizovat a otestovat.
 Jde tedy o rozšíření stávajici infrastruktury ČVUT.
 
 - Proč se tímto zabývat? 
-V budovách, kde je tento přístupový systém firmy IMA zaveden, tedy včetně ČVUT, to zjednoduší a sníží náklady na realizace IoT aplikací, právě tím, že se využije velká část již zavedené infrastruktury.
+Zjednoduší a sníží náklady na realizace IoT aplikací, v budovách, kde je tento přístupový systém firmy IMA zaveden, tedy včetně ČVUT,
+právě tím, že se využije velká část již zavedené infrastruktury
+
 Jako příkladné IoT aplikace přo které by se to mohlo využít je bezdrátové měření nebo aplikace inteligentních budov a to v dané budově i jejím okolí.
 
 ## 2
-Zde je architektura přístupového systému firmy IMA ve spodní části blokového diagramu, i s navrženým rozšířením o senzorovou síť v horní části.
+- Zde je architektura přístupového systému firmy IMA ve spodní části blokového diagramu, i s navrženým rozšířením o senzorovou síť v horní části.
 
-Do serveru řízení přístupu jsou zavedeny kontrolní panely, každý znich je připojen do jedné vlastní sítě RS485 kde je několik zařízení CKP s kterými komunikuje na bázi CKP protokol, který je navržěn firmou IMA.
-CKP zařízení tvoří rozhraní mezi kontrolním panelem a párem čtečka + dveřní zámek. Můžou to být různé typy čteček, stejně tak dveřních zámků, ale i vrat, závor apodobně.
-Rozšíření tohoto přístupového systému o senzorovou síť je realizováno vytvořením gatewaye senzorové sítě, připojené do této sítě RS485, tedy navržená gateway podporuje CKP protokol jako ostatní zařízení v této síti.
+- Pár, dveřní zámek a RFID čtečka jsou připojeny do tzv. CKP zařízení, které je připojené do sítě RS485, která je rozvedená po části budovy. 
+- CKP zařízení komunikují přes síť RS485 s kontrolním panelem přes CKP protokol, který byl navržen v IMA. Kontrolní panel pak odesílá data na server řízení přístupu.
+- CKP zařízení můžou mít v sobě zapojené různé typy čteček a dveřních zámků, nebo i závor, vrat apodobně.
+
+- Rozšíření tohoto přístupového systému o senzorovou síť je realizováno vytvořením gatewaye senzorové sítě, připojené do této sítě RS485, tedy navržená gateway podporuje CKP protokol jako ostatní zařízení v této síti a odesílá data na kontrolní panel.
+
+
 
 ## 3
 Výběr bezdrátové technologie pro realizaci senzorové sítě je založen na požadavcích: Nízká cena HW, jednoduchost přípojení zařízení třetích stran dostupných na trhu, velký počet těchto zařízení dostupných na trhu, jednoduchost implementace senzorové sítě a nízká spotřeba koncových zařízení.
