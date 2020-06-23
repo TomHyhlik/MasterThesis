@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.11)  23 JUN 2020 19:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.11)  23 JUN 2020 22:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1440,12 +1440,12 @@ Underfull \vbox (badness 10000) detected at line 192
 [9
 
 ]
-<../src/images/minigateway_schema.png, id=91, 897.3525pt x 731.73375pt>
-File: ../src/images/minigateway_schema.png Graphic file (type png)
-<use ../src/images/minigateway_schema.png>
-Package pdftex.def Info: ../src/images/minigateway_schema.png  used on input li
-ne 203.
-(pdftex.def)             Requested size: 307.28987pt x 250.57263pt.
+<../src/images/photo_minigatewayV2.jpg, id=91, 3035.34pt x 4047.12pt>
+File: ../src/images/photo_minigatewayV2.jpg Graphic file (type jpg)
+<use ../src/images/photo_minigatewayV2.jpg>
+Package pdftex.def Info: ../src/images/photo_minigatewayV2.jpg  used on input l
+ine 203.
+(pdftex.def)             Requested size: 184.3758pt x 245.78091pt.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <10> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
@@ -1455,132 +1455,132 @@ LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
 (Font)              scaled to size 10.0pt on input line 203.
 
-Overfull \vbox (83.66164pt too high) detected at line 203
+Overfull \vbox (78.86992pt too high) detected at line 203
  []
 
 [10
 
- <../src/images/minigateway_schema.png>]
-<../src/images/photo_minigatewayV2.jpg, id=99, 3035.34pt x 4047.12pt>
-File: ../src/images/photo_minigatewayV2.jpg Graphic file (type jpg)
-<use ../src/images/photo_minigatewayV2.jpg>
-Package pdftex.def Info: ../src/images/photo_minigatewayV2.jpg  used on input l
-ine 214.
-(pdftex.def)             Requested size: 184.3758pt x 245.78091pt.
-
-Overfull \vbox (78.86992pt too high) detected at line 214
- []
-
-[11
-
- <../src/images/photo_minigatewayV2.jpg>] [12
+ <../src/images/photo_minigatewayV2.jpg>] [11
 
 ]
-<Screenshot_odbornyClanek_1.png, id=111, 941.5175pt x 903.375pt>
+<Screenshot_odbornyClanek_1.png, id=103, 941.5175pt x 903.375pt>
 File: Screenshot_odbornyClanek_1.png Graphic file (type png)
 <use Screenshot_odbornyClanek_1.png>
-Package pdftex.def Info: Screenshot_odbornyClanek_1.png  used on input line 245
+Package pdftex.def Info: Screenshot_odbornyClanek_1.png  used on input line 234
 .
 (pdftex.def)             Requested size: 276.559pt x 265.34921pt.
 
-Overfull \vbox (24.0326pt too high) detected at line 245
+Overfull \vbox (24.0326pt too high) detected at line 234
  []
 
-[13
+[12
 
  <./Screenshot_odbornyClanek_1.png>]
 
 Package hyperref Warning: Composite letter `\textasciicaron+e'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 251.
+(hyperref)                removing `\textasciicaron' on input line 240.
 
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <10.95> not avai
 lable
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 251.
+nput line 240.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 10.95pt on input line 251.
+(Font)              scaled to size 10.95pt on input line 240.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <8> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 251.
+nput line 240.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 8.0pt on input line 251.
+(Font)              scaled to size 8.0pt on input line 240.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <6> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 251.
+nput line 240.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 6.0pt on input line 251.
-[14
+(Font)              scaled to size 6.0pt on input line 240.
+[13
 
 ]
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/bold/n' will be
-(Font)              scaled to size 10.95pt on input line 269.
- [15
+(Font)              scaled to size 10.95pt on input line 258.
+ [14
+
+] [15
 
 ] [16
-
-] [17
 
 ]
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <7> not available
 
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 316.
+put line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 7.0pt on input line 316.
+(Font)              scaled to size 7.0pt on input line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/n' in size <5> not available
 
 (Font)              Font shape `OT1/FiraSans-OsF/regular/n' tried instead on in
-put line 316.
+put line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/n' will be
-(Font)              scaled to size 5.0pt on input line 316.
+(Font)              scaled to size 5.0pt on input line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <10> not availab
 le
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 316.
+nput line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 10.0pt on input line 316.
+(Font)              scaled to size 10.0pt on input line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <7> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 316.
+nput line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 7.0pt on input line 316.
+(Font)              scaled to size 7.0pt on input line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/m/it' in size <5> not availabl
 e
 (Font)              Font shape `OT1/FiraSans-OsF/regular/it' tried instead on i
-nput line 316.
+nput line 305.
 LaTeX Font Info:    Font shape `OT1/FiraSans-OsF/regular/it' will be
-(Font)              scaled to size 5.0pt on input line 316.
+(Font)              scaled to size 5.0pt on input line 305.
 
-Overfull \hbox (14.35165pt too wide) in paragraph at lines 316--316
+Overfull \hbox (14.35165pt too wide) in paragraph at lines 305--305
 [][]  
+ []
+
+[17
+
+]
+<../src/images/03-dr-measured.png, id=139, 948.9051pt x 487.8225pt>
+File: ../src/images/03-dr-measured.png Graphic file (type png)
+<use ../src/images/03-dr-measured.png>
+Package pdftex.def Info: ../src/images/03-dr-measured.png  used on input line 3
+18.
+(pdftex.def)             Requested size: 307.28987pt x 157.97472pt.
+
+Overfull \vbox (0.92867pt too high) detected at line 318
  []
 
 [18
 
-]
-<../src/images/03-dr-measured.png, id=147, 948.9051pt x 487.8225pt>
-File: ../src/images/03-dr-measured.png Graphic file (type png)
-<use ../src/images/03-dr-measured.png>
-Package pdftex.def Info: ../src/images/03-dr-measured.png  used on input line 3
-29.
-(pdftex.def)             Requested size: 307.28987pt x 157.97472pt.
-
-Overfull \vbox (0.92867pt too high) detected at line 329
+ <../src/images/03-dr-measured.png>]
+Underfull \vbox (badness 10000) detected at line 343
  []
 
 [19
 
- <../src/images/03-dr-measured.png>]
-Underfull \vbox (badness 10000) detected at line 354
+]
+<../src/images/minigateway_schema.png, id=152, 897.3525pt x 731.73375pt>
+File: ../src/images/minigateway_schema.png Graphic file (type png)
+<use ../src/images/minigateway_schema.png>
+Package pdftex.def Info: ../src/images/minigateway_schema.png  used on input li
+ne 354.
+(pdftex.def)             Requested size: 307.28987pt x 250.57263pt.
+
+Overfull \vbox (83.66164pt too high) detected at line 354
  []
 
 [20
 
-] (./main.bbl) [21
+ <../src/images/minigateway_schema.png>] (./main.bbl) [21
 
  </usr/local/texlive/2019/texmf-dist/tex/latex/beamer/beamericonarticle.pdf>] [
 22
@@ -1596,11 +1596,11 @@ Underfull \vbox (badness 10000) detected at line 354
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 373.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 373.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 385.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 385.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 373.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 373.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 385.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 385.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: DBB8D110651C4397ED1B73AD388D0897;99.
 
@@ -1629,7 +1629,7 @@ texlive/2019/texmf-dist/fonts/enc/dvips/fira/fir_lortfe.enc}</usr/local/texlive
 ve/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texliv
 e/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (22 pages, 4119857 bytes).
+Output written on main.pdf (22 pages, 4119868 bytes).
 PDF statistics:
  227 PDF objects out of 1000 (max. 8388607)
  173 compressed objects within 2 object streams
